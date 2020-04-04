@@ -1,0 +1,23 @@
+I"A<ul id="markdown-toc">
+  <li><a href="#all-my-projects" id="markdown-toc-all-my-projects">All my projects</a>    <ul>
+      <li><a href="#sample-project" id="markdown-toc-sample-project">Sample project</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="all-my-projects">All my projects</h1>
+<p>Following are projects started by me.</p>
+
+<h2 id="sample-project">Sample project</h2>
+<ul>
+  <li>Started: 2020-present</li>
+  <li>Website: <a href="http://www.sample.com">www.sample.com</a>
+    <ul>
+      <li>Code</li>
+      <li>XXX language service and debugger</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Sample project is a newly started project. It was started as my exploration of coding logics in a networked environment. Throughout the years, I have written over a million lines of code with it. All my other projects since 2020 is written in it.</p>
+:ET
