@@ -1,0 +1,76 @@
+I"<p>API stands for Application Program Interface</p>
+
+<blockquote>
+  <p><strong>Get/Post/Put</strong>는 기존 데이터베이스를 조작하기 위한 작업으로,
+API의 문을 두드려서 Request를 보내야 한다. <br />
+만약 API Request가 매 1, 2초에 하나씩 보낸다면? No! Don’t do that!  <br />
+<strong>Web Socket?</strong>
+Web Socket는 위의 매번 1, 2초에 빈번하게 API 요청이 되는 상황을 위한<font color="Red">"Open door policy free"</font>이다.</p>
+</blockquote>
+
+<blockquote>
+  <p>Postman tool : URL에 직접 데이터를 송수신하는 것을 담당(Body data)<br />
+Mongo DB : DB 테이블(Local DB)안에 있는 데이터를 확인</p>
+  <blockquote>
+    <p>실습내용 : Postman 툴을 이용해서 local DB에 데이터를 전송/등록하고, Robo3T(Robomongo)를 이용하여 local DB에 저장된 데이터를 확인한다.<br />
+다음에 공부해보고 싶은 내용 : node.js를 이용하여, 서버쪽을 개발해서 직접 deploy해보기.</p>
+  </blockquote>
+</blockquote>
+
+<hr />
+<p>① mongo demo 실행하기</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$mongod
+
+[initandlisten] exception in initAndListen: NonExistentPath: Data directory /data/db not found., terminating
+</code></pre></div></div>
+
+<p>터미널에서 mongod를 실행했는데, 위와같이 에러가 발생을 한다면, 해당 /data/db의 위치를 찾지 못하고 있는 것이다. 이런 경우에는 Mongo DB의 Path설정을 설정해주면서 실행해주면 된다.</p>
+
+<p>우선 원하는 Home 위치에서 ./data/db DB를 저장할 폴더를 만들어준다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$mongod --dbpath=/Users/hyungilee/data/db
+</code></pre></div></div>
+
+<p>② API의 소스파일이 있는 폴더로 이동을 해서 로컬에서 호스팅되고 있는 API코드를 mongo DB와 함께 실행시킨다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$npm run dev
+</code></pre></div></div>
+
+<p>③ 다음과 같이 “Database connection ready” 메시지가 나오면 성공적으로 실행이 된 것이고, API에서 처리될 작업 이벤트를 기다리고 있는 것이다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; slacky-slack@1.0.0 dev /Users/hyungilee/AndroidStudioProjects/mac-chat-api
+&gt; NODE_ENV=development nodemon -w src --exec "babel-node src --presets es2015,stage-0"
+
+[nodemon] 1.11.0
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching: /Users/hyungilee/AndroidStudioProjects/mac-chat-api/src/**/*
+[nodemon] starting `babel-node src --presets es2015,stage-0`
+Started on port 3005
+mongodb://localhost:27017/chat-api
+Database connection ready
+</code></pre></div></div>
+
+<p>You’ll find this post in your <code class="highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def print_hi(name)
+puts "Hi, #{name}"
+end
+print_hi('Tom')
+#=&gt; prints 'Hi, Tom' to STDOUT.
+</code></pre></div></div>
+
+<p>To add new posts, simply add a file in the <code class="highlighter-rouge">_posts</code> directory that follows the convention <code class="highlighter-rouge">YYYY-MM-DD-name-of-post.ext</code> and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+
+<p>Jekyll also offers powerful support for code snippets:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def print_hi(name)
+  puts "Hi, #{name}"
+end
+print_hi('Tom')
+#=&gt; prints 'Hi, Tom' to STDOUT.
+</code></pre></div></div>
+
+<p>Check out the <a href="http://jekyllrb.com">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://github.com/jekyll/jekyll-help">Jekyll’s dedicated Help repository</a>.</p>
+
+:ET

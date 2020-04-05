@@ -5,9 +5,78 @@
     <description>Hyungi's Ideas &amp; Blogs</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 05 Apr 2020 15:44:20 +0900</pubDate>
-    <lastBuildDate>Sun, 05 Apr 2020 15:44:20 +0900</lastBuildDate>
+    <pubDate>Mon, 06 Apr 2020 00:02:51 +0900</pubDate>
+    <lastBuildDate>Mon, 06 Apr 2020 00:02:51 +0900</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Mongo DB + Android app</title>
+        <description>&lt;blockquote&gt;
+  &lt;blockquote&gt;
+    &lt;p&gt;&lt;strong&gt;API?&lt;/strong&gt; Application Program Interface &lt;br /&gt;
+&lt;strong&gt;Get/Post/Put?&lt;/strong&gt;&lt;br /&gt;
+기존 데이터베이스를 조작하기 위한 작업으로,API의 문을 두드려서 Request를 보내야 한다. &lt;br /&gt;
+만약 API Request가 매 1, 2초에 하나씩 보낸다면? No! Don’t do that!  &lt;br /&gt;
+&lt;strong&gt;Web Socket?&lt;/strong&gt;&lt;br /&gt;
+Web Socket는 위의 매번 1, 2초에 빈번하게 API 요청이 되는 상황을 위한&lt;font color=&quot;Red&quot;&gt;&lt;strong&gt;&quot;Open door policy free&quot;&lt;/strong&gt;&lt;/font&gt;이다.&lt;/p&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Heroku API&lt;/strong&gt; : Built-in Mongo DB로 Mongo DB를 좀 더 편리하게 사용할 수 있도록 해준다. &lt;br /&gt;
+&lt;strong&gt;Postman tool&lt;/strong&gt; : URL에 직접 데이터를 송수신하는 것을 담당(Body data)&lt;br /&gt;
+&lt;strong&gt;Mongo DB&lt;/strong&gt; : DB 테이블(Local DB)안에 있는 데이터를 확인&lt;/p&gt;
+  &lt;blockquote&gt;
+    &lt;p&gt;실습내용 : Postman 툴을 이용해서 local DB에 데이터를 전송/등록하고, Robo3T(Robomongo)를 이용하여 local DB에 저장된 데이터를 확인한다.&lt;br /&gt;
+다음에 공부해보고 싶은 내용 : node.js를 이용하여, 서버쪽을 개발해서 직접 deploy해보기.&lt;/p&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;① mongo demo 실행하기&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$mongod
+
+[initandlisten] exception in initAndListen: NonExistentPath: Data directory /data/db not found., terminating
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;터미널에서 mongod를 실행했는데, 위와같이 에러가 발생을 한다면, 해당 /data/db의 위치를 찾지 못하고 있는 것이다. 이런 경우에는 Mongo DB의 Path설정을 설정해주면서 실행해주면 된다.&lt;/p&gt;
+
+&lt;p&gt;우선 원하는 Home 위치에서 ./data/db DB를 저장할 폴더를 만들어준다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$mongod --dbpath=/Users/hyungilee/data/db
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;② API의 소스파일이 있는 폴더로 이동을 해서 로컬에서 호스팅되고 있는 API코드를 mongo DB와 함께 실행시킨다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$npm run dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;③ 다음과 같이 “Database connection ready” 메시지가 나오면 성공적으로 실행이 된 것이고, API에서 처리될 작업 이벤트를 기다리고 있는 것이다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; slacky-slack@1.0.0 dev /Users/hyungilee/AndroidStudioProjects/mac-chat-api
+&amp;gt; NODE_ENV=development nodemon -w src --exec &quot;babel-node src --presets es2015,stage-0&quot;
+
+[nodemon] 1.11.0
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching: /Users/hyungilee/AndroidStudioProjects/mac-chat-api/src/**/*
+[nodemon] starting `babel-node src --presets es2015,stage-0`
+Started on port 3005
+mongodb://localhost:27017/chat-api
+Database connection ready
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://github.com/jekyll/jekyll-help&quot;&gt;Jekyll’s dedicated Help repository&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 05 Apr 2020 01:43:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/05/Kotlin_for_Android/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/05/Kotlin_for_Android/</guid>
+        
+        
+        <category>Android</category>
+        
+      </item>
     
       <item>
         <title>Empty</title>
@@ -71,40 +140,6 @@
         <link>http://localhost:4000/2015/12/27/useful-links/</link>
         <guid isPermaLink="true">http://localhost:4000/2015/12/27/useful-links/</guid>
         
-        
-      </item>
-    
-      <item>
-        <title>hello jekyll!</title>
-        <description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def print_hi(name)
-puts &quot;Hi, #{name}&quot;
-end
-print_hi('Tom')
-#=&amp;gt; prints 'Hi, Tom' to STDOUT.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
-
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def print_hi(name)
-  puts &quot;Hi, #{name}&quot;
-end
-print_hi('Tom')
-#=&amp;gt; prints 'Hi, Tom' to STDOUT.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://github.com/jekyll/jekyll-help&quot;&gt;Jekyll’s dedicated Help repository&lt;/a&gt;.&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 11 Feb 2015 00:14:54 +0900</pubDate>
-        <link>http://localhost:4000/2015/02/11/empty/</link>
-        <guid isPermaLink="true">http://localhost:4000/2015/02/11/empty/</guid>
-        
-        
-        <category>Android</category>
         
       </item>
     
