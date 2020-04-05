@@ -54,7 +54,7 @@ layout: default
       <div class="categories-list-header">
         Categories
       </div>
-      
+
       <a href="javascript:;" class="categories-list-item" cate="All">
         All<span class="my-badge"> {{site.posts | size}}</span>
       </a>
@@ -63,6 +63,19 @@ layout: default
           {{ category | first }} <span class="my-badge">{{ category | last | size }}</span>
         </a>
       {% endfor %}
+    </div>
+    </br>
+    <div class="shadow-corner-curl hidden-xs">
+      <div class="categories-list-header">
+        Lee's coding activity
+      </div>
+      <!--Time-->
+      <p>Hours Coded</p>
+      <figure><embed src="https://wakatime.com/share/@086c3944-5659-46e2-8bba-e82f14a4db5f/02d4d96f-98d5-44a2-a0e2-f941f2e311a2.svg"></embed></figure>
+    </br>
+      <!--Language-->
+      <p>Language</p>
+      <figure><embed src="https://wakatime.com/share/@086c3944-5659-46e2-8bba-e82f14a4db5f/5a152701-3dc9-4b05-a9aa-9c093bc8cb9b.svg"></embed></figure>
     </div>
   </div>
 </div>
