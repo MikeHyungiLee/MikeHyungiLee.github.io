@@ -2,7 +2,7 @@
 layout: frontpage
 ---
 
-## Welcome to my website
+## Welcome Lee Hyungi's Tech Blog
 
-This is the place where I share my ideas on topics like [Paracraft](http://www.paracraft.cn) software design, artificial intelligence and education. 
-Feel free to send me emails or join our team. 
+This blog is the place where I share the things that I've studied about IT with other engineers.  
+Feel free to leave a comment and send me emails. Thanks you!
