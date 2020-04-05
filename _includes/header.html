@@ -23,10 +23,8 @@
           {% else %}
           <li>
         {% endif %}
-        <a href="{{ site.baseurl }}/">Home</a></li>
 
         {% for p in site.pages %}
-         {% if p.title != "Welcome Lee Hyungi's Tech Blog" %}
           {% if p.title %}
             {% if p.url == page.url %}
               <li class="active">
@@ -34,7 +32,6 @@
               <li>
             {% endif %}
               <a href="{{ p.url | prepend: site.baseurl }}"><span class="glyphicon {{ p.icon }}"></span> {{ p.title }}</a></li>
-          {% endif %}
           {% endif %}
         {% endfor %}
       </ul>
