@@ -1,0 +1,17 @@
+I"�<blockquote>
+  <p>MVVM way to structure code<br />
+<strong>MVVM(Model View View-Model)</strong>은 내가 가장 선호하는 architectural design pattern이다.</p>
+  <blockquote>
+    <p><strong>【MVVM 아키텍쳐의 특징】</strong></p>
+    <ol>
+      <li>UI components are kept away from the business logic
+(화면의 각각 UI요소가 비즈니스 로직과 떨어져 있다.)</li>
+      <li>Business logic is kept away from the database operations
+(비즈니스 로직이 데이터베이스를 관리하는 곳으로부터 떨어져있다.)</li>
+      <li>Easy to understand and read
+()</li>
+      <li>A lot less to worry when it comes to managing life cycle events</li>
+    </ol>
+  </blockquote>
+</blockquote>
+:ET

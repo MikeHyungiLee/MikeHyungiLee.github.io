@@ -1,0 +1,30 @@
+I"><blockquote>
+  <p>MVVM way to structure code<br />
+<strong>MVVM(Model View View-Model)</strong>은 내가 가장 선호하는 architectural design pattern이다.</p>
+  <blockquote>
+    <p><strong>【MVVM 아키텍쳐의 특징】</strong></p>
+    <ol>
+      <li>UI components are kept away from the business logic<br />
+(화면의 각각 UI요소가 비즈니스 로직과 떨어져 있다.)</li>
+      <li>Business logic is kept away from the database operations<br />
+(비즈니스 로직이 데이터베이스를 관리하는 곳으로부터 떨어져있다.)</li>
+      <li>Easy to understand and read<br />
+(이해하기 쉽고 가독성이 높다.)</li>
+      <li>A lot less to worry when it comes to managing life cycle events <br />
+(라이프 사이클 이벤트 관리에 관한 한 크게 걱정할 필요가 없다.)</li>
+    </ol>
+  </blockquote>
+</blockquote>
+
+<blockquote>
+  <p>&lt;strong＞Benefits of using MVVM&lt;/strong&gt;</p>
+  <blockquote>
+    <ol>
+      <li>Life cycle state of the app will be maintained<br />
+(앱의 라이프 사이클 상태를 유지한다.)</li>
+      <li>The app will be in the same position the same exact state as when the user left it<br />
+(앱은 사용자가 앱으로 부터 나갔을때, 똑같은, 정확한 위치에 위치하게 된다.)</li>
+    </ol>
+  </blockquote>
+</blockquote>
+:ET

@@ -1,0 +1,17 @@
+I"<h2 id="git관리-">Git관리 <br /></h2>
+<p>Git 초기화<br /></p>
+<blockquote>
+  <p>① Terminal상에서 프로젝트 초기화시키기</p>
+
+  <p>② Android Studio에서 프로젝트 초기화시키기</p>
+
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hyungilee@HYUNGIs-MacBook-Pro AndroidStudioProjects % cd MVVMRecyclerViewJava
+hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git status
+fatal: not a git repository (or any of the parent directories): .git
+hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git init
+Initialized empty Git repository in /Users/hyungilee/AndroidStudioProjects/MVVMRecyclerViewJava/.git/
+hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git status
+On branch master
+</code></pre></div>  </div>
+</blockquote>
+:ET

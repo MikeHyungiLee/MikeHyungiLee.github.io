@@ -1,0 +1,58 @@
+I"�<blockquote>
+  <p>MVVM way to structure code<br />
+<strong>MVVM(Model View View-Model)</strong>은 내가 가장 선호하는 architectural design pattern이다.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Features of MVVM architectural design pattern</strong></p>
+  <blockquote>
+    <ol>
+      <li>UI components are kept away from the business logic<br />
+(화면의 각각 UI요소가 비즈니스 로직과 떨어져 있다.)</li>
+      <li>Business logic is kept away from the database operations<br />
+(비즈니스 로직이 데이터베이스를 관리하는 곳으로부터 떨어져있다.)</li>
+      <li>Easy to understand and read<br />
+(이해하기 쉽고 가독성이 높다.)</li>
+      <li>A lot less to worry when it comes to managing life cycle events <br />
+(라이프 사이클 이벤트 관리에 관한 한 크게 걱정할 필요가 없다.)</li>
+    </ol>
+  </blockquote>
+</blockquote>
+
+<blockquote>
+  <p><strong>Benefits of using MVVM</strong></p>
+  <blockquote>
+    <ol>
+      <li>Life cycle state of the app will be maintained<br />
+(앱의 라이프 사이클 상태를 유지한다.)</li>
+      <li>The app will be in the same position the same exact state as when the user left it<br />
+(앱은 사용자가 앱으로 부터 나갔을때, 똑같은, 정확한 위치에 위치하게 된다.)</li>
+    </ol>
+  </blockquote>
+</blockquote>
+
+<p><strong>Architecture Diagram - outlining an ideal situation when using MVVM</strong></p>
+<table>
+  <tr>
+    <td width="50%">
+      <img src="/images/android/MVVM architecture diagram.png" alt="blog capture" title="capture img" />
+    </td>  
+    <td width="50%">  
+      <b>※ Repository (Data의 Hub와 같은 역할)</b><br />  
+      <b>①</b> 우선적으로 살펴볼 부분은 <font color="Red"><b>Remote Data Source부분</b></font>이다. Retrofit API와 같은 통신API를 이용해서 원격지의 데이터를 취득하여 사용한다.<br />
+      (Remote data source which is being retrieved by Retrofit library)<br />   
+      <b>②</b> 다음으로 살펴볼 부분은 <font color="Red"><b>Model부분</b></font>으로, Room SQLite database를 가지고 있고, 이 부분이 데이터베이스의 Cache된 데이터를 가지게 된다.<br />
+      (Room SQLite database which is acting as a database cache)<br />
+      <br />
+      <b>※ ViewModel (Model for a View)</b><br />
+      <b>③</b> 다음으로 살펴볼 곳은 <font color="Red"><b>ViewModel부분</b></font>이다. 이 부분은 Business logic을 가지고 있는 부분이다. 화면에 보여질 데이터를 필터하는 조건처리(if-else)등을 한다. 예를 들어, Custom RecyclerView를 살펴보면, 각각의 리스트 요소에는 이미지와 타이틀 두가지 요소를 가지고 있는데, 이와 같은 View를 위한 Model을 처리하는 부분이라고 생각하면 된다.<br />
+    </td>
+  </tr>
+
+  <strong>(Example)Project folder structure</strong>  
+  adapters   
+  models   
+  repositories   
+  viewmodels : 일반적으로 models의 Object의 이름을 이용해서 [Object name]+ViewModel로 하기도 하지만, <strong>어떤 Activity에서 사용되는 ViewModel인가를 구분하기 위해서 [Activity name]+ViewModel로 class명을 지정하기도 한다.</strong>
+</table>
+:ET

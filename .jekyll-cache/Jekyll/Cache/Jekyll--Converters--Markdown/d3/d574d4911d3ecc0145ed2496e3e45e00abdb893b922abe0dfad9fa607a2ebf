@@ -1,0 +1,12 @@
+I"L<blockquote>
+  <p>① gem dependencies를 설치한다.</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$bundle update  
+$bundle install
+</code></pre></div></div>
+
+<blockquote>
+  <p>② 아래의 명령어를 실행하여, 로컬로 사이트를 제공한다.</p>
+</blockquote>
+:ET

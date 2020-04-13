@@ -1,0 +1,134 @@
+I"�<p>이번에 포스팅에서는 ListView, RecyclerView, ViewHolder의 개념들에 대해서 공부하면서 간단한 어플을 만들어 볼 것이다.</p>
+
+<h3 id="-model-data-structure"><strong><font color="Blue">① Model (Data structure)</font></strong></h3>
+<p>우선적으로 생각해야되는 부분은 View에 보여줄 data의 구조이다.<br />
+이번에 예시로 만들어 볼 어플에서는 categories와 product 항목이 있다. 따라서 이 항목들을 객체화할 class를 작성할 것이다.<br />
+ex) Category, Product<br />
+위의 View에 보여줄 data객체의 class는 전부 <strong>“models” package</strong>안에 작성을 해줄 것이다.<br /></p>
+
+<h3 id="-controller"><strong><font color="Blue">② Controller</font></strong></h3>
+<p>다음으로 <strong>“controllers” package</strong>를 작성해준다. 이 안에는 기본 생성되는 MainActivity가 위치한다.</p>
+
+<h3 id="-services"><strong><font color="Blue">③ Services</font></strong></h3>
+<p>다음으로 <strong>“services” package</strong>를 작성해준다. 파일을 작성할때는 File type을 Object로 하고, 이름은 DataService로 작성한다.<br />
+안에 작성하게 될 내용은, Google에서 “Kotlin object singleton” 이라고 검색을 해서 작성법에 대해서 이해하고 작성하면 된다. → <a href="https://kotlinlang.org/docs/reference/object-declarations.html">Kotlin object singleton</a> <br /></p>
+
+<p>다음과 같이 각 항목의 List data를 선언해준다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>object DataService {
+
+  val categories =  listOf(
+      Category("SHIRTS", "shirtimage"),
+      Category("HOODIES", "hoodieimage"),
+      Category("HATS", "hatimage"),
+      Category("DIGITAL", "digitalgoodsimage"),
+      ....
+      )
+
+  val hats = listOf(
+      Product("Devslopes Graphic Beanie","$18","hat1"),
+      Product("Devslopes Graphic Black","$20","hat2"),
+      ....
+      )
+
+  val hoodies = listOf(
+      Product("Devslopes Hoodie Gray","$28", "hoodie1"),
+      Product("Devslopes Hoodie Red","$30", "hoodie2"),
+      ....
+      )
+
+  val shirts = listOf(
+      Product("Devslopes Shirt black","$28", "shirt1"),
+      Product("Devslopes Shirt Red","$20", "shirt2"),
+      ....
+      )
+
+  val digitalGood = listOf&lt;Product&gt;()
+
+  fun getProducts(category: String) : List&lt;Product&gt;{
+      return when(category){
+          "SHIRTS"-&gt; return shirts
+          "HATS" -&gt; return hats
+          "HOODIES" -&gt; return hoodies
+          else -&gt; return digitalGood
+        }
+    }
+}
+</code></pre></div></div>
+
+<p>ListView와 Adapter, Data의 관계[?]에 대해서 이해를 해보자. 우선 UI에는 ListView가 추가되어있고, 이 ListView에 표시하고자 하는 데이터가 필요하다. 이 Data는 raw data인데 이를 알맞게 ListView에 formatting해서 표시해주는 역할을 하는 것이 바로 <strong>Adapter</strong>이다.</p>
+
+<p><img src="/images/android/2020-04-08 data, adapter, ListView.png" alt="blog capture" width="500" title="capture img" /><br /></p>
+
+<p>이 Adapter는 Controller Package의 class에 작성해준다.
+자 그럼 이제 Android에서 기본적으로 제공되는 Layout을 활용해서 Adapter를 작성해 볼 것이다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class MainActivity : AppCompatActivity() {
+
+    lateinit var adapter: ArrayAdapter&lt;Category&gt;
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        adapter = ArrayAdapter(this,
+                               android.R.layout.simple_list_item_1,
+                               DataService.categories)
+        // ArrayAdapter([context], [android default layout], [data list object])                       
+        listView.adapter = adapter
+    }  
+}    
+</code></pre></div></div>
+
+<p>이제는 <strong><font color="Red">ListView를 Customize</font></strong>해서 만들어 볼 것이다.<br />
+새로운 레이아웃 파일을 생성한다. layout/category_list_item.xml 생성.</p>
+
+<p>Customized ListAdapter<br />
+① adapters package를 작성하기.  <br />
+② CategoryAdapter class를 작성하고, <strong>BaseAdapter</strong> class를 상속한다.<br />
+③ <strong>getView()</strong> : 가장 큰 mothod, <strong>getItem()</strong> : position parameter를 사용해서 item을 취득하는 것, <strong>getItemId()</strong> : 이 method는 사용되지 않을 것이므로, return 0 처리를 해준다.<br /></p>
+
+<p>※ 우리가 저번시간에 Adapter를 초기했을때, 사용한 각 요소를 확인해보면, context와 layout요소 그리고 각 layout리스트에 초기화 시켜주기 위한 data set이 필요했다.<br /></p>
+
+<p>※ 우리는 이번 custom list view 클래스를 초기화시켜줄때, context와 data set을 parameter로써 선언해서 adapter를 초기화시켜 줄 것이다.</p>
+
+<table>
+  <tr>
+    <td width="500">
+      <img src="/images/android/2020-04-08 custom adapter.png" alt="blog capture" width="500" title="capture img" />
+    </td>
+    <td width="500">
+      <div>
+          override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {<br />
+          <strong>Position</strong> - index path<br />
+          <strong>convertView</strong> - view that is displayed over and over<br />
+          <br />
+      </div>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td width="500">
+      <img src="/images/android/2020-04-08 LayoutInflater.png" alt="blog capture" width="700" title="capture img" />
+    </td>
+    <td width="500">
+      <div>
+        <strong> Inflater is an object that takes in XML layout like we have here in out layouts folder in this category list items and it turns it into an actual view that we can use in code.
+        We have inflated a view that we are calling category view from the XML file called category.
+        </strong>
+      </div>
+    </td>
+  </tr>
+</table>
+
+<blockquote>
+  <blockquote>
+    <p>2020-04-08 LayoutInflater</p>
+  </blockquote>
+</blockquote>
+
+<p>※ 직접 내 GitHub에 Repository추가해서 실습하기 <br />
+내 GitHub Repository 주소 :</p>
+:ET

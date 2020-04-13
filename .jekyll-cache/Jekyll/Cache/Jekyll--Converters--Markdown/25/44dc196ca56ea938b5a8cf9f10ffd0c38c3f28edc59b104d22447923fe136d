@@ -1,0 +1,22 @@
+I"�<p><strong>안드로이드에는 어떤 종류의 테스트가?</strong><br />
+총 세가지의 테스트 종류가 있다.<br />
+① Local Unit Tests<br />
+② Instrumentation Tests<br />
+③ UI Test<br />
+<img src="/images/android/2020-04-10 android test.png" alt="blog capture" width="500" title="capture img" /><br /></p>
+
+<p>우선 <strong>Local Unit Tests<strong>에 대해서 살펴보자</strong></strong></p>
+
+<p>Local Computer
+① Java Virtual Machine(JVM)
+② Very fast (not required to use emulator, run raw java code, sequence of method, logic based test)<br />
+(Local Unit Tests는 별도의 emulator를 사용하지 않고, logic을 베이스로 java코드를 실행해서 하는 테스트이기 때문에 속도가 매우 빠르다)
+③ JUnit5, Mockito<br /></p>
+
+<p>그 다음으로 살펴볼 것은 <strong>Instrumentation Tests</strong>이다.
+① Similar to local unit tests
+   (Local Unit Tests와 매우 유사하지만, 조금 다르다)<br />
+② Test Android functionality (Activity, Fragment, Services Life cycle) 검사 목적의 테스트    <br />
+③ Need a real device or emulator - framework<br />
+④ JUnit4, Mockito</p>
+:ET

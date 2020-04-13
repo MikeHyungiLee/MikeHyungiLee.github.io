@@ -1,0 +1,13 @@
+I"�<h3 id="java와-kotlin-클래스의-차이점">Java와 Kotlin 클래스의 차이점<br /></h3>
+<p>① 코들린 클래스와 Java 클래스의 차이점 중 하나는 코틀린은 ‘Getter, Setter’가 자동 생성된다.<br />
+② 코틀린 클래스에서 ‘var’로 선언한 변수는 getter,setter 전부 생성되고, ‘val’키워드로 선언된 변수는 getter만 선언된다.<br />
+③ 코틀린에서 field변수에 대한 setter method를 customize해서 사용해야 되는 경우가 있는데, 이 경우에는 다음과 같이 <br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var nickName = ""
+    set(value){
+      field = value.toLowerCase()
+    }
+</code></pre></div></div>
+
+<p>위와 같은 문법을 사용하는 이유는 ‘Property의 이름’을 사용하는 경우, 자동으로 Setter, Getter가 호출되기 때문이다. <br /></p>
+:ET

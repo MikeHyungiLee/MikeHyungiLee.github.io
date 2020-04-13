@@ -1,0 +1,6 @@
+I"*<p>실제로 Test case를 작성해가면서, Unit Test를 해 볼 것이다.<br />
+~(test)Package는 안드로이드 기능과 상관없는 ‘Java’ 혹은 ‘Kotlin’코드를 테스트할 수 있다.<br />
+~(androidTest)Package는 안드로이드 환경과 연고나된 코드를 테스트 할 수 있다. - 안드로이드 환경에서 테스트하는 것이기 때문에, 에뮬레이터나 안드로이드 기기가 필요하다.<br /></p>
+
+<p>기본적으로 Unit Test를 테스트하는 곳은 ~(Test)Package에서 작업을 한다.<br /></p>
+:ET

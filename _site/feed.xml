@@ -5,73 +5,37 @@
     <description>Hyungi's Ideas &amp; Blogs</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 06 Apr 2020 00:02:51 +0900</pubDate>
-    <lastBuildDate>Mon, 06 Apr 2020 00:02:51 +0900</lastBuildDate>
+    <pubDate>Mon, 13 Apr 2020 23:28:04 +0900</pubDate>
+    <lastBuildDate>Mon, 13 Apr 2020 23:28:04 +0900</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
-        <title>Mongo DB + Android app</title>
-        <description>&lt;blockquote&gt;
-  &lt;blockquote&gt;
-    &lt;p&gt;&lt;strong&gt;API?&lt;/strong&gt; Application Program Interface &lt;br /&gt;
-&lt;strong&gt;Get/Post/Put?&lt;/strong&gt;&lt;br /&gt;
-기존 데이터베이스를 조작하기 위한 작업으로,API의 문을 두드려서 Request를 보내야 한다. &lt;br /&gt;
-만약 API Request가 매 1, 2초에 하나씩 보낸다면? No! Don’t do that!  &lt;br /&gt;
-&lt;strong&gt;Web Socket?&lt;/strong&gt;&lt;br /&gt;
-Web Socket는 위의 매번 1, 2초에 빈번하게 API 요청이 되는 상황을 위한&lt;font color=&quot;Red&quot;&gt;&lt;strong&gt;&quot;Open door policy free&quot;&lt;/strong&gt;&lt;/font&gt;이다.&lt;/p&gt;
-  &lt;/blockquote&gt;
-&lt;/blockquote&gt;
+        <title>뷰(View), 뷰 그룹(ViewGroup), 레이아웃(Layout)</title>
+        <description>&lt;h3 id=&quot;view와-viewgroup-layout의-개념&quot;&gt;View와 ViewGroup, Layout의 개념&lt;br /&gt;&lt;/h3&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;Heroku API&lt;/strong&gt; : Built-in Mongo DB로 Mongo DB를 좀 더 편리하게 사용할 수 있도록 해준다. &lt;br /&gt;
-&lt;strong&gt;Postman tool&lt;/strong&gt; : URL에 직접 데이터를 송수신하는 것을 담당(Body data)&lt;br /&gt;
-&lt;strong&gt;Mongo DB&lt;/strong&gt; : DB 테이블(Local DB)안에 있는 데이터를 확인&lt;/p&gt;
-  &lt;blockquote&gt;
-    &lt;p&gt;실습내용 : Postman 툴을 이용해서 local DB에 데이터를 전송/등록하고, Robo3T(Robomongo)를 이용하여 local DB에 저장된 데이터를 확인한다.&lt;br /&gt;
-다음에 공부해보고 싶은 내용 : node.js를 이용하여, 서버쪽을 개발해서 직접 deploy해보기.&lt;/p&gt;
-  &lt;/blockquote&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;‘View’란?&lt;br /&gt;&lt;/p&gt;
 
-&lt;hr /&gt;
-&lt;p&gt;① mongo demo 실행하기&lt;/p&gt;
+&lt;p&gt;UI의 구성 요소 중 가장 추상화된 개념으로서, 화면에 표시되는 가장 기본적인 요소를 말한다.&lt;br /&gt;
+ex) 그림, 텍스트, 버튼 등 화면에 표시되는 모든 요소가 View로 간주된다.&lt;br /&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$mongod
+&lt;p&gt;‘ViewGroup이란?’&lt;br /&gt;&lt;/p&gt;
 
-[initandlisten] exception in initAndListen: NonExistentPath: Data directory /data/db not found., terminating
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;ViewGroup은 View를 상속받으면서 특별히 여러 개의 구성 요소들을 포함하는 View이다. ViewGroup은 여러 개의 View들을 자식 뷰(Child View)로 가지면서 View의 위치를 조정하고 그룹화하여 관리할 수 있다. ViewGroup에 포함되어 있는 ‘View’를 가르켜 ‘자식 뷰(Child View)’라고 하고, ViewGroup을 ‘부모 뷰(Parent View)’라고 한다.&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;터미널에서 mongod를 실행했는데, 위와같이 에러가 발생을 한다면, 해당 /data/db의 위치를 찾지 못하고 있는 것이다. 이런 경우에는 Mongo DB의 Path설정을 설정해주면서 실행해주면 된다.&lt;/p&gt;
+&lt;p&gt;ViewGroup은 View를 Group형태로 포함시킬 수 있는 클래스의 추상화된 개념으로, 실제로 사용되는 것이 ViewGroup를 상속받은 ‘Layout’이다.&lt;br /&gt;
+‘Layout’은 포함된 View를 배치할 수 있는 클래스이다.&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;우선 원하는 Home 위치에서 ./data/db DB를 저장할 폴더를 만들어준다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$mongod --dbpath=/Users/hyungilee/data/db
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;② API의 소스파일이 있는 폴더로 이동을 해서 로컬에서 호스팅되고 있는 API코드를 mongo DB와 함께 실행시킨다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$npm run dev
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;③ 다음과 같이 “Database connection ready” 메시지가 나오면 성공적으로 실행이 된 것이고, API에서 처리될 작업 이벤트를 기다리고 있는 것이다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; slacky-slack@1.0.0 dev /Users/hyungilee/AndroidStudioProjects/mac-chat-api
-&amp;gt; NODE_ENV=development nodemon -w src --exec &quot;babel-node src --presets es2015,stage-0&quot;
-
-[nodemon] 1.11.0
-[nodemon] to restart at any time, enter `rs`
-[nodemon] watching: /Users/hyungilee/AndroidStudioProjects/mac-chat-api/src/**/*
-[nodemon] starting `babel-node src --presets es2015,stage-0`
-Started on port 3005
-mongodb://localhost:27017/chat-api
-Database connection ready
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://github.com/jekyll/jekyll-help&quot;&gt;Jekyll’s dedicated Help repository&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;View는 안드로이드의 UI 요소 중 가장 기본이 되는 요소이다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;ViewGroup은 다른 여러 View를 포함시킬 수 있는 특별한 View이다. ViewGroup을 사용하면 View를 그룹화하여 관리할 수 있다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;레이아웃은 ViewGroup의 실제 구현 클래스이며 자식 뷰를 어떻게 배치할지 결정한다. 자주 사용하는 레이아웃에는 LinearLayout, RelativeLayout, ConstraintLayout등이 있다.&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
 
 </description>
-        <pubDate>Sun, 05 Apr 2020 01:43:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/05/Kotlin_for_Android/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/05/Kotlin_for_Android/</guid>
+        <pubDate>Sun, 12 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/12/Android-View,-ViewGroup,-Layout/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/12/Android-View,-ViewGroup,-Layout/</guid>
         
         
         <category>Android</category>
@@ -79,94 +43,1274 @@ Database connection ready
       </item>
     
       <item>
-        <title>Empty</title>
-        <description>&lt;h2 id=&quot;empty&quot;&gt;Empty&lt;/h2&gt;
+        <title>Layout 종류와 개념</title>
+        <description>&lt;h3 id=&quot;linear-레이아웃의-개념과-orientation&quot;&gt;Linear 레이아웃의 개념과 Orientation&lt;br /&gt;&lt;/h3&gt;
 
-&lt;p&gt;Empty post template&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;‘LinearLayout’이란?&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;LinearLayout은 포함된 자식 뷰를 ‘선형’으로 배치시키는 레이아웃이다. 선형으로 배치하기 때문에, ‘가로 혹은 ‘세로’방향 등 두가지 방법으로 배치할 수 있다.&lt;br /&gt;
+LinearLayout의 Orientation 속성값은 ‘none’, ‘horizontal’, ‘vertical’로 선택할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;LinearLayout의 속성&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+① gravity, layout_gravity속성에 대해서 이해해보자.&lt;br /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;속성&lt;/td&gt;
+    &lt;td&gt;설명&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;gravity&lt;/td&gt;
+    &lt;td&gt;객체가 자신의 경계 내에서 X축과 Y축의 내용을 배치하는 방법을 지정한다. 설정한 값은 단일 행이나 열 내의 모든 자식 뷰의 가로 및 세로 정렬에 영향을 준다.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;layout_gravity&lt;/td&gt;
+    &lt;td&gt;View 자신의 위치를 부모 뷰를 기준으로 정렬하는 속성이다. 구성 요소를 셀 그룹에 배치하는 방법을 지정한다. 기본값은 'LEFT | BASELINE'이다.&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br /&gt;
+→ ‘Margin’과 ‘Padding’, 이 두가지 요소는 비슷하면서도 서로 달라 자칫 헷갈리기 쉬우니 여기서 개념을 확실히 잡아 두는 것이 중요하다.&lt;br /&gt;
+‘배치기준(center, left, right)’이 먼저 적용이 되고, 그 적용된 기준선에 대해 ‘margin값’이 적용된다는 것을 알 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Margin과 Padding&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;속성&lt;/td&gt;
+    &lt;td&gt;설명&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;layout_margin(외부 여백)&lt;/td&gt;
+    &lt;td&gt;뷰의 왼쪽, 위쪽, 오른쪽 및 아래쪽에 추가 공간을 지정한다.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;padding(내부 여백)&lt;/td&gt;
+    &lt;td&gt;왼쪽, 위쪽, 오른쪽 및 아래쪽 가장자리의 padding을 픽셀 단위로 설정한다. padding은 view의 가장자리와 view의 내용 사이의 간격을 지정한다.&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br /&gt;
+‘Padding’속성은 Marginㄹ과 달리 View 자기 자신의 영역이 움직이는 것이 아니다. 대신 View가 Drawing하는 내부 컨텐츠가 View 기준선으로부터의 여백을 결정한다.&lt;br /&gt;
+※’Margin’은 View의 기준선에 여백을 설정하여, &lt;strong&gt;View의 영역 자체를 옮기는 것이고,&lt;/strong&gt;Padding은 View의 기준선은 그대로 있지만 &lt;strong&gt;그려야 할 내부 컨텐츠의 영역에 여백을 주는 것&lt;/strong&gt;이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;weight 속성&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+‘weight’속성은 ViewGroup 전체 크기에서 View가 갖는 크기의 비중을 설정하는 속성이다.&lt;br /&gt;
+기존에 알지 못했던 ‘weightSum’속성에 대해서 알아보자.&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;'weightSum'&lt;/font&gt;&lt;/strong&gt;속성은 자신의 비중총합을 설정할 수 있는 속성이다. &lt;br /&gt;
+&lt;strong&gt;※ View가 비율로 지정될 쪽의 사이즈를 ‘0dp’로 지정해야한다.(안드로이드 개발자 레퍼런스)&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;레이아웃 중첩(nested)&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;‘LinearLayout의 중첩’&lt;/strong&gt;이란? LinearLayout 안에 또 LinearLayout 등을 넣는 것을 의미한다. 이렇게 하는 이유는 LinearLayout은 ‘가운데 또는 세로’, 즉 어느 한 방향의 배치 기준만 가질 수 있기 때문이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-12 nested layout.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;500&quot; /&gt;  &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;‘안드로이드의 지원 라이브러리(Support Library)’&lt;/strong&gt;는 프레임워크에는 포함되지 않았지만, 많은 유용한 기능을 포함하고 있다. 안드로이드를 개발할때, 좀 더 편리하게 개발할 수 있도록 도와주는 라이브러리이다. 이런 라이브러리들이 프레임워크가 아닌 별도의 라이브러리가 된 가장 큰 이유는 ‘하위 호환성’때문이다. 하위 버전에서는 새로운 버전에서 생긴 UI요소들을 사용할 수 없기 때문이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;relativelayout-레이아웃의-개념&quot;&gt;RelativeLayout 레이아웃의 개념&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;‘RelativeLayout’이란?&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;‘RelativeLayout’은 View를 ‘부모 뷰’ 또는 ‘다른 View’와의 상대적인 위치 관계 기반으로 배치한다.&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;RelativeLayout의 속성&lt;/font&gt;&lt;/strong&gt;을 크게 보면 &lt;strong&gt;2가지&lt;/strong&gt; 정도로 생각할 수 있는데, 하나는 &lt;strong&gt;부모 뷰를 기준으로 배치하는 것&lt;/strong&gt;이고, &lt;strong&gt;다른 하나&lt;/strong&gt;는 &lt;strong&gt;부모 뷰가 같은 형제 뷰를 기준으로 배치하는 것&lt;/strong&gt;이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※RelativeLayout을 사용할때의 주의점&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+① View객체를 화면이 아닌 [Component Tree]에 Drag&amp;amp;Drop해야한다. 그 이유는 ‘상대적인 배치’ 기준인 ‘RelativeLayout’상태에서 화면으로 직접 끌어 옮기면 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;다른 뷰와의 관계, margin 값이 자동으로 생성되어 버리기 때문&lt;/font&gt;&lt;/strong&gt;이다. 그렇기 때문에 RelativeLayout상태에서는 &lt;strong&gt;XML에 코드를 직접 View의 속성을 정의&lt;/strong&gt;하거나, [Design]탬에서 [Component Tree]에 버튼을 추가한 후 속성을 변경하여 배치하는 것이 좋다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;RelativeLayout에서 View의 배치는 &lt;strong&gt;‘edge’&lt;/strong&gt;를 기준으로 이루어지므로, ‘edge’에 대한 이해가 선행된다면 전체적인 이해 또한 보다 수월해진다.&lt;br /&gt;
+View에서의 ‘edge’는 일종의 ‘기준선’을 의미한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;※기준선 구조 그림&lt;/strong&gt;&lt;br /&gt;
+&lt;img src=&quot;/images/android/2020-04-12 Relativelayout alignment.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;500&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;rtlright-to-left-지원&quot;&gt;&lt;strong&gt;RTL(Right To Left) 지원&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;앞서서 부모 뷰를 기준으로 하여 상대적으로 뷰들을 배치하는 방법에 대해서 배워보았다. 그런데 ‘alignParentStart’와 ‘alignParentEnd’속성은 무엇인가?&lt;br /&gt;
+‘alignParentStart’와 ‘alignParentLeft’는 똑같은 동작을 하는데, 사실 두 속성의 차이는 ‘RTL(Right To Left)보기 지원’과 관련이 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;우선&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;'RTL'&lt;/font&gt;&lt;/strong&gt;이란 무엇일까요? 이는 &lt;strong&gt;화면을 보는 방식&lt;/strong&gt;을 의미한다. 사실 국가마다 조금씩 차이가 있지만, 한국의 경우에는 일반적으로 &lt;strong&gt;LTR(Left To Right)방식&lt;/strong&gt;을 사용한다. 즉 &lt;strong&gt;왼쪽에서 오른쪽으로 화면을 본다는 의미&lt;/strong&gt;이다. &lt;strong&gt;RTL(Right To Left)&lt;/strong&gt;은 거꾸로 &lt;strong&gt;오른쪽에서 왼쪽으로 보는 방식&lt;/strong&gt;이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;형제-뷰-기준-배치&quot;&gt;&lt;strong&gt;형제 뷰 기준 배치&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;이번에 배울 내용은 부모 뷰가 기준이 아닌 &lt;strong&gt;‘형제 뷰를 기준으로 배치하는 방법’&lt;/strong&gt;이다. 형제 뷰란, 같은 뷰를 공유하는 View들을 의미한다.&lt;br /&gt;
+&lt;strong&gt;형제 뷰의 기준선을 일치시키는 방법으로 지정하는 것&lt;/strong&gt;이다.&lt;br /&gt;
+&lt;strong&gt;ex) layout_alignLeft = “@+id/button14”&lt;/strong&gt;라는 명령은 &lt;strong&gt;“자기 자신의 왼쪽 기준선을 ‘button14’의 왼쪽 기준선과 일치시킨다.”&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-13 RelativeLayout(2).png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;700&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 그림 이외에 &lt;strong&gt;‘layout_alignBaseLine’&lt;/strong&gt;이라는 속성이 있다. 이 속성은 다른 속성들과는 다르게  &lt;strong&gt;View의 테두리 기준선이 아닌 컨텐츠의 기준선을 맞춘다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;linearlayout과-relativelayout의-장단점-비교-&quot;&gt;LinearLayout과 RelativeLayout의 장단점 비교 &lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;RelativeLayout은&lt;/strong&gt; LinearLayout에 비해 View의 중첩을 줄일 수 있는 장점이 있다. 앞서 LinearLayout을 배울때, View의 정렬 방향이 바뀌면서  LinearLayout 안에 또 다른 LinearLayout을 넣어야 했지만, &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;'레이아웃의 중첩'은 UI 성능을 떨어뜨리는 주요 원인 중 하나가 된다.&lt;/font&gt;&lt;/strong&gt;그런 면을 볼때 RelativeLayout의 장점을 활용해서 레이아웃을 만들어보는 것도 좋다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※RelativeLayout으로 레이아웃을 작성할때, 주의해야될 점&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+① &lt;strong&gt;‘기준’으로 잡을 View를 찾아야 한다.&lt;/strong&gt;&lt;br /&gt;
+② 레이아웃 편집은 &lt;strong&gt;[Text]탭&lt;/strong&gt;에서 타이핑하여 진행해야 한다. 그 이유는 &lt;strong&gt;RelativeLayout&lt;/strong&gt;은 마우스로 글어 View를 배치할 경우 자동으로 ‘margin 및 관계’가 생성되어 오히려 편집이 어려워지기 때문이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;constraintlayout-레이아웃의-개념&quot;&gt;ConstraintLayout 레이아웃의 개념&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;‘ConstraintLayout’이란?&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;ConstraintLayout은 &lt;strong&gt;RelativeLayout과 LinearLayout을 완전히 대체 가능한 &lt;font color=&quot;Red&quot;&gt;'ConstraintLayout'&lt;/font&gt;에 대해 학습한다.&lt;/strong&gt;‘ConstraintLayout’은 ‘제약조건’을 기반으로 View를 배치하는 레이아웃으로, Android SDK에 기본적으로 포함된 것은 아니지만, Google에서 제공하는 ‘Support 라이브러리’로 제공되며 매우 강력하다.&lt;br /&gt;
+&lt;strong&gt;Google은 레이아웃을 작성할 때 ConstraintLayout을 사용할 것을 권장하고 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;Constraint 레이아웃과 제약&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;ConstraintLayout의 모든 View에는 적어도 하나씩의 ‘수평제약’과 ‘수직 제약’이 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-13 ConstraintLayout(1).png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;400&quot; /&gt;&lt;br /&gt;
+다음과 같이 ‘수평’,’수직에 기준한 제약을 각 각 하나식 등록을 하게 되면, Button의 위치를 결정할 수 있게 된다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;다른-뷰와의-제약-관계&quot;&gt;다른 뷰와의 제약 관계&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;기존에 추가한 버튼에 새로 추가한 버튼을 ‘수평’, ‘수직’Constraint관계로 엮어준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-13 ConstraintLayout(2).png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;400&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;ConstraintLayout의 강력한 기능인 &lt;font color=&quot;Red&quot;&gt;'Bias'&lt;/font&gt;&lt;/strong&gt;에 대해서 알아보자.&lt;br /&gt;
+이 &lt;strong&gt;‘Bias’기능은 수평 또는 수직 방향으로 제약을 2개 추가하게 되면 더는 제약을 지킬 수 없는 상태가 된다. 이 경우 Constraint는 매우 유용한 기능인 ‘Bias’를 사용할 수 있다.&lt;/strong&gt;&lt;br /&gt;
+&lt;img src=&quot;/images/android/2020-04-13 ConstraintLayout(3).png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;600&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 캡쳐를 보면, 아래에 위치한 버튼은 좌측 제약은 좌측 상단에 위치한 버튼과 연결되어 있고, 우측제약은 부모 뷰와 연결이 되어 있는 것을 알 수 있다. 이 경우는 현재 크기로는 양쪽 제약을 모두 지킬 수 없는 상태이다.&lt;br /&gt;
+이렇게 &lt;strong&gt;서로 동시에 성립할 수 없는 제약 상태가 되면, &lt;/strong&gt; ConstraintLayout은 각 제약을 마치 ‘서로 당기는 힘’처럼 사용한다. &lt;br /&gt;
+아래 위치한 버튼의 좌측 제약과 우측 제약이 같은 힘으로 버튼을 당긴다고 생각해보자.&lt;br /&gt;
+이때 ‘Bias(선호도)’는 ‘퍼센테이지’로 표현된다. 기본값은 ‘50’으로 양쪽 제약 가운데에 배치되지만, 그 값을 변경함으로써 뷰의 위치를 퍼센테이지로 결정하게 된다. 즉 제약의 margin을 지키는 범위 내에서 자유롭게 배치할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-13 ConstraintLayout(4).png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;600&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 캡쳐는 ‘Bias(선호도)’를 ‘20’으로 조정한 결과이다. 버튼의 위치가 제약을 지키는 범위 내에서 20% 지점에 위치한 것을 확인할 수 있다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;수평 제약에 대한 Bias 설정을 해봤으니, 수직 제약도 추가하여 수직제약에 대한 Bias도 확인해보자.&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;aspect-ratio&quot;&gt;Aspect Ratio&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;‘ConstraintLayout’의 크기의 기준은 &lt;strong&gt;‘wrap_content, match_constraint, fixed_size’&lt;/strong&gt;등의 3가지 경우가 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;여기서 ‘match_constraint’로 ‘layout_width’나 ‘layout_height’의 속성 중 하나를 지정하게 되면, View의 크기 비율을 지정할 수 있다. &lt;strong&gt;‘aspectRatio(종횡비, 가로와 세로의 비율)’&lt;/strong&gt; 속성이 그것이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;circle-제약&quot;&gt;Circle 제약&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;layout_constraintCircle&lt;/strong&gt;속성은 특정 뷰를 기준으로 View를 원형으로 배치되도록 하는 기능이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td width=&quot;400&quot;&gt;
+      &lt;img src=&quot;/images/android/2020-04-13 Circle Constraint.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;300&quot; /&gt;&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td width=&quot;400&quot;&gt;
+      &lt;img src=&quot;/images/android/2020-04-13 Circle constraint(1).png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;300&quot; /&gt;&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td width=&quot;400&quot;&gt;
+      이 Circle 제약에서는 하단에 위치한 버튼 위에 TextView를 위치시키고, 이 TextView의 위치는 타켓이 되는 뷰의 중점을 기준으로 '각도'와 '떨어진 거리'를 각각 'circleAngle'과 'circleRadius'값들로 설정한다.&lt;br /&gt;
+      이는 화면의 해상도가 바뀌어도 정확한 'angle' 방향에 위치하게 되는 강력한 기능이다.&lt;br /&gt;
+
+      ① layout_constraintCircle &lt;br /&gt;
+      ② layout_constraintCircleAngle &lt;br /&gt;
+      ③ layout_constraintCircleRadius &lt;br /&gt;
+
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;가이드라인guideline&quot;&gt;가이드라인(Guideline)&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;‘Guideline’은 뷰를 더 쉽게 배치할 수 있도록 ‘기준선’을 추가하는 것이다.&lt;/strong&gt;‘수직’과 ‘수평’의 두 가지 종류가 있는데, 우선 ‘vertical guideline’에 대해서 살펴보자.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;‘Component Tree’&lt;/strong&gt;에서 ConstraintLayout을 우클릭하고, [Helpers] - [Add ~ Guideline]&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;가이드라인의 상단부에 타입을 바꿀 수 있는 버튼이 있는데, 이를 클릭하면 &lt;strong&gt;‘begin, end, percent’&lt;/strong&gt;순으로 전환됨을 확인할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 가이드 라인은 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;특히 '퍼센트(비율)'로 배치할 때 매우 유용하다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+예를 들어 특정 버튼이 상단으로부터 ‘80%’, 크기는 ‘10%’, 좌측에서 ‘30%’ 떨어진 곳에 위치한다면, 화면의 사이즈가 바뀌어도 걔속 비율상 같은 ‘크기’와 같은 ‘위치’로 존재하게 된다. 단 constraintGuidePercent 속성을 입력할때는 ‘constraintGuideBegin’, ‘constraintGuideEnd’등 다른 속성은 반드시 지워야 한다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;체인chain&quot;&gt;체인(Chain)&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;‘ConstraintLayout’에서 ‘Chain’은 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;가로축 또는 세로축을 기준으로 여러 개의 View를 그룹처럼 관리하게 해 주는데,&lt;/font&gt;&lt;/strong&gt;별도로 속성이 존재하는 것이 아니라 ‘2개의 뷰가 서로를 참조’하고 있으면 Chain으로 묶인다.&lt;br /&gt;
+이렇게 ‘상호 제약’이 걸린 상태가 바로 ‘체인(Chain)’이다. 여러 개의 View가 체인으로 연결되어 있을 때 그 첫 번째 View를 가르켜 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;'Chain Head'&lt;/font&gt;&lt;/strong&gt;라고 부른다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 ‘Chain Head’를 담당하는 View에는 Chain 스타일을 지정할 수 있는데, 이 Chain Head를 담당하는 뷰에서 지정 가능한 스타일은 아래와 같다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;스타일&lt;/td&gt;
+    &lt;td&gt;설명&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;CHAIN_SPREAD&lt;/td&gt;
+    &lt;td&gt;각 View들이 동일한 간격으로 펼쳐지게 한다.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;CHAIN_SPREAD_INSIDE&lt;/td&gt;
+    &lt;td&gt;CHAIN SPREAD처럼 펼쳐지지만 View의 양끝은 펼치지 않는다. 즉 여백을 두지 않는다.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;CHAIN_PACKED&lt;/td&gt;
+    &lt;td&gt;View 사이에 여백을 두어 펼치지 않고 딱 붙게 한다. CHAIN_PACKED상태에서는 Bias로 'PACKED'된 뷰의 위치를 조정할 수 있다.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;WEIGHTED CHAIN&lt;/td&gt;
+    &lt;td&gt;체인으로 묶인 View의 일부가 'match_constraint'인 경우 '비율'로서 크기를 지정할 수 있다.&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-13 ConstraintLayout chain.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;600&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;※ ConstraintLayout으로 레이아웃 작성하&lt;/strong&gt;&lt;br /&gt;
+① 제약의 중심이 될 가이드라인을 생성하기.&lt;br /&gt;
+② 레이아웃상에 각 View를 위치시키고, 필요에 따라 각 가이드라인에 제약조건을 걸어 각 View요소를 위치시킨다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-13 ConstraintLayout guideline layout.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;300&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;LinearLayout ?&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;레이아웃은 ViewGroup의 실제 구현 클래스이며 자식 뷰를 어떻게 배치할지 결정한다. 자주 사용하는 레이아웃에는 LinearLayout, RelativeLayout, ConstraintLayout등이 있다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;LinearLayout은 가로 또는 세로로 뷰를 순차적으로 배치한다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;LinearLayout의 배치 기준은 gravity, layout_gravity 속성을 이용하여 변경이 가능하다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;gravity 속성은 뷰 자신의 컨텐츠 또는 자식 뷰들의 배치 기준을 변경한다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;layout_gravity 속성은 부모 뷰 안에서 뷰 자신의 배치 기준을 변경한다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;Margin 속성은 뷰가 부모 뷰로부터 떨어진 여백을 설정한다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;Padding 속성은 자신의 컨텐츠 또는 자식 뷰들이 떨어지는 영역을 설정한다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;LinearLayout의 weight 속성을 사용하면, View의 크기를 비율로 설정할 수 있다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;LinearLayout에서 여러 개의 뷰 중 한 개만 weight 속성을 설정하면, weight를 설정하지 않은 다른 뷰가 그려지고 남은 영역의 전부를 차지하게 된다. &lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;LinearLayout에서 정렬 기준(Orientation)이 다양한 UI를 만들려면 레이아웃을 중첩해서 사용해야 한다.&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;RelativeLayout ?&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;RelativeLayout은 ‘부모 뷰’또는 ‘형제 뷰’와의 관계를 지정하여 View를 배치한다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;RelativeLayout의 ‘align관련 속성은 자신의 기준선과 부모 뷰, 형제 뷰의 기준선을 맞추는 것이다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;RTL(Right To Left)지원이란 국가마다 다른 ‘보기 방식의 지원’을 의미한다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;RTL 지원을 적용하려면 left대신 start, right대신 end를 사용하는 것이 좋다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;RelativeLayout을 사용하면 상대적인 관계지정이 되기 때문에 레이아웃 중첩을 줄일 수 있다.&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;ConstraintLayout ?&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;ConstraintLayout은 레이아웃 편집창에서 사용하는 미리보기만을 위한 속성이 있다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;ConstraintLayout은 뷰의 위치를 결정하기 위해 제약 조건을 사용한다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;각 뷰는 상/하/좌/우 제약을 의미하는 ‘constraintTop, constraintBottom, constraintLeft, constraintRight’ 속성이 있다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;수평 제약과 수직 제약 각각 1개 이상의 제약이 있어야 View의 위치를 결정&lt;strong&gt;할 수 있다.&lt;br /&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;각 뷰의 상/하/좌/우 제약을 다른 뷰 또는 부모 뷰의 면과 연결하면 제약이 지정된다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;제약조건은 마치 RelativeLayout의 관걔와 비슷하며, 제약 조건 이후 여백(margin)을 설정할 수 있다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;제약 조건이 수평/ 수직에 대하여 양방향으로 설정된 경우, 두 제약을 동시에 지킬 수 없는 상태가 되는데, 이때 ConstraintLayout은 선호도(Bias)값을 설정하여, 제약을 지키는 범위 내에서 뷰를 퍼센티지로 배치할 수 있다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;Circle 제약은 뷰를 원형으로 배치할 수 있게 하는 강력한 기능이다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;ConstraintLayout은 뷰를 쉽게 배치할 수 있도록 돕는 가이드라인을 제공한다. 가이드라인 역시 View로 취급되며, 방향과 여백으로 위치를 지정하거나 퍼센트로 위치를 지정할 수 있다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;뷰의 제약이 서로를 참조하고 있는 형태를 Chain이라고 한다. 이 Chain을 활용하면, 별도의 레이아웃 없이 View를 그룹화하여 관리할 수 있다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;ConstraintLayout은 뷰의 중첩을 줄일 수 있어 UI 성능 향상에 유리하다.&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
 </description>
-        <pubDate>Sat, 04 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/04/empty/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/04/empty/</guid>
+        <pubDate>Sun, 12 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/12/Android-Layout-conception/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/12/Android-Layout-conception/</guid>
         
         
-        <category>diary</category>
+        <category>Android</category>
         
       </item>
     
       <item>
-        <title>Empty Template</title>
-        <description>&lt;h2 id=&quot;empty-diary-template&quot;&gt;Empty diary template&lt;/h2&gt;
+        <title>Activity, 명시적 Intent(Explicit Intent), 암시적 Intent(Implicit Intent)</title>
+        <description>&lt;p&gt;이번 포스팅에서는 안드로이드의 기초적인 부분을 정리할 것이다. 이는 나중에 안드로이드를 모르는 사람에게 기초적인 부분을 좀 더 잘 설명할 수 있기 위함이다.&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;Empty post template&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Activity?&lt;/font&gt;&lt;/strong&gt;
+사용자와 상호 작용이 가능한 UI, 즉 ‘활성화된 상태의 화면’을 말한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Activity는 단일 화면이기 때문에, 각각의 독립된 단일 화면으로 나타낸 화면설계도(스토리 보드)의 화면은 각각의 Activity로 구성한다.&lt;br /&gt;
+비슷한 구성이거나 약간 다른 Activity같은 경우는 Activity를 통합하고 조건에 따라서 화면의 요소만 바꿔주면 된다.&lt;br /&gt;
+사전에 스토리 보드를 사용하여, 화면 설계를 하게 되면, 서로 비슷한 작업들을 사전에 파악하여 작업량을 줄이는 것이 가능하다. (화면설계의 중요성)&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;여러 개의 화면을 Activity로 구성했을 때 화면 전환을 위해 사용하는 것이 바로 ‘Intent’이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Intent?&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+Intent는 안드로이드에서 앱 구성 요소 간의 작업을 요청할 수 있는 메시지 객체이다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;Intent의 기본적인 용례&lt;br /&gt;&lt;/p&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td width=&quot;300&quot;&gt;사례&lt;/td&gt;
+    &lt;td width=&quot;700&quot;&gt;설명&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;액티비티 시작&lt;/td&gt;
+    &lt;td&gt;Activity는 사용자와 상호 작용이 가능한 단일 화면이다. Activity의 새 인스턴스를 시작하기 위해 startActivity()메소드를 사용하여 Intent를 전달할 수 있습니다. 호출한 Activity가 완료되었을 때 결과를 수신하기 위해서는 startActivityForResult를 사용한다.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;서비스 시작&lt;/td&gt;
+    &lt;td&gt;Service는 UI없이 Background에서 작업을 수행하는 요소이다. Service를 시작하기 위해서는 startService()메소드를 사용하여 Intent를 전달한다. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;브로드캐스트(broadcast)전달&lt;/td&gt;
+    &lt;td&gt;브로드캐스트는 모든 앱이 수신할 수 있는 메세지로, sendBroadCast(), sendBroadCastOrder(), sendStickyBroadcast 메소드에 Intent를 전달하여 BroadCast를 전달할 수 있다.&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td width=&quot;200&quot;&gt;Click 이벤트 리스너 등록방법&lt;/td&gt;
+    &lt;td width=&quot;400&quot;&gt;장점&lt;/td&gt;
+    &lt;td width=&quot;400&quot;&gt;단점&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;XML onClick&lt;/td&gt;
+    &lt;td&gt;레이아웃 XML 파일에서 View 객체들의 ID를 신경쓰지 않아도 된다. 심지어 ID가 없어도 된다.&lt;/td&gt;
+    &lt;td&gt;메소드가 없거나, 이름이 틀리거나, 파라미터 형태가 다르면 에러가 발생하고, 앱이 동료된다. 이러한 에러는 보통 Runtime(실행)중에 발견된다.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;View.setOnClickListener&lt;/td&gt;
+    &lt;td&gt;에러 발생을 컴파일 시에 미리 알 수 있다. Kotlin의 경우 Android Extension 기능으로 findViewById()가 필요 없어 소스가 간결하다.&lt;/td&gt;
+    &lt;td&gt;View 객체의 ID에 민감하다. 반드시 해당 View의 ID가 존재해야 하며, 레이아웃 구성이 복잡한 경우라면 View 객체들의 ID를 전부 이름 짓기 곤란한 경우가 있다.&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br /&gt;
+하지만, 코틀린 코드에서는 setOnClickListener를 사용하는 방법을 활용하는 것이 좋다. 실행과정에서 에러를 발견하는 것보다는 사전에 에러를 발견하는 것이 메리트가 크다고 판단된다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;인텐트-유형-및-구성요소-&quot;&gt;인텐트 유형 및 구성요소 &lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;Intent는 ‘기본 구성 요소 간의 통신을 위한 메세지 객체’이다. Activity를 시작하기 위해서 Intent를 사용하는 방법은 크게 2가지 유형이 있다. 그 2가지 유형을 ‘명시적 호출’과 ‘암시적 호출’이라고 부른다.&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;명시적 호출(Intent) : &lt;/font&gt;&lt;/strong&gt;시작할 기본 구성 요소(Activity, Service)등의 ‘이름’을 정확하게 알고 있을 때 사용한다. 여기서 ‘이름’이란 패키지명까지 포함한 완벽한 이름을 말한다. 명시적 인텐트는 보통 앱 자신의 구성요소를 호출할 때 사용한다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;ex) Intent(Package Context, 타겟이 되는 구성요소의 Class)&lt;br /&gt;
+&lt;strong&gt;Context란?&lt;/strong&gt;&lt;br /&gt;
+애플리케이션이 가지고 있는 ‘환경 정보’에 대한 인터페이스로서, 이때의 ‘환경정보’란 애플리케이션의 패키지 이름, 리소스 정보 등 애플리케이션이 실행되고 있는 환경의 요소들을 일컫는다. &lt;br /&gt;
+Activity는 Context를 상속받기 때문에, 특정 Context 대신에 ‘자기자신’을 전달한다. 그러므로, 현재 실행되는 Activity의 애플리케이션 환경정보가 전달된다.&lt;br /&gt;&lt;/p&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td width=&quot;300&quot;&gt;구성요소&lt;/td&gt;
+    &lt;td width=&quot;700&quot;&gt;설명&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Component name&lt;/td&gt;
+    &lt;td&gt;Component name은 실행하고자 하는 기본 구성요소의 명확한 이름이며, Intent가 명시인지, 암시인지 구분하는 요소가 된다.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Action&lt;/td&gt;
+    &lt;td&gt;
+      Action은 수행할 작업을 의미한다. &lt;br /&gt;
+      'ACTION_VIEW'와 같은 작업은 Activity가 사용자에게 특정 화면을 보여주도록 요청한다. 따라서 ACTION_VIEW 액션은 갤러리 앱의 특정 사진을 보여줄 경우 등에도 사용된다.
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Data&lt;/td&gt;
+    &lt;td&gt;Data는 Action에 따라 필요한 Data를 함께 보낼 때 사용한다. 예를 들어 갤러리에서 특정 사진을 편집해야 하는 경우 Data에 사진 정보에 대한 데이터를 같이 보낼 수 있다.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Category&lt;/td&gt;
+    &lt;td&gt;Category는 인텐트를 처리하는 구성 요소에 대한 '분류'를 의미한다. 예를 들어 'CATEGORY_LAUNCHER'는 이 Activity가 런처에서 보여지고 앱이 시작될 때 사용되는 화면임을 의미하는 정보이다.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Extras&lt;/td&gt;
+    &lt;td&gt;작업을 수행하기 위해 필요한 추가 정보이다. 보통은 Key, Value 타입의 정보를 전달하며, Bundle 객체로 전달할 수 있다.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Flags&lt;/td&gt;
+    &lt;td&gt;Intent에 대한 Meta정보이다. 특정 구성 요소를 실행할 때 추가 정보로 활용될 수 있다. 예를 들어 Activity를 실행할 때 현재가지 실행된 모든  Activity를 실행할 때 현재까지 실행된 모든 Activity 스택을 초기화하고 실행하는 등의 작업을 할 수 있다.&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;암시적 호출 : &lt;/font&gt;&lt;/strong&gt;시작하는 구성요소(Activity, Service)의 이름을 명확하게 적지는 않지만, 일반적인 작업 유형을 선언하여 그 작업을 수행할 수 있는 구성 요소를 호출한다.&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;예를 들어&lt;/font&gt;&lt;/strong&gt; &lt;strong&gt;작성하고 있는 앱에서 위치를 지도에서 표시하고 싶은 경우,&lt;/strong&gt;이 경우 직접 구현하는 것도 방법이지만, 이미 사용자의 핸드폰에 설치된 ‘지도 애플리케이션’을 사용할 수도 있다. 사용자의 핸드폰에 이미 설치된 지도 애플리케이션이 &lt;strong&gt;‘구글 지도’&lt;/strong&gt; 일수도, &lt;strong&gt;‘네이버 지도’&lt;/strong&gt;일수도 있으며, 또는 그 구성요소의 명확한 이름을 알 수 없는 경우도 있다. &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;바로 이러한 경우에 '암시적 인텐트'를 사용한다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;Intent는 구성 요소 간의 작업을 요청할 수 있는 메시지 객체이다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;Intent의 유형에는 명시적, 암시적 유형이 있다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;같은 애플리케이션 내에서 화면 전환을 위해서는 명시적 Intent를 생성하고, startActivity()함수를 사용한다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;암시적 Intent는 Component Name은 없고, 대신 작업 유형을 나타내는 Action을 지정한다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
 </description>
-        <pubDate>Mon, 28 Dec 2015 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2015/12/28/empty-template/</link>
-        <guid isPermaLink="true">http://localhost:4000/2015/12/28/empty-template/</guid>
+        <pubDate>Sun, 12 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/12/Android-Basic/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/12/Android-Basic/</guid>
         
         
-        <category>paracraft</category>
+        <category>Android</category>
         
       </item>
     
       <item>
-        <title>Empty Template</title>
-        <description>&lt;h2 id=&quot;empty-npl-tutorial-template&quot;&gt;Empty npl tutorial template&lt;/h2&gt;
+        <title>Android Unit Testing</title>
+        <description>&lt;p&gt;실제로 Test case를 작성해가면서, Unit Test를 해 볼 것이다.&lt;br /&gt;
+~(test)Package는 안드로이드 기능과 상관없는 ‘Java’ 혹은 ‘Kotlin’코드를 테스트할 수 있다.&lt;br /&gt;
+~(androidTest)Package는 안드로이드 환경과 연고나된 코드를 테스트 할 수 있다. - 안드로이드 환경에서 테스트하는 것이기 때문에, 에뮬레이터나 안드로이드 기기가 필요하다.&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;Empty post template&lt;/p&gt;
+&lt;p&gt;기본적으로 Unit Test를 테스트하는 곳은 ~(Test)Package에서 작업을 한다.&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;'단위(Unit)테스트'는&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;① 보통 위 경우와 같이 예측과 실제 결과를 비교합니다. 과학 실험과 비슷하게 ‘가설’을 세우고, ‘각종 변인들을 통제’한다.이후에 실험의 결과가 가설의 예측 결과와 동일한지 확인을 한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;② 복잡한 소프트웨어를 작은 모듈로 분리하여, 코드가 정상적으로 동작하는지 확인한다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;③ 테스트를 빠르게 수행할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;※ 하지만, “필요한 경우에 단위 테스트를 하되, 모든 기능에 대한 단위 테스트를 반드시 해야할 필요는 없다.” 그 이유는 종종 단위테스트에 너무 신경을 쓴 나머지, 프로그램이 구현해야 하는 중요한 비즈니스 로직보다 테스트를 위해서만 존재하는 코드들을 위해 많은 시간을 투자해야 되는 경우도 있기 때문이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;테스트-방법론test-driven-development--tdd-&quot;&gt;&lt;strong&gt;테스트 방법론&lt;/strong&gt;(Test-Driven Development : &lt;strong&gt;TDD&lt;/strong&gt;) &lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;‘테스트 주도 개발’ 등 테스트 방법론에서는 실제 로직에 해당하는 코드를 작성하기 전에 테스트 코드부터 만들 것을 권장한다.&lt;br /&gt;
+가령 테스트 주도 개발에서는 먼저 테스트를 만드고 실패한 뒤, &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;먼저 작성한 테스트 코드를 통과 가능한 코드로 만드는 방식으로 개발을 진행&lt;/font&gt;&lt;/strong&gt;한다. &lt;br /&gt;
+이 방법은 저번 운용보수 겐바에서 뉴스 어플의 batch처리를 수정하는 현장에서 일을 했을때, 단위테스트를 하면서 에러가 발생한 조건이 있다면, 이 조건에러없이 통과 가능하도록 기존의 코드를 수정하는 방식으로 진행했었는데, 이 방식이 바로 TDD(Test-Driven Development)방식이다.&lt;br /&gt;&lt;/p&gt;
 </description>
-        <pubDate>Mon, 28 Dec 2015 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2015/12/28/empty-template/</link>
-        <guid isPermaLink="true">http://localhost:4000/2015/12/28/empty-template/</guid>
+        <pubDate>Thu, 09 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/09/Unit-Testing-in-Android/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/09/Unit-Testing-in-Android/</guid>
         
         
-        <category>npl</category>
+        <category>Android</category>
         
       </item>
     
       <item>
-        <title>useful links</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#paracraft&quot; id=&quot;markdown-toc-paracraft&quot;&gt;ParaCraft&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#npl&quot; id=&quot;markdown-toc-npl&quot;&gt;NPL&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+        <title>Tests in Android</title>
+        <description>&lt;p&gt;&lt;strong&gt;안드로이드에는 어떤 종류의 테스트가?&lt;/strong&gt;&lt;br /&gt;
+총 세가지의 테스트 종류가 있다.&lt;br /&gt;
+① Local Unit Tests&lt;br /&gt;
+② Instrumentation Tests&lt;br /&gt;
+③ UI Test&lt;br /&gt;
+&lt;img src=&quot;/images/android/2020-04-10 android test.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;paracraft&quot;&gt;ParaCraft&lt;/h3&gt;
-&lt;p&gt;http://www.paracraft.cn&lt;/p&gt;
+&lt;p&gt;우선 &lt;strong&gt;Local Unit Tests&lt;strong&gt;에 대해서 살펴보자&lt;br /&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;npl&quot;&gt;NPL&lt;/h3&gt;
-&lt;p&gt;http://www.nplproject.com&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;①Local Computer&lt;br /&gt;
+② Java Virtual Machine(JVM)&lt;br /&gt;
+③ Very fast (not required to use emulator, run raw java code, sequence of method, logic based test)&lt;br /&gt;&lt;br /&gt;
+(Local Unit Tests는 별도의 emulator를 사용하지 않고, logic을 베이스로 java코드를 실행해서 하는 테스트이기 때문에 속도가 매우 빠르다)&lt;br /&gt;
+④ JUnit5, Mockito&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;그 다음으로 살펴볼 것은 &lt;strong&gt;Instrumentation Tests&lt;/strong&gt;이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;① Similar to local unit tests(Local Unit Tests와 매우 유사하지만, 조금 다르다)&lt;br /&gt;
+② Test Android functionality (Activity, Fragment, Services Life cycle) 검사 목적의 테스트&lt;br /&gt;
+③ Need a real device or emulator - framework&lt;br /&gt;
+④ JUnit4, Mockito&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;마지막으로 살펴볼 테스트는 &lt;strong&gt;UI테스트&lt;/strong&gt;이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;① Simulate a person using your app&lt;br /&gt;
+② Literally uses widgets&lt;br /&gt;
+  (Pressing a button, entering a text)&lt;br /&gt;
+③ Real device or emulator&lt;br /&gt;
+④ Expresso Library&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;
+      &lt;img src=&quot;/images/android/2020-04-10 Android Test folder.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+      안드로이드 스튜디오에서 Project view로 전환하면 좌측의 폴더구조와 같이 androidTest, main, test폴더를 볼 수 있다.&lt;br /&gt;
+      우선 첫번째 androidTest 폴더의 경우, Instrumentation Tests와 UI 테스트를 하는 곳으로, Mockito, JUnit과 Expresso 라이브러리를 사용한다. &lt;br /&gt;
+      두번째 test폴더의 경우, Local Unit Tests를 하는 곳으로, Mockito와 JUnit 라이브러리를 사용한다.
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h2 id=&quot;professional-unit-tests&quot;&gt;Professional Unit Tests!&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;새로운 Java component&lt;br /&gt;
+① ViewModels&lt;br /&gt;
+② Room Persistence&lt;br /&gt;
+③ Repository(MVVM)&lt;br /&gt;
+④ ‘Local’ Unit Testing&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;JUnit5 - 새로운 Junit 라이브러리&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;JUnit4 - 일부 라이브러리와 호환이 되지 않는 경우가 있다.&lt;/p&gt;
+
+&lt;p&gt;Mockito - Third part library이지만 대부분의 회사에서 사용되고 있는 라이브러리이다.&lt;br /&gt;
+Fake class! Mocks of objects (Fake objects) - Network request test, MVVM request, Repository server HTTP request, &lt;br /&gt;
+mock the class and certain 조건에 따른 데이터 처리 테스트를 해볼 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Testing with AndroidX&lt;/strong&gt;&lt;br /&gt;
+① Room Database&lt;br /&gt;
+② Room DAO&lt;br /&gt;
+③ ApplicationProvider&lt;br /&gt;
+④ Instant TaskExecutorRule&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Test-driven Development(TDD)&lt;/strong&gt;&lt;br /&gt;
+① Implement feature&lt;br /&gt;
+② Unit test feature&lt;br /&gt;
+③ Implement feature&lt;br /&gt;
+④ Unit test feature&lt;br /&gt;
+⑤ Repeat…&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;local-unit-tests&quot;&gt;Local Unit Tests&lt;/h2&gt;
 </description>
-        <pubDate>Sun, 27 Dec 2015 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2015/12/27/useful-links/</link>
-        <guid isPermaLink="true">http://localhost:4000/2015/12/27/useful-links/</guid>
+        <pubDate>Thu, 09 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/09/Tests-in-Android/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/09/Tests-in-Android/</guid>
         
+        
+        <category>Android</category>
         
       </item>
     
       <item>
-        <title>hello jekyll!</title>
-        <description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+        <title>Java and Kotlin</title>
+        <description>&lt;h3 id=&quot;java와-kotlin-클래스의-차이점&quot;&gt;Java와 Kotlin 클래스의 차이점&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;① 코들린 클래스와 Java 클래스의 차이점 중 하나는 코틀린은 ‘Getter, Setter’가 자동 생성된다.&lt;br /&gt;
+② 코틀린 클래스에서 ‘var’로 선언한 변수는 getter,setter 전부 생성되고, ‘val’키워드로 선언된 변수는 getter만 선언된다.&lt;br /&gt;
+③ 코틀린에서 field변수에 대한 setter method를 customize해서 사용해야 되는 경우가 있는데, 이 경우에는 다음과 같이 &lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
-
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def print_hi(name)
-  puts &quot;Hi, #{name}&quot;
-end
-print_hi('Tom')
-#=&amp;gt; prints 'Hi, Tom' to STDOUT.
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var nickName = &quot;&quot;
+    set(value){
+      field = value.toLowerCase()
+    }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://github.com/jekyll/jekyll-help&quot;&gt;Jekyll’s dedicated Help repository&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;위와 같은 문법을 사용하는 이유는 ‘Property의 이름’을 사용하는 경우, 자동으로 Setter, Getter가 호출되기 때문이다. &lt;br /&gt;
+접근자(Getter, Setter)에서 field키워드로 사용되는 개념을 ‘Property를 뒷받침하는 field’라는 의미의 ‘Backing Field’라 불린다.&lt;br /&gt;
+Kotlin에서는 field를 사용하지 않기 때문에 이렇게 field키워드를 사용해서 접근한다.&lt;/p&gt;
 
+&lt;p&gt;Property의 위임은 코틀린이 객체의 Property를 더욱 유연하게 활용할 수 있도록 지원하는 기능 &lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;property와-field의-차이점-&quot;&gt;Property와 Field의 차이점 &lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;코틀린은 기본적으로 Field를 사용하지 않는다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Field는 클래스에 선언되어 있는, ‘클래스 변수’가 아닌 ‘인스턴스 변수’를 의미한다.&lt;br /&gt;
+필드는 외부에서 접근할 수 있는 Getter, Setter 메소드가 반드시 존재할 필요가 없다.따라서 Getter, Setter는 있건 없건 상관없다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;클래스의 인스턴스 변수들을 모두 Field라고 부릅니다. Getter, Setter가 있든 없든, 혹은 접근 제어자가 무엇이든 Field이다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;반면, Property는 조금 다르다!&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+① Field가 선언되어 있고 Getter, Setter가 있는 경우 Property이다.&lt;br /&gt;
+② Getter만 선언되어 있어서, 변수의 값을 읽을수만 있는 경우도 Property이다.&lt;br /&gt;
+③ 단순 Field는 Property가 아니다. &lt;strong&gt;ex) private int notProperty1 = 0;&lt;/strong&gt;&lt;br /&gt;
+④ 클래스 변수 역시 Property가 아니다. &lt;strong&gt;ex) private static int notProperty2;&lt;/strong&gt; &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;※ Property는 Field와 외부에서 접근 가능한 Getter 또는 Setter가 있는 경우이다. 더 정확히 말하면 Property는 Field와 접근 가능한 Getter, Setter의 조합을 의미한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;코틀린은 기본적으로 클래스의 상속을 불가능하다. &lt;br /&gt;
+이렇게 만든 이유는 Java분야의 유명서적 ‘Effective Java’에서는 상속에 대하여 ‘상속을 위한 설계와 문서를 갖추거나, 그렇지 않은 경우 상속을 금지하라’라고 조언한다. &lt;br /&gt;
+캡슐화의 주요 목적 중 하나는 클래스를 사용하는 측면에서 해당 클래스의 구체적인 사항을 모르게 하는 것입니다. 하지만, 구체적인 구현 클래스를 알고 있는 상태에서 구현해야하는 상황이 발생한다면, 이는 “캡슐화가 깨졌다”라고 볼 수 있다.&lt;br /&gt;
+Kotlin에서 상속을 허용하려면, ‘open’키워드를 사용해야 한다.&lt;br /&gt;
+코틀린에서 클래스의 메소드는 기본적으로 ‘final’상태이기 때문에, 클래스뿐만 아니라 메소드 역시 open처리를 해야 override할 수 있다!&lt;br /&gt;
+Override하는 함수에 대해서는 반드시 ‘override’키워드를 사용해야만 한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;위임--코틀린에서-상속의-단점을-줄이고-코드를-재사용할-수-있다&quot;&gt;‘위임’ : 코틀린에서 상속의 단점을 줄이고 코드를 재사용할 수 있다.&lt;br /&gt;&lt;/h1&gt;
+&lt;h3 id=&quot;클래스와-프로퍼티의-위임&quot;&gt;클래스와 프로퍼티의 위임&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;객체 지향에서 위임이란?&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+클래스의 특정 기능들을 대신 처리해 주는 것을 말한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;클래스를 상속하지 않고 기존 클래스의 일부 메소드를 변경하거나 새로운 기능을 확장하는 방법은 ‘위임’이다. &lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;위임을 사용하는 대표적인 패턴에는 &lt;font color=&quot;Red&quot;&gt;데코레이터(Decorator)패턴&lt;/font&gt;이 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;'데코레이터 패턴'&lt;/font&gt;&lt;/strong&gt;은 그 이름처럼 특정 클래스의 기능에 추가 기능을 덧붙이는 방법이다.&lt;br /&gt;
+&lt;strong&gt;‘기존에 설계된 객체에서 책임을 전달하는 것’&lt;/strong&gt;이 ‘위임’입니다. 확장 기능은 자신이 실행하고, 기존의 기능은 그대로 기존 객체의 메소드에 전달하는 방식이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;데코레이터 패턴은 이런 위임을 활용한 패턴 중 하나로, 보통 기존 기능에 추가 기능을 덧붙이는 패턴이다. 데코레이터 패턴을 활용하면 기존 클래스를 상속받지 않은 상태로 새로운 추가 기능을 덧붙이거나 확장할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;문제는 이런 Decorator 패턴의 경우, 단순한 경우에도 코드가 상당히 길어진다는 것이다. 인터페이스에 포함된 메소드가 많다면 코드가 매우 길어진다. 그 이유는 일단은 인터페이스의 모든 메소드를 구현해야 한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;코틀린은 클래스 위임을 언어 차원에서 제공하기 때문에, 훨씬 간결하게 표현할 수 있다.&lt;br /&gt;
+&lt;strong&gt;ex)&lt;/strong&gt; ‘by’ 명령어를 이용해서 인터페이스의 기능을 위임&lt;br /&gt;
+class DelegatingArrayList&lt;T&gt;(private val innerList: MutableCollection&lt;T&gt; = mutableListOf()) : MutableCollection&lt;T&gt; by innerList&lt;br /&gt;&lt;/T&gt;&lt;/T&gt;&lt;/T&gt;&lt;/p&gt;
+
+&lt;p&gt;→ 위의 코틀린 코드는 ‘innerList’라는 ArrayList타입의 Property가 있고, ‘Collection’인터페이스를 상속받고, &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;Collection 인터페이스의 기능을 'innerList'에 위임&lt;/font&gt;&lt;/strong&gt;하겠다”는 의미이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;프로퍼티 위임이란?&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+코틀린에서는 ‘클래스’뿐만 아니라 ‘프로퍼티’에 대해서도 ‘위임’을 제공한다. 코틀린의 ‘프로퍼티 위임’은 Getter, Setter 연산자를 위임할 수 있게 해준다.&lt;br /&gt;
+방법으로는 아래 세 가지 방법이 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;① Lazy 위임 : 프로퍼티의 초기화를 인스턴스 생성 시점이 아니라 프로퍼티를 사용하는 시점에 초기화하는 것 &lt;br /&gt;
+  &lt;strong&gt;→ 인스턴스 생성 시점에 모든 초기화를 진행한다면 전체적인 성능이 매우 저하된다. 그래서 일단은 초기화를 하지 않고 사용하다가 실제로 사용하는 시점에 초기화를 하는 것을 ‘게으른 초기화(lazy initialization)’라 하며, 프로그래밍에서 자주 사용되는 패턴 중 하나이다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;※ lateinit과 lazy는 게으른 초기화를 위해 사용한다는 측면에서 동일하지만, 그 외 특징은 꽤 다르다. &lt;br /&gt;
+  (1) lateinit은 lazy처럼 위임이 아닌 변수의 &lt;strong&gt;변경자(modifier)&lt;/strong&gt;로 사용한다. &lt;br /&gt;
+  변경자(modifier)란? 변수의 성질을 변경하는 것인데, ‘private, public, static, final’등도 모두 변경자이다. lateinit은 나중에 변수가 초기화될 것임을 표시하는 것이다. &lt;strong&gt;“이 프로퍼티는 이후 초기화되어 null이 아닐 것이 확실하니, 사용할때 null을 신경쓰지 않고 사용하겠다” 라고 컴파일러에게 알려주는 것이다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;② &lt;strong&gt;Observable 위임&lt;/strong&gt; : 주로 관찰하고자 하는 대상에 변경 사항이 생길 때, 변경된 사실을 관측자에게 알려주는 것이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;③ &lt;strong&gt;프로퍼티를 Map 객체에 위임&lt;/strong&gt; : 특정 Key에 해당하는 Value를 저장&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;singleton-패턴-및-object-클래스&quot;&gt;Singleton 패턴 및 Object 클래스&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;Singleton 패턴 : 한 개의 인스턴스 생성을 보장하고, 코드 어디에서나 접근 가능하게 하는 것이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td width=&quot;500&quot;&gt;
+      &lt;b&gt;자바에서의 Singleton class&lt;/b&gt;
+    &lt;/td&gt;
+    &lt;td width=&quot;500&quot;&gt;
+      &lt;b&gt;코틀린에서의 Singleton class&lt;/b&gt;&lt;br /&gt;
+      어차피 싱글턴 패턴은 거의 뻔한 코드를 사용하는 것이므로, 그냥 키워드로 제공한다. 단순히 object 키워드를 사용하는 것만으로 Java에서 꽤 복잡하게 작성한 코드들을 생략가능하다.
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;
+      &lt;img src=&quot;/images/android/2020-04-11 SingletonJava.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+      &lt;img src=&quot;/images/android/2020-04-11 Singleton Kotlin.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;data-클래스-&quot;&gt;Data 클래스 &lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;Kotlin에서는 ‘toString()’, equals(), hashCode()’등의 함수를 자동으로 생성해주는 ‘Data’클래스를 지원한다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;클래스의-가시성-변경자-&quot;&gt;클래스의 가시성 변경자 &lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;클래스에서 ‘가시성 변경자’는 클래스의 메소드 혹은 필드에 대해 접근을 허용하는지 결정하는 역할을 한다.&lt;br /&gt;
+‘private, protected, default, public’ 키워드로 사용했던 ‘접근 제어자’와 같은 의미한다. 먼저 Java의 가시성 변경자와 의미에 대해서 알아보자. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;자바의 가시성 변경자(접근 제어자)&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;
+      변경자
+    &lt;/td&gt;
+    &lt;td&gt;
+      의미
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;
+      default(기본 가시성)
+    &lt;/td&gt;
+    &lt;td&gt;
+      같은 패키지에서 접근 가능
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;
+      private
+    &lt;/td&gt;
+    &lt;td&gt;
+      클래스 내부에서만 사용 가능하며 외부에 비공개
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;
+      protected
+    &lt;/td&gt;
+    &lt;td&gt;
+      클래스와 상속받은 하위클래스에서만 사용 가능
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;
+      public
+    &lt;/td&gt;
+    &lt;td&gt;
+      외부에서 모두 접근 가능
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;코틀린의 가시성 변경자&lt;/strong&gt;&lt;br /&gt;
+코틀린에서는 함수나 프로퍼티가 꼭 클래스 내부에만 존재하는 것이 아니기 때문에 의미가 추가된다. ‘클래스 멤버일 때’의 의미와 ‘최상위 선언인 경우’ 그 의미가 조금 다르다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;변경자&lt;/td&gt;
+    &lt;td&gt;클래스 멤버&lt;/td&gt;
+    &lt;td&gt;최상위 선언&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;internal&lt;/td&gt;
+    &lt;td&gt;같은 모듈에서 접근 가능&lt;/td&gt;
+    &lt;td&gt;같은 모듈에서 접근 가능&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;private&lt;/td&gt;
+    &lt;td&gt;클래스 내부에서만 사용 가능하며, 외부에 비공개&lt;/td&gt;
+    &lt;td&gt;같은 파일에서만 접근 가능&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;protected&lt;/td&gt;
+    &lt;td&gt;클래스와 상속받은 하위 클래스에서 사용 가능&lt;/td&gt;
+    &lt;td&gt;최상위 선언에서는 사용 불가&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;public(기본 가시성)&lt;/td&gt;
+    &lt;td&gt;모든 곳에서 접근 가능&lt;/td&gt;
+    &lt;td&gt;모든 곳에서 접근 가능&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br /&gt;
+Java와 달리 코틀린은 같은 패키지에서 접근 가능한 ‘default’ 속성이 따로 없다. 대신에 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;같은 모듈일때 접근 가능한 변경자로써 'internal' 키워드&lt;/font&gt;&lt;/strong&gt;가 있습니다.&lt;br /&gt;
+여기서 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;모듈이란?&lt;/font&gt;&lt;/strong&gt; 무엇인가. 모듈은 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;한꺼번에 컴파일되어 묶이는 하나의 프로젝트 단위&lt;/font&gt;&lt;/strong&gt;라고 볼 수 있다. 현재 안드로이드 프로젝트를 기준으로 한다면 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;개별 'app'이 바로 '모듈의 단위'&lt;/font&gt;&lt;/strong&gt;라고 할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;내부-클래스와-중첩-클래스&quot;&gt;내부 클래스와 중첩 클래스&lt;br /&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;/td&gt;
+    &lt;td&gt;Java&lt;/td&gt;
+    &lt;td&gt;Kotlin&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;내부 클래스&lt;/td&gt;
+    &lt;td&gt;
+      클래스 내부에 선언된 클래스를 내부 클래스(Inner Class)라고 한다.&lt;br /&gt;
+      내부 클래스는 외부로 선언된 외부 클래스 객체가 생성되어야 존재할 수 있다.&lt;br /&gt;
+      내부 클래스에서는 외부 클래스의 필드에 접근 가능하다.&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+      코틀린은 내부 클래스를 선언하려면 inner 키워드를 사용하면 된다.&lt;br /&gt;
+      내부 클래스에서는 외부 클래스의 속성에 접근 가능하다.&lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;중첩 클래스&lt;/td&gt;
+    &lt;td&gt;
+      클래스 내부에 선언되어 있지만 static이 붙으면 중첩 클래스가 된다.&lt;br /&gt;
+      중첩 클래스는 외부에 있는 외부 객체가 없어도 존재할 수 있다.&lt;br /&gt;
+      중첩 클래스는 외부 클래스 필드에 접근이 불가하다.&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+      코틀린은 내부에 클래스를 선언하면 중첩클래스가 된다.&lt;br /&gt;
+      중첩 클래스에서는 외부 클래스 속성에 접근 불가하다.&lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;코틀린에서 클래스의 프로퍼티는 val의 경우 Getter가, var의 경우 Getter, Setter가 자동 생성된다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;필드란 ‘인스턴스 변수’를 의미하고 프로퍼티란 ‘필드와 접근자(Getter, Setter)의 조합’을 의미한다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;코틀린의 프로퍼티는 접근자(Getter, Setter)에 의해 결정되며, 필드를 사용하지 않는다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;코틀린은 클래스의 접근자에서 자신의 프로퍼티에 접근하기 위해 ‘field’키워드를 사용하고, 이것을 ‘Backing Field’라고 한다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;코틀린의 클래스는 기볹거으로 상속이 닫혀 있고, 상속을 허용하려면 ‘open’키워드를 사용해야 한다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;코틀린은 클래스를 위임하기 위해 ‘by’ 키워드를 사용할 수 있다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;코틀린은 프로퍼티도 위임이 가능하며, 위임을 하기 위해서는 역시 ‘by’키워드를 사용한다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;코틀린의 프로퍼티 위임은 Getter, Setter연산자를 구현한 클래스로 위임하거나, 표준 라이브러리에서 제공하는 ‘lazy, observable, map’등으로 위임할 수 있다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;코틀린은 자주 사용되는 ‘싱글턴(Singleton)’패턴을 대체하는 ‘object’클래스를 사용할 수 있다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;코틀린의 ‘Data’클래스에서는 ‘toString, equals, hashCode’메소드가 자동으로 구현된다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;코틀린의 클래스는 Java와 가시성이 일부 다르다. 특히 코틀린은 package변경자가 없고, 모듈 가시성인 ‘internal’을 지원한다.&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;코틀린은 클래스 내부에 클래스를 선언하는 경우 기본적으로 ‘중첩클래스’가 된다. Java와 같이 ‘내부 클래스’로 선언하려면 ‘inner’키워드를 사용한다. &lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
 </description>
-        <pubDate>Wed, 11 Feb 2015 00:14:54 +0900</pubDate>
-        <link>http://localhost:4000/2015/02/11/welcome-to-jekyll/</link>
-        <guid isPermaLink="true">http://localhost:4000/2015/02/11/welcome-to-jekyll/</guid>
+        <pubDate>Thu, 09 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/09/Java-and-Kotlin/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/09/Java-and-Kotlin/</guid>
         
         
-        <category>jekyll</category>
+        <category>Android</category>
+        
+      </item>
+    
+      <item>
+        <title>Using Git with Android Studio</title>
+        <description>&lt;h2 id=&quot;android-studio와-git을-함께-사용-&quot;&gt;Android Studio와 Git을 함께 사용 &lt;br /&gt;&lt;/h2&gt;
+&lt;p&gt;Android Built-in tool&lt;br /&gt;
+&lt;br /&gt;
+① &lt;strong&gt;Android studio에서 새로운 프로젝트를 생성한다.&lt;/strong&gt;&lt;br /&gt;
+ex)Project name : AndroidTest&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hyungilee@HYUNGIs-MacBook-Pro ~ % cd ./AndroidStudioProjects
+hyungilee@HYUNGIs-MacBook-Pro AndroidStudioProjects % ls
+AndroidTest	DinnerDecider	Test
+hyungilee@HYUNGIs-MacBook-Pro AndroidStudioProjects % cd ./AndroidTest
+hyungilee@HYUNGIs-MacBook-Pro AndroidTest %
+hyungilee@HYUNGIs-MacBook-Pro AndroidTest % pwd
+/Users/hyungilee/AndroidStudioProjects/AndroidTest
+hyungilee@HYUNGIs-MacBook-Pro AndroidTest % git branch
+fatal: not a git repository (or any of the parent directories): .git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;② &lt;strong&gt;$git init&lt;/strong&gt;을 Android Studio IDE상에서 해준다.&lt;br /&gt;
+Android Studio에서 VCS(Version Control System) - Enable Version Control Integration - Git - [OK]&lt;br /&gt;
+&lt;br /&gt;
+③&lt;strong&gt;Git Repository 생성 완료&lt;/strong&gt;&lt;br /&gt;
+다시 git branch 명령어를 입력해보면, 아무것도 나타나지 않음을 확인할 수 있다.&lt;br /&gt;
+Android Studio의 프로젝트 Tree를 보기를 Android에서 Project로 변경.&lt;br /&gt;
+프로젝트의 하위에 .gitignore파일 내부를 확인.&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;(Push할때, 무시하고자하는 항목의 리스트를 .gitignore파일에 추가해준다)&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+.gitignore파일에 추가해야하는 내용에 대해서는 아래의 url에서 확인한다. → &lt;a href=&quot;http://gitignore.io/&quot;&gt;http://gitignore.io/&lt;/a&gt;&lt;br /&gt;
+(위의 url에서 AndroidStudio를 검색하면, default로 .gitignore파일에 추가해줄 내용을 확인할 수 있다. 이 내용을 .gitignore파일에 붙여넣어준다)
+이제 .gitignore파일의 수정까지 완료된 프로젝트를 GitHub 계정으로 Push해 줄 것이다.&lt;br /&gt;
+&lt;br /&gt;
+④ &lt;strong&gt;GitHub와 프로젝트를 연동하고, 프로젝트의 파일들을 Push한다.&lt;/strong&gt;&lt;br /&gt;
+Android Studio - VCS - Import into Version Control - Share Project on GitHub&lt;br /&gt;
+GitHub 계정을 입력&lt;br /&gt;
+Repository name : AndroidTest / Remote name: origin / Description : Testing out Android Git feature - Share &lt;br /&gt;
+Everything checked 확인 후 OK&lt;br /&gt;
+GitHub계정에서 확인해보면, 프로젝트 전체 파일이 Push 되었음을 확인할 수 있다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;※ &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;실습내용&lt;/font&gt;&lt;/strong&gt; : 안드로이드 프로젝트를 생성해서 GitHub와 연동하기&lt;br /&gt;
+① Android Project생성하기. (Project name : &lt;strong&gt;MVVMRecyclerViewJava&lt;/strong&gt;)&lt;br /&gt;
+② 안드로이드 프로젝트를 생성하고, Repository를 초기화 시켜주고, 추가된 파일을 tracking, commit해준다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hyungilee@HYUNGIs-MacBook-Pro AndroidStudioProjects % cd MVVMRecyclerViewJava
+hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava %
+hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava %
+hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git init
+Initialized empty Git repository in /Users/hyungilee/AndroidStudioProjects/MVVMRecyclerViewJava/.git/
+hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git branch
+hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git status
+On branch master
+
+No commits yet
+
+Untracked files:
+(use &quot;git add &amp;lt;file&amp;gt;...&quot; to include in what will be committed)
+  .gitignore
+  .idea/
+  app/
+  ......
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)
+hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git add .
+hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git commit -m &quot;Initial commit&quot;
+[master (root-commit) b9d2268] Initial commit
+37 files changed, 882 insertions(+)
+create mode 100644 .gitignore
+......
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;③ Remote GitHub(Repository)에 해당 프로젝트를 push하도록 한다.&lt;/p&gt;
+  &lt;blockquote&gt;
+    &lt;p&gt;(1) 새로운 Repository를 GitHub에서 생성 (Repository name : &lt;strong&gt;MVVMRecyclerViewJava&lt;/strong&gt;)&lt;br /&gt;
+(2) Repository의 Http URL을 이용해서 &lt;strong&gt;$git remote add origin [Http URL]&lt;/strong&gt;을 해준다.&lt;br /&gt;
+(3) 생성한 프로젝트에 remote GitHub의 repository의 origin이 추가되었으므로, commit된 파일들을 push해준다.&lt;br /&gt;&lt;/p&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git remote add origin https://github.com/MikeHyungiLee/MVVMRecyclerViewJava.git
+  hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git push origin master
+  Enumerating objects: 70, done.
+  Counting objects: 100% (70/70), done.
+  Delta compression using up to 4 threads
+  Compressing objects: 100% (53/53), done.
+  Writing objects: 100% (70/70), 131.88 KiB | 4.25 MiB/s, done.
+  Total 70 (delta 0), reused 0 (delta 0)
+  To https://github.com/MikeHyungiLee/MVVMRecyclerViewJava.git
+  * [new branch]      master -&amp;gt; master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Wed, 08 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/08/Using-Git-with-Android-Studio/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/08/Using-Git-with-Android-Studio/</guid>
+        
+        
+        <category>Git</category>
+        
+      </item>
+    
+      <item>
+        <title>Setting up Github</title>
+        <description>&lt;h2 id=&quot;github-initial-setting&quot;&gt;GitHub Initial Setting&lt;br /&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://help.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh&quot;&gt;GitHub SSH key setting 참고 Link&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent&quot;&gt;[Generating a new SSH key and adding it to the ssh-agent]&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;홈페이지의 Instruction을 따라서 SSH키를 generate한 뒤에, 개인 GitHub 계정에 setting해본다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hyungilee@HYUNGIs-MacBook-Pro ~ % ssh-keygen -t rsa -b 4096 -C &quot;mike.hyungi.lee@gmail.com&quot;
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/hyungilee/.ssh/id_rsa):
+Created directory '/Users/hyungilee/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /Users/hyungilee/.ssh/id_rsa.
+Your public key has been saved in /Users/hyungilee/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:mNbD+8ugZkiabHbAxHz80dw8I++O9O0gRDtjrGEMqEs mike.hyungi.lee@gmail.com
+The key's randomart image is:
++---[RSA 4096]----+
+|                 |
+|   .             |
+| o...  o.o       |
+| .+ oo.B+.=      |
+|.E . .B.So o     |
+|..o .o.= =.      |
+|.. = .. =..      |
+|  * o oo B.o     |
+| o . o. ..*oo    |
++----[SHA256]-----+
+hyungilee@HYUNGIs-MacBook-Pro ~ % eval &quot;$(ssh-agent -s)&quot;
+Agent pid 5969
+
+hyungilee@HYUNGIs-MacBook-Pro .ssh % cat ./config
+Host *
+AddKeysToAgent yes
+UseKeychain yes
+IdentityFile ~/.ssh/id_rsa
+hyungilee@HYUNGIs-MacBook-Pro .ssh % pwd
+/Users/hyungilee/.ssh
+hyungilee@HYUNGIs-MacBook-Pro .ssh % ssh-add -K ~/.ssh/id_rsa
+Identity added: /Users/hyungilee/.ssh/id_rsa (mike.hyungi.lee@gmail.com)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;adding-a-new-ssh-key-to-your-github-account&quot;&gt;[Adding a new SSH key to your GitHub account]&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hyungilee@HYUNGIs-MacBook-Pro .ssh % pbcopy &amp;lt; ~/.ssh/id_rsa.pub
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;생성된 SSH키를 클립보드에 복사한 후에, GitHub계정의 SSH keys Setting에 붙여넣고, 추가해준다.
+&lt;img src=&quot;/images/android/2020-04-08 Add SSH Key into GitHub setting.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 08 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/08/Setting-up-Github/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/08/Setting-up-Github/</guid>
+        
+        
+        <category>Git</category>
+        
+      </item>
+    
+      <item>
+        <title>Branch management</title>
+        <description>&lt;h2 id=&quot;git-branch-management&quot;&gt;Git branch management&lt;br /&gt;&lt;/h2&gt;
+
+&lt;p&gt;(1) &lt;strong&gt;develop branch 작성&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git branch // branch에 있는 전체 branch정보를 확인
+$ git branch develop // develop branch를 작성하기
+$ git checkout develop // develop branch를 checkout하기
+$ git checkout -b develop // develop branch를 작성함과 동시에 새 branch로 switch하기
+$ git push origin develop //remote에 develop 정보를 push하기
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;(2) &lt;strong&gt;feature작성&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git branch //지금 현재 branch가 feature branch인 것을 확인
+$ git branch feature/(feature branch이름) //feature branch를 작성
+$ git checkout feature/(feature branch이름) //feature branch를 checkout
+$ git checkout -b feature/layouts  //branch를 작성함과 동시에 새 branch로 switch하기
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;(2-1) &lt;strong&gt;feature branch 만들기.&lt;/strong&gt;&lt;br /&gt;
+① 새로운 기능 브랜치를 생성하려면 develop 브랜치에서 브랜치합니다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$git checkout -b myfeature develop //&quot;myfeature&quot;라는 이름의 브랜치를 만들고 동시에 전환
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;② 구현이 완료된 기능 분기를 develop에 통합하기.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git checkout develop //develop 브랜치로 전환합니다
+$ git merge --no-ff myfeature //--no-ff 옵션을 지정해두면, 기능 브랜치의 이력이나 Commit 기록을 추가로 남길 수 있습니다.
+Updating ea1b82a..05e9557 (Summary of changes)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;③ myfeature 지점은 삭제 해 둡니다&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git branch -d myfeature
+Deleted branch myfeature (was 05e9557).
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;④ GitHub remote repository의 develop branch에 작업한 내용 push하기.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git push origin develop
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;#코드를 수정한 후에,&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git add . // 수정된 파일을 tracking list에 추가시켜준다. “.”은 전체 파일을 의미하지만, 각 개별적인 파일을 추가하고 commit해주기 위해서는 구체적인 파일명과 확장자를 입력해주어야 한다.
+$ git commit -m “[commit message]&quot; // 로컬 Repository에 commit하기.
+$ git push origin feature/(feature branch이름)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;(3) &lt;strong&gt;develop브랜치를 merge시키기&lt;/strong&gt;&lt;br /&gt;
+     →Merge시키기 전에 merge시키고자 하는 branch의 전 단계 branch로 switch한다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; $ git checkout develop //feature/(feature branch이름)을 merge시키기 전에 develop branch로 switch한다.
+ $ git merge feature/(feature branch이름) // feature branch를 develop branch에 merge시키기
+ //merge시킬때, merge option을 사용해서 merge해보기.
+ $ git merge --no-ff
+ //일반적으로 git merge [branch]하는 것과 git merge --no-ff의 차이점은 아래 첨부한 사진과 같다.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-08  merge --no-ff.png&quot; alt=&quot;blog capture&quot; width=&quot;300&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;(4) 최종적으로 feature branch를 develop branch에 merge했다면, 이 feature branch는 삭제한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git branch -d feature/(feature branch명) // feature branch를 삭제
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;(5) 업데이트 된 develop branch를 master branch에 merge시킨다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git checkout master //master branch에 checkout하기
+$ git merge develop //develop branch를 master branch로 merge하기
+$ git push origin master // feature/(feature branch명)브랜치의 내용을 origin에 upload하기
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Wed, 08 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/08/Branch-management/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/08/Branch-management/</guid>
+        
+        
+        <category>Git</category>
+        
+      </item>
+    
+      <item>
+        <title>List and Recycler views</title>
+        <description>&lt;p&gt;이번에 포스팅에서는 ListView, RecyclerView, ViewHolder의 개념들에 대해서 공부하면서 간단한 어플을 만들어 볼 것이다.&lt;/p&gt;
+
+&lt;h3 id=&quot;-model-data-structure&quot;&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;① Model (Data structure)&lt;/font&gt;&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;우선적으로 생각해야되는 부분은 View에 보여줄 data의 구조이다.&lt;br /&gt;
+이번에 예시로 만들어 볼 어플에서는 categories와 product 항목이 있다. 따라서 이 항목들을 객체화할 class를 작성할 것이다.&lt;br /&gt;
+ex) Category, Product&lt;br /&gt;
+위의 View에 보여줄 data객체의 class는 전부 &lt;strong&gt;“models” package&lt;/strong&gt;안에 작성을 해줄 것이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;-controller&quot;&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;② Controller&lt;/font&gt;&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;다음으로 &lt;strong&gt;“controllers” package&lt;/strong&gt;를 작성해준다. 이 안에는 기본 생성되는 MainActivity가 위치한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;-services&quot;&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;③ Services&lt;/font&gt;&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;다음으로 &lt;strong&gt;“services” package&lt;/strong&gt;를 작성해준다. 파일을 작성할때는 File type을 Object로 하고, 이름은 DataService로 작성한다.&lt;br /&gt;
+안에 작성하게 될 내용은, Google에서 “Kotlin object singleton” 이라고 검색을 해서 작성법에 대해서 이해하고 작성하면 된다. → &lt;a href=&quot;https://kotlinlang.org/docs/reference/object-declarations.html&quot;&gt;Kotlin object singleton&lt;/a&gt; &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음과 같이 각 항목의 List data를 선언해준다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;object DataService {
+
+  val categories =  listOf(
+      Category(&quot;SHIRTS&quot;, &quot;shirtimage&quot;),
+      Category(&quot;HOODIES&quot;, &quot;hoodieimage&quot;),
+      Category(&quot;HATS&quot;, &quot;hatimage&quot;),
+      Category(&quot;DIGITAL&quot;, &quot;digitalgoodsimage&quot;),
+      ....
+      )
+
+  val hats = listOf(
+      Product(&quot;Devslopes Graphic Beanie&quot;,&quot;$18&quot;,&quot;hat1&quot;),
+      Product(&quot;Devslopes Graphic Black&quot;,&quot;$20&quot;,&quot;hat2&quot;),
+      ....
+      )
+
+  val hoodies = listOf(
+      Product(&quot;Devslopes Hoodie Gray&quot;,&quot;$28&quot;, &quot;hoodie1&quot;),
+      Product(&quot;Devslopes Hoodie Red&quot;,&quot;$30&quot;, &quot;hoodie2&quot;),
+      ....
+      )
+
+  val shirts = listOf(
+      Product(&quot;Devslopes Shirt black&quot;,&quot;$28&quot;, &quot;shirt1&quot;),
+      Product(&quot;Devslopes Shirt Red&quot;,&quot;$20&quot;, &quot;shirt2&quot;),
+      ....
+      )
+
+  val digitalGood = listOf&amp;lt;Product&amp;gt;()
+
+  fun getProducts(category: String) : List&amp;lt;Product&amp;gt;{
+      return when(category){
+          &quot;SHIRTS&quot;-&amp;gt; return shirts
+          &quot;HATS&quot; -&amp;gt; return hats
+          &quot;HOODIES&quot; -&amp;gt; return hoodies
+          else -&amp;gt; return digitalGood
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;ListView와 Adapter, Data의 관계[?]에 대해서 이해를 해보자. 우선 UI에는 ListView가 추가되어있고, 이 ListView에 표시하고자 하는 데이터가 필요하다. 이 Data는 raw data인데 이를 알맞게 ListView에 formatting해서 표시해주는 역할을 하는 것이 바로 &lt;strong&gt;Adapter&lt;/strong&gt;이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-08 data, adapter, ListView.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 Adapter는 Controller Package의 class에 작성해준다.
+자 그럼 이제 Android에서 기본적으로 제공되는 Layout을 활용해서 Adapter를 작성해 볼 것이다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class MainActivity : AppCompatActivity() {
+
+    lateinit var adapter: ArrayAdapter&amp;lt;Category&amp;gt;
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        adapter = ArrayAdapter(this,
+                               android.R.layout.simple_list_item_1,
+                               DataService.categories)
+        // ArrayAdapter([context], [android default layout], [data list object])                       
+        listView.adapter = adapter
+    }  
+}    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이제는 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;ListView를 Customize&lt;/font&gt;&lt;/strong&gt;해서 만들어 볼 것이다.&lt;br /&gt;
+새로운 레이아웃 파일을 생성한다. layout/category_list_item.xml 생성.&lt;/p&gt;
+
+&lt;p&gt;Customized ListAdapter&lt;br /&gt;
+① adapters package를 작성하기.  &lt;br /&gt;
+② CategoryAdapter class를 작성하고, &lt;strong&gt;BaseAdapter&lt;/strong&gt; class를 상속한다.&lt;br /&gt;
+③ &lt;strong&gt;getView()&lt;/strong&gt; : 가장 큰 mothod, &lt;strong&gt;getItem()&lt;/strong&gt; : position parameter를 사용해서 item을 취득하는 것, &lt;strong&gt;getItemId()&lt;/strong&gt; : 이 method는 사용되지 않을 것이므로, return 0 처리를 해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;※ 우리가 저번시간에 Adapter를 초기했을때, 사용한 각 요소를 확인해보면, context와 layout요소 그리고 각 layout리스트에 초기화 시켜주기 위한 data set이 필요했다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;※ 우리는 이번 custom list view 클래스를 초기화시켜줄때, context와 data set을 parameter로써 선언해서 adapter를 초기화시켜 줄 것이다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td width=&quot;500&quot;&gt;
+      &lt;img src=&quot;/images/android/2020-04-08 custom adapter.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;
+    &lt;/td&gt;
+    &lt;td width=&quot;500&quot;&gt;
+      &lt;div&gt;
+          override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {&lt;br /&gt;
+          &lt;strong&gt;Position&lt;/strong&gt; - index path&lt;br /&gt;
+          &lt;strong&gt;convertView&lt;/strong&gt; - view that is displayed over and over&lt;br /&gt;
+          &lt;br /&gt;
+      &lt;/div&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td width=&quot;500&quot;&gt;
+      &lt;img src=&quot;/images/android/2020-04-08 LayoutInflater.png&quot; alt=&quot;blog capture&quot; width=&quot;700&quot; title=&quot;capture img&quot; /&gt;
+    &lt;/td&gt;
+    &lt;td width=&quot;500&quot;&gt;
+      &lt;div&gt;
+        Inflater is an object that takes in XML layout like we have here in out layouts folder in this category list items and it turns it into an actual view that we can use in code.&lt;br /&gt;
+        We have inflated a view that we are calling category view from the XML file called category.&lt;br /&gt;
+        이 방법이 최선은 아니다. 왜냐하면 화면을 스크롤할때 마다 매번 getView 메소드가 호출되고 초기화되고 있기 때문이다.
+      &lt;/div&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;red&quot;&gt;※ 개선후 코드&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td width=&quot;500&quot;&gt;
+      &lt;img src=&quot;/images/android/2020-04-09 getView.png&quot; alt=&quot;blog capture&quot; width=&quot;700&quot; title=&quot;capture img&quot; /&gt;
+    &lt;/td&gt;
+    &lt;td width=&quot;500&quot;&gt;
+      &lt;div&gt;
+        getView 메소드에서 화면의 UI요소가 매번 초기화되는 비효율적인 부분을 refactoring해줄 것이다.&lt;strong&gt;(Prevent from heavy computing)&lt;/strong&gt;&lt;br /&gt;  
+        viewHolder paradigm&lt;br /&gt;
+        오직 한 번 layout을 Inflate해준다. (레이아웃과 UI Element를 재활용한다)&lt;br /&gt;
+        ListView에서는 ViewHolder를 사용하는 것은 Option이지만, &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※RecyclerView에서는 ViewHolder를 필수적으로 사용해야한다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+
+
+      &lt;/div&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;h3 id=&quot;recyclerview와-listview의-차이-&quot;&gt;RecyclerView와 ListView의 차이 &lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;RecyclerView를 사용하게 되면 ViewHolder의 사용은 필수이기 때문에 좀 더 부드러운 scroll과 최적화된 ListView를 사용할 수 있다. 그리고 큰 용량의 data set을 사용할때도 최적화시킬 수 있다.&lt;br /&gt;
+하지만, &lt;font color=&quot;Red&quot;&gt;&lt;u&gt;RecyclerView는 ListView와 같이 built-in method (onItemClickListener)같은 method를 제공하지는 않는다.&lt;/u&gt;&lt;/font&gt;&lt;br /&gt;
+RecyclerView를 사용할때는 standard SDK를 사용하지 않고, support library를 사용하기 위해 dependency를 추가해주어야 한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Support library란?&lt;/strong&gt;&lt;br /&gt;
+→ &lt;a href=&quot;https://developer.android.com/topic/libraries/support-library?hl=Language&quot;&gt;https://developer.android.com/topic/libraries/support-library?hl=Language&lt;/a&gt;
+&lt;br /&gt;
+AndroidX는 기존 Android 지원 라이브러리를 크게 개선한 것으로, androidx 패키지는 동일한 기능과 새로운 라이브러리를 제공하여 지원 라이브러리를 완전히 대체한다.&lt;br /&gt;
+&lt;br /&gt;
+The RecyclerView Support Library and RecyclerView AndroidX library are having the same purpose. The main difference is the package name. The AndroidX mainly a repackage and re-branded support library with the main purpose to ease the Android development process. All the support library capabilities is still existed in AndroidX, but the newest capabilities and development shifted to AndroidX now.&lt;/p&gt;
+
+&lt;p&gt;(Android Jetpack) Androidx를 사용해서 RecyclerView를 구현하는 경우에는 &lt;strong&gt;“implementation “androidx.recyclerview:recyclerview:1.1.0”&lt;/strong&gt;를 dependency에 추가한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※ RecyclerView Class 작성하기&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+① RecyclerView.Adapter를 상속받아서 &lt;strong&gt;RecyclerView클래스를 작성&lt;/strong&gt;해준다.&lt;br /&gt;
+② &lt;strong&gt;ViewHolder 내부 클래스를 작성&lt;/strong&gt;해준다. 기존의 ListView의 ViewHolder의 inner class에서는 아무것도 상속하지 않고 작성했지만, &lt;strong&gt;RecyclerView의 ViewHolder에서는 RecyclerView.ViewHolder를 상속해서 작성&lt;/strong&gt;해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class CategoryRecycleAdapter : RecyclerView.Adapter&amp;lt;CategoryRecycleAdapter.holder&amp;gt;(){
+
+    inner class holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;③ RecyclerView class에도 override method들을 추가해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class CategoryAdapter(val context: Context, val categories: List&amp;lt;Category&amp;gt;) : BaseAdapter {
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;RecyclerView class에도 다음과 같이 parameter에 context와 dataSet변수를 constructor로 초기화시켜서 처리해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;④ RecyclerView 클래스의 Override method&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;onBindViewHolder()&lt;/strong&gt; - display the data at the specified location &lt;br /&gt;
+(binding is the process of preparing a child view to display data according to the position within adapter)&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;onCreateViewHolder()&lt;/strong&gt; - When new holders are needed &lt;br /&gt;
+ListView에서의 같은 부분 :&lt;br /&gt;
+&lt;img src=&quot;/images/android/2020-04-09 onCreateViewHolder.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Holder inner class&lt;/strong&gt; - UI element binding &lt;br /&gt;
+ListView에서의 같은 부분 :&lt;br /&gt;
+&lt;img src=&quot;/images/android/2020-04-09 Holder inner class.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;기존의 ListView class의 getView method에서 UI element의 binding처리를 해주었다.&lt;br /&gt;
+&lt;strong&gt;이 작업을 RecyclerView에서는 Holder inner class에서 처리&lt;/strong&gt;해준다.&lt;br /&gt;
+&lt;strong&gt;이 Holder inner class에서만든 내용을 onBindViewHolder method에서 호출하기 위해 Holder inner class내부에 개별적인 method의 작성이 필요&lt;/strong&gt;하다.&lt;br /&gt;
+&lt;img src=&quot;/images/android/2020-04-09 onBindViewHolder.png&quot; alt=&quot;blog capture&quot; width=&quot;700&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;onCreateViewHolder()&lt;/strong&gt; - inflate the view for the very first time.&lt;br /&gt;
+RecyclerView가 사용할 layout이 없을때 layout inflate가 실행되는 method.&lt;br /&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;val view = LayoutInflater.from()&lt;/code&gt;&lt;br /&gt;
+layout을 inflate할때, 생성자를 통해 받은 context를 사용해도 되고, method자체에서 parameter로 받고 있는 parent변수를 받아서 처리해도 된다.&lt;br /&gt;
+&lt;img src=&quot;/images/android/2020-04-09 LayoutInflater.png&quot; alt=&quot;blog capture&quot; width=&quot;600&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;⑤  ListVie와 다르게 RecyclerView에서는 한 가지 더 설정해줘야하는 부분이 있다.&lt;br /&gt;
+    바로 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;Layout manager&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Layout manager - layout manager positions item views inside a recycler view and determines
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-09 Layout manager.png&quot; alt=&quot;blog capture&quot; width=&quot;600&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이미 화면에 출력된 적이 있는 data set의 경우에는 재사용을 하고, 재사용을 할 경우에는, layout manager는 adapter에게 다른 컨텐츠 뷰로 교체할 것을 물을 것이다. &lt;br /&gt;
+이러한 컨셉은 불필요한 뷰의 생성과 매우 무거운 findViewById() lookup작업을 피함으로써 어플리케이션의 퍼포먼스를 좋게 만들 것이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-09 LayoutManager.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;⑥　RecyclerView Clicks&lt;/p&gt;
+
+&lt;p&gt;RecyclerView는 built-in onClickListener method가 없기 때문에, Lambda식으로 RecyclerView의 click 이벤트를 처리해줘야 한다.&lt;br /&gt;
+기존에 선언한 CategoryRecycleAdapter에서 Parameter로 넘겼던 context, dataset과 함께 &lt;strong&gt;itemClick:(Category)-&amp;gt;Unit&lt;/strong&gt; 넘겨줘야 한다.&lt;br /&gt;
+클릭을 했을때, Category 객체를 넘겨주지만, 결과적으로 아무것도 반환하지 않기 때문에, Unit으로 처리를 해준다.&lt;br /&gt;
+&lt;br /&gt;
+그 다음에는 이렇게 넘긴 itemClick 인수를 Holder inner class에 선언해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-09 itemClick event.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;최종적으로 RecyclerView에서 Lambda식으로 선언을 하면 아래와 같이 RecyclerViewAdapter내의 메소드가 수정되어 있음을 알 수 있다.&lt;br /&gt;&lt;br /&gt;
+이렇게 처리를 하면, MainActivity에서 Holder inner class내의 itemView.setOnClickListener에 접근을 할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음과 같이 onclick event부분을 호출해서 adapter를 초기화 시켜줄때 click event 처리를 할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-09 adapter setOnClick event.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;예시로 ProductAdapter 클래스로 기존에 작성했던 RecyclerViewAdapter를 작성해본다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-09 ProductAdapter.png&quot; alt=&quot;blog capture&quot; width=&quot;700&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;blockquote&gt;
+    &lt;p&gt;2020-04-08 LayoutInflater&lt;/p&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;※ 직접 내 GitHub에 Repository추가해서 실습하기 &lt;br /&gt;
+내 GitHub Repository 주소 :&lt;/p&gt;
+</description>
+        <pubDate>Wed, 08 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/08/List-and-RecyclerView/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/08/List-and-RecyclerView/</guid>
+        
+        
+        <category>Android</category>
         
       </item>
     

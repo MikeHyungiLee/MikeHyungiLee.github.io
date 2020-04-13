@@ -1,0 +1,11 @@
+I"�<h3 id="view와-viewgroup-layout의-개념">View와 ViewGroup, Layout의 개념<br /></h3>
+
+<p>‘View’란?<br /></p>
+
+<p>UI의 구성 요소 중 가장 추상화된 개념으로서, 화면에 표시되는 가장 기본적인 요소를 말한다.<br />
+ex) 그림, 텍스트, 버튼 등 화면에 표시되는 모든 요소가 View로 간주된다.<br /></p>
+
+<p>‘ViewGroup이란?’<br /></p>
+
+<p>ViewGroup은 View를 상속받으면서 특별히 여러 개의 구성 요소들을 포함하는 View이다. ViewGroup은 여러 개의 View들을 자식 뷰(Child View)로 가지면서 View의 위치를 조정하고 그룹화하여 관리할 수 있다.</p>
+:ET

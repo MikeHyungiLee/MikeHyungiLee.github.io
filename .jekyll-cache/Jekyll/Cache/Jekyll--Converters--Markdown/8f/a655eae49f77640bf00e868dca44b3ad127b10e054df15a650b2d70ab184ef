@@ -1,0 +1,48 @@
+I"�<p><strong>안드로이드에는 어떤 종류의 테스트가?</strong><br />
+총 세가지의 테스트 종류가 있다.<br />
+① Local Unit Tests<br />
+② Instrumentation Tests<br />
+③ UI Test<br />
+<img src="/images/android/2020-04-10 android test.png" alt="blog capture" width="500" title="capture img" /><br /></p>
+
+<p>우선 <strong>Local Unit Tests<strong>에 대해서 살펴보자<br /></strong></strong></p>
+
+<blockquote>
+  <p>①Local Computer<br />
+② Java Virtual Machine(JVM)<br />
+③ Very fast (not required to use emulator, run raw java code, sequence of method, logic based test)<br /><br />
+(Local Unit Tests는 별도의 emulator를 사용하지 않고, logic을 베이스로 java코드를 실행해서 하는 테스트이기 때문에 속도가 매우 빠르다)<br />
+④ JUnit5, Mockito<br /></p>
+</blockquote>
+
+<p>그 다음으로 살펴볼 것은 <strong>Instrumentation Tests</strong>이다.<br /></p>
+
+<blockquote>
+  <p>① Similar to local unit tests<br /><br />
+  (Local Unit Tests와 매우 유사하지만, 조금 다르다)<br /><br />
+② Test Android functionality (Activity, Fragment, Services Life cycle) 검사 목적의 테스트<br />    <br />
+③ Need a real device or emulator - framework<br /><br />
+④ JUnit4, Mockito<br /></p>
+</blockquote>
+
+<p>마지막으로 살펴볼 테스트는 <strong>UI테스트</strong>이다.<br /></p>
+
+<p>① Simulate a person using your app<br />
+② Literally uses widgets<br />
+   (Pressing a button, entering a text)<br />
+③ Real device or emulator<br />
+④ Expresso Library<br /></p>
+
+<table>
+  <tr>
+    <td>
+      <img src="/images/android/2020-04-10 Android Test folder.png" alt="blog capture" width="500" title="capture img" /><br />
+    </td>
+    <td>
+      안드로이드 스튜디오에서 Project view로 전환하면 좌측의 폴더구조와 같이 androidTest, main, test폴더를 볼 수 있다.<br />
+      우선 첫번째 androidTest 폴더의 경우, Instrumentation Tests와 UI 테스트를 하는 곳으로, Mockito, JUnit과 Expresso 라이브러리를 사용한다. <br />
+      두번째 test폴더의 경우, Local Unit Tests를 하는 곳으로, Mockito와 JUnit 라이브러리를 사용한다.
+    </td>
+  </tr>
+</table>
+:ET
