@@ -1,0 +1,28 @@
+I"�<h3 id="apply-"><strong>.apply ?</strong><br /></h3>
+
+<p>우선 .apply를 사용해서 recyclerView의 LayoutManager와 adapter를 초기해준 아래 예를 같이 살펴보자. <br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>private fun initRecyclerView(){
+    // apply 를 사용해서 layoutManager 와 adapter 를 지정해주었을때,
+    recycler_view.apply {
+        layoutManager = LinearLayoutManager(this@MainActivity)
+        blogAdapter = BlogRecyclerAdapter(context,[dataSet])
+        adapter = blogAdapter
+    }
+
+    // recycler_view를 지정해주면서 layoutManager 와 adapter 를 지정해주었을때
+    recycler_view.layoutManager = LinearLayoutManager(this@MainActivity)
+    blogAdapter = BlogRecyclerAdapter(this,[dataSet])
+    recycler_view.adapter = blogAdapter
+}
+</code></pre></div></div>
+
+<p>확실히 apply annotation을 사용해서 recycler_view를 초기화 시켜주면, 매번 recycler_view를 호출해서 사용하지 않아도 가볍게 layoutManager와 adapter 키워드만으로도 초기화 시켜줄 수 있다.</p>
+
+<h3 id="companion-object-"><strong>companion object ?</strong><br /></h3>
+
+<p>Kotlin은 클래스에 static 필드를 갖게 할 수는 없지만, companion object의 구조를 이용해서 Java의 static 메소드와 동일한 동작을 수행할 수 있다.<br /></p>
+
+<h3 id="전체적인-학습내용을-복습한다">전체적인 학습내용을 복습한다.<br /></h3>
+<p>1.</p>
+:ET

@@ -1,0 +1,32 @@
+I"m<h3 id="mvvm-architecture">MVVM Architecture<br /></h3>
+
+<p><strong><font color="Red">① ViewModel Class</font></strong> <br /></p>
+
+<p>(1) class 선언하기<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class MainActivityViewModel extends ViewModel {
+
+    private MutableLiveData&lt;List&lt;NicePlace&gt;&gt; mNicePlaces;
+
+    public LiveData&lt;List&lt;NicePlace&gt;&gt; getNicePlaces(){return mNicePlaces;}
+
+}
+</code></pre></div></div>
+
+<p>클래스를 선언할때에는 ViewModel 클래스를 상속하고, field변수로 MutableLiveData&lt;List<NicePlace>&gt;타입의 변수를 선언해준다. Field변수로 선언을 해줄때는 값이 변화하기 때문에 MutableLiveData 타입으로 선언하지만, 이 값을 읽어올때는 LiveData&lt;List<NicePlace>&gt; 타입으로 선언해준다.</NicePlace></NicePlace></p>
+
+<p>(2) ImageView에 보여줄 이미지를 binding하는 부분에서 아래와 같이 Glide 라이브러리로 바인딩해준다.<br />
+<strong><font color="Blue">[Basic Usage]</font></strong><br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Set the image
+RequestOptions defaultOptions = new RequestOptions()
+                                .error(R.drawable.ic_launcher_background);
+Glide.with(mContext)
+            .setDefaultRequestOptions(defaultOptions)
+            .load(mNicePlaces.get(position).getImageUrl())
+            .into(((Holder)holder).mImage);
+</code></pre></div></div>
+
+<h3 id="전체적인-학습내용을-복습한다">전체적인 학습내용을 복습한다.<br /></h3>
+<p>1.</p>
+:ET

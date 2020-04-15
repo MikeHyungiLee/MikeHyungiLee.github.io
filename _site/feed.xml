@@ -5,9 +5,701 @@
     <description>Hyungi's Ideas &amp; Blogs</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 13 Apr 2020 23:28:04 +0900</pubDate>
-    <lastBuildDate>Mon, 13 Apr 2020 23:28:04 +0900</lastBuildDate>
+    <pubDate>Wed, 15 Apr 2020 18:49:52 +0900</pubDate>
+    <lastBuildDate>Wed, 15 Apr 2020 18:49:52 +0900</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Kotlin Singleton Example with MVVM and coroutines</title>
+        <description>&lt;h3 id=&quot;kotlin-singleton-example-with-mvvm-and-coroutines&quot;&gt;Kotlin Singleton Example with MVVM and coroutines&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;이번 Post에 정리할 내용은 아래와 같다.&lt;br /&gt;
+2 examples :&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;1) Quick “how to”&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;2)Practical example&lt;br /&gt;
+-Retrofit&lt;br /&gt;
+-Coroutines&lt;br /&gt;
+-MVVM&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Singletons&lt;/p&gt;
+
+&lt;p&gt;Instance of an object &lt;br /&gt;
+reuse the instance &lt;br /&gt;
+Retrofit instance &lt;br /&gt;
+Repository instance &lt;br /&gt;
+User sessions &lt;br /&gt;
+Dagger(Dependency Injection/Provide Singleton)
+Dagger라이브러리는 좀 어렵다. 나중에 별도의 강의로 이해하도록 하자.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;자 이제 실제로 Singleton 패턴의 클래스를 Kotlin으로 작성해보자.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;① 우선 models패키지를 작성을 하고, 그 안에 User라는 data class를 작성해준다. &lt;br /&gt;
+② 다음으로 ExampleSingleton을 이름으로 하는 Object클래스를 작성한다. 이 클래스 안에는 앞서 작성한 User클래스를 아래와 같이 객체를 만들어준다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val singletonUser: User by lazy {
+  User(&quot;email@gmail.com&quot;, &quot;username&quot;, &quot;image.png&quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;lazy키워드를 사용해서 변수를 위임하면 실제로 해당 속성이 호출되서 사용될때, 초기화가 된다.&lt;br /&gt;
+(클래스가 인스턴스화되는 타이밍에는 해당 속성은 메모리상에 초기화되지 않는다) &lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;③ MainActivity의 onCreate 메소드 내에서 Singleton클래스 내부에서 작성한 singletonUser 변수의 hashCode를 확인해서 실제 화면의 configuration(portrait/landscape)가 변경이 되었을때, 같은 메모리 주소를 반환하고 있는지 확인해본다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;println(&quot;DEBUG: ${ExampleSingleton.singletonUser.hashCode()}&quot;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;아래와 같이 화면의 configuration을 바꿨을때, 매번 같은 hashCode를 반환함을 알 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;D/EGL_emulation: eglMakeCurrent: 0xdb71a480: ver 3 0 (tinfo 0xdb70f7a0)
+I/System.out: DEBUG: -1198862957
+D/EGL_emulation: eglMakeCurrent: 0xdb71a480: ver 3 0 (tinfo 0xdb70f7a0)
+D/EGL_emulation: eglMakeCurrent: 0xdb71a480: ver 3 0 (tinfo 0xdb70f7a0)
+I/System.out: DEBUG: -1198862957
+D/EGL_emulation: eglMakeCurrent: 0xdb71a480: ver 3 0 (tinfo 0xdb70f7a0)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;④ 다음으로, api 패키지를 작성하고, MyRetrofitBuilder(Object클래스)와 ApiService 인터페이스를 작성해볼 것이다. &lt;br /&gt;
+MyRetrofitBuilder클래스를 Object클래스 타입으로 작성하는 이유는 Kotlin에서는 Object클래스로 작성한다는 의미가 바로 ‘Singleton’으로 작성하겠다는 의미이기 때문이다. ApiService인터페이스에서는 Retrofit을 사용해 통신상으로터 데이터를 취득하는 메소드를 작성할 것이다.&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;MyRetrofitBuilder.kt&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;object MyRetrofitBuilder {
+
+    const val BASE_URL = &quot;https://open-api.xyz/&quot;
+
+    // Singleton Retrofit builder
+    val retrofitBuilder: Retrofit.Builder by lazy {
+      Retrofit.Builder()
+      .baseUrl(BASE_URL)
+      .addConverterFactory(GsonConverterFactory.create())
+      // 서버로부터 호출되는 데이터의 형식은 JSON형태이므로, 이를 Convert할 Converter가 필요하다.
+      // Gson Converter = JSON objcet -&amp;gt; Java object
+    }
+
+    // Singleton apiService (Network request)
+    val apiService: ApiService by lazy {
+      retrofitBuilder
+      .build()
+      .create(ApiService::class.java)
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;ApiService.kt&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;interface ApiService {
+
+    @GET(&quot;placeholder/user/{userId}&quot;)
+    // 여기서 사용되는 suspend fun은 'coroutine'을 사용하기 위한 fun이다.
+    // use 'coroutine' fun return the date from network.
+    suspend fun getUser(
+        @Path(&quot;userId&quot;) userId: String
+    ): User
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;‘suspend fun’을 사용하면 ‘coroutine’을 사용한다는 의미이다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;⑤ &lt;strong&gt;Repository&lt;/strong&gt;패키지 추가하고, Repository Object클래스 작성하기.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;object Repository{
+
+    var job: CompletableJob? = null
+
+    fun getUser(userId: String): LiveData&amp;lt;User&amp;gt; {
+      // job을 초기화시켜준다.
+      job = Job()
+      return object: LiveData&amp;lt;User&amp;gt;(){
+          override fun onActive(){
+            super.onActive()
+            // 우선 job이 null인지 아닌지 검사를 한다.
+            job?.let{ theJob-&amp;gt;
+              // job이 null이 아닌경우, 실행을 한다.
+              // IO(Dispatchers)+theJob으로 유니크한 CoroutineScope를 background thread에 생성을 한다.
+              CoroutineScope(IO+theJob).launch{
+                val user = MyRetrofitBuilder.apiService.getUser(userId)
+                // live data를 background thread에 해줄 수 없으므로,
+                // 우선 MAIN 스레드로 전환을 하고, live data를 setting해주어야 한다.
+                withContext(Main){
+                  value = user
+                  theJob.complete()
+                }
+              }
+            }
+          }
+      }  
+    }
+    // job을 calcel하는 method이다.
+    fun cancelJob(){
+        job?.cancel()
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;⑥ MainViewModel 클래스를 작성한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class MainViewModel : ViewModel() {
+    private val _userId: MutableLiveData&amp;lt;String&amp;gt; = MutableLiveData()
+
+    // Transformations _userId에 변화가 생기면 .switchMap 이 trigger 되고 {}안에 코드가 실행된다.
+    val user: LiveData&amp;lt;User&amp;gt; = Transformations
+          .switchMap(_userId){
+              // 기존 _userId에 변화가 생겼으니, 업데이트를 해주어야 한다.
+              // 따라서, Repository.getUser를 통해서 새로운 uerId를 취득해서 위에 String변수를 초기화 시켜준다.
+              Repository.getUser(it)
+          }
+
+    fun setUserId(userId: String){
+         val update = userId
+
+         // 현재의 userId가 이미 setting 되었다면 종료한다.
+         if(_userId.value == update){
+              return
+          }
+         // 기존의 userId를 update된 새로운 userId로 초기화시킨다.
+          _userId.value = update
+    }  
+
+    // Repository에서 작성한 cancelJobs() 메소드를 viewModel클래스의 cancelJobs()메소드 안에 작성해준다.
+    fun cancelJobs(){
+        Repository.cancelJobs()
+    }    
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;⑦ MainActivity에서 작성한 MainViewModel클래스의 instance를 작성해서, Observe(변수의 변화가 감지되었을때)를 작성한다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class MainActivity : AppCompatActivity() {
+
+    lateinit var viewModel: MainViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+        viewModel.user.observe(this, Observer {user -&amp;gt;
+            println(&quot;DBUG: $user&quot;)
+        })
+        viewModel.setUserId(&quot;1&quot;)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.cancelJobs()
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Wed, 15 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/15/Kotlin-Singleton-Example-with-MVVM-and-Coroutines/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/15/Kotlin-Singleton-Example-with-MVVM-and-Coroutines/</guid>
+        
+        
+        <category>Android-Architecture</category>
+        
+      </item>
+    
+      <item>
+        <title>Transfer data between Activities and Fragments</title>
+        <description>&lt;h3 id=&quot;activities와-fragments-사이에서-값-전달하기&quot;&gt;Activities와 Fragments 사이에서 값 전달하기&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;① Intent putExtra/getExtra &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;② Bundle bundle.putString/bundle.getString &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;③ Parcelable &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;④ SharedPreference &lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Tue, 14 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/14/Transfer-data-between-Activities-and-Fragments/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/14/Transfer-data-between-Activities-and-Fragments/</guid>
+        
+        
+        <category>Android</category>
+        
+      </item>
+    
+      <item>
+        <title>FragmentManager</title>
+        <description>&lt;h3 id=&quot;activities와-fragments-사이에서-값-전달하기&quot;&gt;Activities와 Fragments 사이에서 값 전달하기&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;① Intent putExtra/getExtra &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;② Bundle bundle.putString/bundle.getString &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;③ Parcelable &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;④ SharedPreference &lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Tue, 14 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/14/FragmentManager/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/14/FragmentManager/</guid>
+        
+        
+        <category>Android</category>
+        
+      </item>
+    
+      <item>
+        <title>Image libraries</title>
+        <description>&lt;h3 id=&quot;image-library&quot;&gt;Image Library&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;① Glide library&lt;/font&gt;&lt;/strong&gt; &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;(1) dependencies 추가하기&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//Glide library
+def glideVersion = '4.11.0'
+implementation &quot;com.github.bumptech.glide:glide:$glideVersion&quot;
+// Glide v4 uses this new annotation processor
+annotationProcessor &quot;com.github.bumptech.glide:compiler:$glideVersion&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;(2) ImageView에 보여줄 이미지를 binding하는 부분에서 아래와 같이 Glide 라이브러리로 바인딩해준다.&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;[Basic Usage]&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// Set the image
+RequestOptions defaultOptions = new RequestOptions()
+                                .error(R.drawable.ic_launcher_background);
+Glide.with(mContext)
+            .setDefaultRequestOptions(defaultOptions)
+            .load(mNicePlaces.get(position).getImageUrl())
+            .into(((Holder)holder).mImage);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;1.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 14 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/14/Image-Library/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/14/Image-Library/</guid>
+        
+        
+        <category>Android-Libraries</category>
+        
+      </item>
+    
+      <item>
+        <title>Kotlin in Android</title>
+        <description>&lt;h3 id=&quot;apply-&quot;&gt;&lt;strong&gt;.apply ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;우선 .apply를 사용해서 recyclerView의 LayoutManager와 adapter를 초기해준 아래 예를 같이 살펴보자. &lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private fun initRecyclerView(){
+    // apply 를 사용해서 layoutManager 와 adapter 를 지정해주었을때,
+    recycler_view.apply {
+        layoutManager = LinearLayoutManager(this@MainActivity)
+        blogAdapter = BlogRecyclerAdapter(context,[dataSet])
+        adapter = blogAdapter
+    }
+
+    // recycler_view를 지정해주면서 layoutManager 와 adapter 를 지정해주었을때
+    recycler_view.layoutManager = LinearLayoutManager(this@MainActivity)
+    blogAdapter = BlogRecyclerAdapter(this,[dataSet])
+    recycler_view.adapter = blogAdapter
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;확실히 apply annotation을 사용해서 recycler_view를 초기화 시켜주면, 매번 recycler_view를 호출해서 사용하지 않아도 가볍게 layoutManager와 adapter 키워드만으로도 초기화 시켜줄 수 있다.&lt;/p&gt;
+
+&lt;h3 id=&quot;companion-object-&quot;&gt;&lt;strong&gt;companion object ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;Kotlin은 클래스에 static 필드를 갖게 할 수는 없지만, companion object의 구조를 이용해서 Java의 static 메소드와 동일한 동작을 수행할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;data class Book(val title: String, val price: Int){
+    companion object {
+        const val FREE_PRICE = 0
+        fun newFreeBook(title: String) = Book(title, FREE_PRICE)
+    }
+}
+
+fun main(){
+  val book = Book.newFreeBook(&quot;Free Kotlin&quot;)
+  println(book)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위와 같이 companion object 뒤의 {}안에는 일반 클래스의 본체와 같이 구현을 한다. 위와 같이 도우미 개체를 정의하면 Book 클래스 안에 내재 된 싱글 톤 인스턴스(Singleton Instance)가 생성되며, Book.[Field name]형태로 액세스 할 수 있다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;companion object는 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;자체가 클래스 정의를 가지고 있으며, 외부에서 정의 된 클래스의 인스턴스가 아니다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+Book.xxx()라는 접근방식을 보면, 마치 Book 클래스의 싱글톤 인스턴스가 만들어지고 있는 것처럼 보이지만, Book인스턴스가 만들어지는 것은 아니다.&lt;br /&gt;
+위의 Book.xxx()라는 문장은 사실 &lt;strong&gt;Book.Companion.xxx()&lt;/strong&gt;이 생략 기법이다. 이 점에서 companion object는 Book 클래스의 인스턴스와는 별개임을 알 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;위와 같이 companion object{}의 형태로 작성할 수 있지만, 이 companion object에 이름을 넣어줄 수도 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;data class Book(val title: String, val price: Int){
+    companion object Factory{
+      const val FREE_PRICE = 0
+      fun freeBook(title: String) = Book(title, FREE_PRICE)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위의 도우미 객체는 Book.Factory.[Field name] 형태로 액세스 할 수 있다.&lt;br /&gt;
+&lt;strong&gt;companion object는 클래스 내에서 하나 밖에 정의할 수 없다.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;1.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 14 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/14/Android-Kotlin/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/14/Android-Kotlin/</guid>
+        
+        
+        <category>Android-Kotlin</category>
+        
+      </item>
+    
+      <item>
+        <title>Android Kotlin Coroutine(비동기 처리)</title>
+        <description>&lt;h3 id=&quot;coroutine--&quot;&gt;&lt;strong&gt;Coroutine ?&lt;/strong&gt; &lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;‘Coroutine’에 대해 알아보기 전에 우선, ‘동기’와 ‘비동기’의 개념에 대해서 알아보자.&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;동기(Synchronous) : will run in the same thread.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;ex1) 메인 스레드에서 실행&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// 메인 스레드에서 실행
+fun runMain(){
+  val data = Weather.tomorrow()
+  println(&quot;Tomorrow weather : ${data}&quot;)
+}
+
+fun Weather.tomorrow() : String{
+  Thread.sleep(2000)
+  return &quot;sunny&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;비동기(Asynchronous) : will run in a different thread.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;ex2) Coroutine으로 비동기 스레드 처리&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fun runMain() : Job = viewModelScope.launch{
+    val data = Weather.tomorrow()
+    println(&quot;Tomorrow weather : ${data}&quot;)
+}
+
+suspend fun Weather.tomorrow() : String{
+  delay(2000)
+  return &quot;sunny&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위의 ‘ex1’의 코드에서는 모두 Main Thread에서 실행하는 소스코드이다. 이는 동기적으로 호출해서 사용되고 있는 예이다.&lt;br /&gt;
+동기적 처리는 2초 스레드가 차단되어버리는 문제가 있다. 이 스레드가 차단되는 동안에는 사용자의 조작이 얼어 버리기 때문에 응용 프로그램에서 이 코드를 작성하는 것은 현실적이지 않다. 한편 coroutin을 사용하면 결과가 나올 때까지 2초 사용자가 일반적으로 수행할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 차이가 나는 이유는 &lt;strong&gt;coroutine에서 스레드를 차단하는 대신 처리를 &lt;font color=&quot;Red&quot;&gt;&quot;중단&quot;&lt;/font&gt;하기 때문이다.&lt;/strong&gt;&lt;br /&gt;
+첫번째 소스 코드에서 Thread.sleep() 따라 2초 main thread를 점유(차단)하고, 그 동안 다른 작업을 하고 싶어도 메인 스레드가 사용할 수 없다. &lt;br /&gt;
+한편 coroutine의 예에서 사용한 delay()함수는 2초간 차단하는 것이 아니라 &lt;strong&gt;main thread를 2초 동안 방출&lt;/strong&gt;하고  main thread를 다시 취득하고 처리를 계속한다. main thread가 개방되는 동안 다른 process에 thread를 활용할 수 있다. 이것을&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;중단(suspend)&quot;&lt;/font&gt;&lt;/strong&gt;라고 한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 ‘ex2’의 코드에서 delay() 같은 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;중단이 발생하는 함수를 &quot;suspend 함수&quot;라 한다.&lt;/font&gt;&lt;/strong&gt; 일반 함수는 중단하지 않기 때문에, suspend 함수를 호출할 수 없다. &lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※suspend 함수를 호출하려면 launch에서 호출하거나 함수에 suspend 키워드를 붙여서 suspend fun을 호출해야 한다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;※ 이처럼 coroutine은 기본적으로 사용이 어렵지 않다. 기본적으로 &lt;font color=&quot;Red&quot;&gt;&quot;launch()&quot;&lt;/font&gt;에서 비동기 작업을 시작하고, &lt;font color=&quot;Red&quot;&gt;중단함수(launch{}내에서 실행할 함수)는 suspend로 선언해서 사용&lt;/font&gt;한다.&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;coroutinescope-&quot;&gt;&lt;strong&gt;CoroutineScope ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;‘ex2’ 예제 코드를 살펴보면 viewModelScope에 대한 launch{…}　호출로, &lt;strong&gt;coroutine을 시작하는 기능을 가진 개체를 &lt;font color=&quot;Red&quot;&gt;&quot;CoroutineScope&quot;&lt;/font&gt;&lt;/strong&gt;라고 한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 ‘CoroutineScope’는 coroutine의 &lt;strong&gt;시작뿐만 아니라 시작한 coroutine을 적절하게 종료하는 역할을 담당하고 있다.&lt;/strong&gt;&lt;br /&gt;
+예를 들어 Android KTX로 제공되는 &lt;strong&gt;“viewModelScope”&lt;/strong&gt;를 닫을때 coroutine을 자동으로 취소해준다.&lt;br /&gt;
+Android에서 사용자 조작에 의한 처리를 하는 경우, “viewModelScope”에서 시작하는 것이 좋다. 병렬 프로그래밍을 하는데 있어 간과하기 쉬운 취소 처리도 CoroutineScope가 제대로 해줄 수 있게 되어있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val  job  =  runMain ()
+// 개별적으로 작업을 취소한다.  
+job . cancel ()
+
+runMain ()
+
+// viewModelScope를 cancel()하게 되면, viewModelScope에서 실행 한 작업을 모두 취소 할 수 있다.
+viewModelScope . cancel ()  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;launch-내에서-호출해서-사용할-suspend-함수를-작성하는-방법에-대해-알아보자&quot;&gt;&lt;strong&gt;launch{} 내에서 호출해서 사용할 suspend 함수를 작성하는 방법에 대해 알아보자.&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;① 블록처리를 suspend 함수로 변환&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;suspend fun Weather.tomorrow():String = withContext(Dispatchers.IO){
+    Thread.sleep(2000)
+    &quot;Text&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;→ &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;withContext(Dispatchers.IO){...}&lt;/font&gt;&lt;/strong&gt;에서 다른 스레드를 사용하여 실행하고, withContext() 처리가 완료되기 전까지 메인 스레드를 개방할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;② 콜백함수를 suspend 함수로 변환&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fun Weather.tomorrow(callback : (String) -&amp;gt; Unit) : Unit {
+  // 2초 후 처리를 호출하도록 타이머를 설정한다.
+  // callback 처리는 메인 스레드에서 행해지고, 그동안 스레드가 해제된다.
+  val handler = Handler()
+  handler.postDelayed({callback(&quot;Text&quot;)}, 2000)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;suspendCoroutine{...}를 사용해서 suspend함수로 변환&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;suspend fun Weathers.tomorrow() : String = suspendCoroutine{ c -&amp;gt;
+  // 2초 후 처리를 호출하도록 타이머를 설정한다.
+  // callback 처리는 메인 스레드에서 행해지고, 그동안 스레드가 해제된다.
+  val handler = Handler()
+  handler.postDelayed({c.resume(&quot;Text&quot;)}, 2000)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;suspendCancellableCoroutine{...}를 사용해서 suspend함수로 변환하는 것을 추천&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;suspend fun Weather.tomorrow() : String = suspendCancellableCoroutine{ c -&amp;gt;
+  // cancel 대응을 위한 코드 ① : 콜백 처리를 위한 변수
+  val callback = Runnable {
+      // 취소 대응을 위한 코드 ②
+      if(c.isActive) c.resume(&quot;Text&quot;)
+  }
+
+  val handler = Handler()
+  // cancel 대응을 위한 코드 ③ : coroutine 취소가 일어 났을 때 Handler 측도 취소한다.
+  c.invokeOnCancellation{handler.removeCallbacks(callback)}
+
+  // 2 초후 처리를 호출하도록 타이머를 설정한다.
+  // callback 처리는 메인 스레드에서 행해지고, 그 동안 스레드가 해제된다.
+  handler.postDelayed(callback, 2000)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;참고 : &lt;a href=&quot;https://qiita.com/wm3/items/48b5b5c878561ff4761a&quot;&gt;https://qiita.com/wm3/items/48b5b5c878561ff4761a&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;1.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 14 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/14/Android-Kotlin-Coroutine/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/14/Android-Kotlin-Coroutine/</guid>
+        
+        
+        <category>Android-Kotlin</category>
+        
+      </item>
+    
+      <item>
+        <title>MVVM Architecture Image Training</title>
+        <description>&lt;h2 id=&quot;mvvm-architecture&quot;&gt;MVVM Architecture&lt;br /&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;java-&quot;&gt;Java &lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;① ViewModel Class&lt;/font&gt;&lt;/strong&gt; &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;(1) class 선언하기&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class MainActivityViewModel extends ViewModel {
+
+    private MutableLiveData&amp;lt;List&amp;lt;NicePlace&amp;gt;&amp;gt; mNicePlaces;
+
+    public LiveData&amp;lt;List&amp;lt;NicePlace&amp;gt;&amp;gt; getNicePlaces(){return mNicePlaces;}
+
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;클래스를 선언할때에는 ViewModel 클래스를 상속하고, field변수로 MutableLiveData&amp;lt;List&lt;NicePlace&gt;&amp;gt;타입의 변수를 선언해준다. Field변수로 선언을 해줄때는 값이 변화하기 때문에 MutableLiveData 타입으로 선언하지만, 이 값을 읽어올때는 LiveData&amp;lt;List&lt;NicePlace&gt;&amp;gt; 타입으로 선언해준다. &lt;br /&gt;&lt;/NicePlace&gt;&lt;/NicePlace&gt;&lt;/p&gt;
+
+&lt;p&gt;(2) MainActivity에서 작성한 MainActivityViewModel 인스턴스를 만들어서 초기화시켜준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;우선, dependencies에 Lifecycle components dependency를 넣어준다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// Lifecycle components
+def archLifecycleVersion = '1.1.1'
+implementation &quot;android.arch.lifecycle:extensions:$archLifecycleVersion&quot;
+annotationProcessor &quot;android.arch.lifecycle:compiler:$archLifecycleVersion&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;다음으로 해줄 것은 &lt;strong&gt;데이터가 변화하는 것을 관찰하기 위한 설정&lt;/strong&gt;을 할 것이다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mMainActivityViewModel.getNicePlaces().observe(this, new Observer&amp;lt;List&amp;lt;NicePlace&amp;gt;&amp;gt;() {
+    @Override
+    public void onChanged(List&amp;lt;NicePlace&amp;gt; nicePlaces) {
+        mNicePlaceRecycleAdapter.notifyDataSetChanged();
+    }
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이젠 데이터가 변할때마다 변화된 데이터를 화면에 잘 출력할 수 있도록 adapter를 초기화시켜줄때 이 변화된 데이터로 초기화를 시켜준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private void initRecyclerView(){
+  mAdapter = new RecyclerAdapter(this, mMainActivityViewModel.getNicePlaces().getValue());
+  RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(this);
+  mRecyclerView.setLayoutManager(linearLayoutManager);
+  mRecyclerView.setAdapter(mAdapter);
+}    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;(3) Repository 클래스를 작성해준다.&lt;br /&gt;
+    이 Repository클래스에서는 실제 화면에 보여지는 Data의 setter와 getter메소드가 있는 클래스이다.&lt;br /&gt;
+    Repository class는 Singleton으로 작성을 한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;(4) 작성한 Repository 클래스를 활용하여, ViewModel 클래스에서 init() 메소드를 작성해준다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public void init(){
+  if(mNicePlaces != null){
+      return;
+  }
+  mRepo = NicePlaceRepository.getInstance();
+  mNicePlaces = mRepo.getNicePlaces();
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위에 작성한 init() 메소드는 MainActivity에서 ViewModel 클래스를 초기화시켜줄때, 기존의 dataSet변수가 ‘null’인 경우, ViewModel 클래스 객체를 초기화시켜준 다음에 Repository로부터 데이터를 가져와서 데이터를 초기화시켜주는 작업을 한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;kotlin-&quot;&gt;Kotlin &lt;br /&gt;&lt;/h3&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;1.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 14 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/14/MVVM-Architecture-Image-Training/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/14/MVVM-Architecture-Image-Training/</guid>
+        
+        
+        <category>Android-Architecture</category>
+        
+      </item>
+    
+      <item>
+        <title>RecyclerView를 Java/Kotlin으로 작성하기</title>
+        <description>&lt;h3 id=&quot;recyclerview을-작성하기---recyclerviewadapter작성하기&quot;&gt;RecyclerView을 작성하기 - RecyclerViewAdapter작성하기.&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;① RecyclerView Class를 초기화시켜 줄 두 개의 변수 (Context와 DataSet 변수)를 Field변수로 선언해준다.&lt;br /&gt;
+→ 위와 같이 생성자에서 직접 Context와 DataSet을 초기화해줘도 되지만, 내부에 다른 DataSet 필드 변수를 초기화 시켜주는 메소드를 작성해서 해줄 수 있다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;② 새로운 생성자를 작성해주고, 그 생성자 안에서 ①에서 작성한 field변수를 초기화시켜준다.&lt;br /&gt;
+③ 내부 클래스를 작성해준다. (이 내부 클래스에서는 Layout상에 있는 View요소를 초기화시켜준다. - UI element binding)&lt;br /&gt;
+④ 나머지 Override 메소드를 implementation해준다.&lt;br /&gt;
+⑤ onCreateViewHolder() - 이 부분에서는 parent View가 ‘null’인 경우에 custom listItem View를 Inflate해주고 holder 변수를 초기화시켜주는 부분이다.&lt;br /&gt;
+⑥ onBindViewHolder() - 구체적인 위치에 데이터를 보여주는 곳이다. 각 position마다 보여질 데이터를 초기화 시켜준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※RecyclerView의 OnClickListener의 가장 최고의 연습방법에 대해서 알아보자.(Java편)&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 방법은 일전에 Bravo라는 프로젝트를 했을 당시에 성전이 형한테 배웠던 방법이다. RecyclerView 내에 있는 아이템 클릭 이벤트를 구현할때, 아이템 클릭시 자동으로 UI내부의 요소를 동시에 업데이트 해주고 싶었는데, 아래와 같은 방식으로 했더니 원하는대로 작동이 되었었다. 나중을 위해서 아래의 내용을 정리해둔다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;① 우선 RecyclerViewAdapter 클래스 안에 onClick 메소드를 하나 가지고 있는 interface를 작성한다.&lt;br /&gt;
+② 그 다음에는 작성한 interface를 구현할 MainActivity에 가서 class에 implement해준다.&lt;br /&gt;
+③ Adapter클래스의 ViewHolder 내부 클래스에도 interface를 상속시켜준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;④ Adapter클래스의 Holder 내부 클래스에서 OnNicePlaceClickListener를 아래와 같이 선언해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    private ImageView mImage;
+    private TextView mTitle;
+    OnNicePlaceClickListener onNicePlaceClickListener;
+
+    public Holder(@NonNull View itemView, OnNicePlaceClickListener onNicePlaceClickListener) {
+        super(itemView);
+        mImage = itemView.findViewById(R.id.image);
+        mTitle = itemView.findViewById(R.id.image_name);
+        this.onNicePlaceClickListener = onNicePlaceClickListener;
+        itemView.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        onNicePlaceClickListener.onNicePlaceClick(getAdapterPosition());
+    }
+}
+
+public interface OnNicePlaceClickListener{
+    void onNicePlaceClick(int position);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;⑤ 기존에 onCreateViewHolder() 메소드 안에서 생성자 요소가 하나 추가 되었으므로, 외부 클래스 (Adapter)클래스에서도 필드 변수로 ‘mOnNicePlaceClickListener 인터페이스’를 선언해주고 생성자에서도 초기화를 시켜준다. &lt;br /&gt;
+그 다음에 onCreateViewHolder() 메소드 안에서도 Holder 내부 클래스를 초기화 시켜주는 요소로 mOnNicePlaceClickListener를 추가해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;⑥ 그 다음으로 MainActivity에서 Adapter를 초기화 시켜줄때, 두번째 요소에 this를 넣어 초기화시켜준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※RecyclerView의 OnClickListener의 가장 최고의 연습방법에 대해서 알아보자.(Kotlin편)&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;RecyclerView는 built-in onClickListener 메소드가 없기 때문에, Lambda식으로 RecyclerView의 click이벤트를 처리해줘야 한다.&lt;br /&gt;
+기존에 선언한 Aapter에서 Parameter로 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;itemClick:(T)-&amp;gt;Unit&lt;/font&gt;&lt;/strong&gt;를 넘겨줘야 한다.&lt;br /&gt;
+클릭했을때, Category 객체를 넘겨주지만, 결과적으로 아무것도 반환하지 않기 때문에, Unit으로 처리를 한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;ViewHolder(내부 클래스)의 Parameter에도 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;val itemClick: (Category) -&amp;gt; Unit&lt;/font&gt;&lt;/strong&gt;를 넘겨서 내부 메소드 내에 itemView.setOnClickListener{itemClick(category)}로 작성해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;⑦ Adapter클래스를 초기화시켜서 사용하는 클래스(MainActivity)에서 Lambda식으로 Adapter클래스를 초기화 시켜줄때　OnClickListener도 함께 초기화를 시켜준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※ Kotlin에서는 위의 방법 이외에 앞서 Java에서 interface를 구현해서 클릭 이벤트를 구현했던 방식으로도 할 수 있다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;①&lt;strong&gt;“OnItemClickListener”&lt;/strong&gt;interface를 Adapter클래스에 추가한다.&lt;br /&gt;
+②Adapter클래스의 Field변수로 OnItemClickListener를 선언한다.&lt;br /&gt;
+③OnItemClickListener의 setter메소드를 작성한다.&lt;br /&gt;
+④ViewHolder 내부 클래스 안에 아래와 같이 OnClickListener를 setting한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;itemView.setOnClickListener{
+      mOnPostClickListener.onClick(blogPost)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;⑤MainActivity에서 adapter를 초기화 시키는 부분에서 interface의 setter 메소드를 사용해서 interface를 구현해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private fun initRecyclerView(){
+    // apply 를 사용해서 layoutManager 와 adapter 를 지정해주었을때,
+    recycler_view.apply {
+        layoutManager = LinearLayoutManager(this@MainActivity)
+        blogAdapter = BlogRecyclerAdapter()
+        blogAdapter.setOnPostClickListener(onPostClickListener)
+        val topSpacingDecoration = TopSpacingItemDecoration(30)
+        addItemDecoration(topSpacingDecoration)
+        adapter = blogAdapter
+    }
+}
+
+// onPostClickListener
+private val onPostClickListener = object : BlogRecyclerAdapter.OnPostClickListener{
+    override fun onClick(blogPost: BlogPost) {
+      Toast.makeText(applicationContext, blogPost.username, Toast.LENGTH_SHORT).show()
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;RecyclerView를 사용할때 필요한 RecyclerViewAdapter클래스의 작성순서를 이미지 트레이닝한다.&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Mon, 13 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/13/RecyclerView/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/13/RecyclerView/</guid>
+        
+        
+        <category>Android</category>
+        
+      </item>
     
       <item>
         <title>뷰(View), 뷰 그룹(ViewGroup), 레이아웃(Layout)</title>
@@ -303,1011 +995,6 @@ View에서의 ‘edge’는 일종의 ‘기준선’을 의미한다.&lt;br /&g
         <pubDate>Sun, 12 Apr 2020 00:00:00 +0900</pubDate>
         <link>http://localhost:4000/2020/04/12/Android-Layout-conception/</link>
         <guid isPermaLink="true">http://localhost:4000/2020/04/12/Android-Layout-conception/</guid>
-        
-        
-        <category>Android</category>
-        
-      </item>
-    
-      <item>
-        <title>Activity, 명시적 Intent(Explicit Intent), 암시적 Intent(Implicit Intent)</title>
-        <description>&lt;p&gt;이번 포스팅에서는 안드로이드의 기초적인 부분을 정리할 것이다. 이는 나중에 안드로이드를 모르는 사람에게 기초적인 부분을 좀 더 잘 설명할 수 있기 위함이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Activity?&lt;/font&gt;&lt;/strong&gt;
-사용자와 상호 작용이 가능한 UI, 즉 ‘활성화된 상태의 화면’을 말한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;Activity는 단일 화면이기 때문에, 각각의 독립된 단일 화면으로 나타낸 화면설계도(스토리 보드)의 화면은 각각의 Activity로 구성한다.&lt;br /&gt;
-비슷한 구성이거나 약간 다른 Activity같은 경우는 Activity를 통합하고 조건에 따라서 화면의 요소만 바꿔주면 된다.&lt;br /&gt;
-사전에 스토리 보드를 사용하여, 화면 설계를 하게 되면, 서로 비슷한 작업들을 사전에 파악하여 작업량을 줄이는 것이 가능하다. (화면설계의 중요성)&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;여러 개의 화면을 Activity로 구성했을 때 화면 전환을 위해 사용하는 것이 바로 ‘Intent’이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Intent?&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-Intent는 안드로이드에서 앱 구성 요소 간의 작업을 요청할 수 있는 메시지 객체이다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;Intent의 기본적인 용례&lt;br /&gt;&lt;/p&gt;
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td width=&quot;300&quot;&gt;사례&lt;/td&gt;
-    &lt;td width=&quot;700&quot;&gt;설명&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;액티비티 시작&lt;/td&gt;
-    &lt;td&gt;Activity는 사용자와 상호 작용이 가능한 단일 화면이다. Activity의 새 인스턴스를 시작하기 위해 startActivity()메소드를 사용하여 Intent를 전달할 수 있습니다. 호출한 Activity가 완료되었을 때 결과를 수신하기 위해서는 startActivityForResult를 사용한다.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;서비스 시작&lt;/td&gt;
-    &lt;td&gt;Service는 UI없이 Background에서 작업을 수행하는 요소이다. Service를 시작하기 위해서는 startService()메소드를 사용하여 Intent를 전달한다. &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;브로드캐스트(broadcast)전달&lt;/td&gt;
-    &lt;td&gt;브로드캐스트는 모든 앱이 수신할 수 있는 메세지로, sendBroadCast(), sendBroadCastOrder(), sendStickyBroadcast 메소드에 Intent를 전달하여 BroadCast를 전달할 수 있다.&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td width=&quot;200&quot;&gt;Click 이벤트 리스너 등록방법&lt;/td&gt;
-    &lt;td width=&quot;400&quot;&gt;장점&lt;/td&gt;
-    &lt;td width=&quot;400&quot;&gt;단점&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;XML onClick&lt;/td&gt;
-    &lt;td&gt;레이아웃 XML 파일에서 View 객체들의 ID를 신경쓰지 않아도 된다. 심지어 ID가 없어도 된다.&lt;/td&gt;
-    &lt;td&gt;메소드가 없거나, 이름이 틀리거나, 파라미터 형태가 다르면 에러가 발생하고, 앱이 동료된다. 이러한 에러는 보통 Runtime(실행)중에 발견된다.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;View.setOnClickListener&lt;/td&gt;
-    &lt;td&gt;에러 발생을 컴파일 시에 미리 알 수 있다. Kotlin의 경우 Android Extension 기능으로 findViewById()가 필요 없어 소스가 간결하다.&lt;/td&gt;
-    &lt;td&gt;View 객체의 ID에 민감하다. 반드시 해당 View의 ID가 존재해야 하며, 레이아웃 구성이 복잡한 경우라면 View 객체들의 ID를 전부 이름 짓기 곤란한 경우가 있다.&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br /&gt;
-하지만, 코틀린 코드에서는 setOnClickListener를 사용하는 방법을 활용하는 것이 좋다. 실행과정에서 에러를 발견하는 것보다는 사전에 에러를 발견하는 것이 메리트가 크다고 판단된다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;인텐트-유형-및-구성요소-&quot;&gt;인텐트 유형 및 구성요소 &lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;Intent는 ‘기본 구성 요소 간의 통신을 위한 메세지 객체’이다. Activity를 시작하기 위해서 Intent를 사용하는 방법은 크게 2가지 유형이 있다. 그 2가지 유형을 ‘명시적 호출’과 ‘암시적 호출’이라고 부른다.&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;명시적 호출(Intent) : &lt;/font&gt;&lt;/strong&gt;시작할 기본 구성 요소(Activity, Service)등의 ‘이름’을 정확하게 알고 있을 때 사용한다. 여기서 ‘이름’이란 패키지명까지 포함한 완벽한 이름을 말한다. 명시적 인텐트는 보통 앱 자신의 구성요소를 호출할 때 사용한다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;ex) Intent(Package Context, 타겟이 되는 구성요소의 Class)&lt;br /&gt;
-&lt;strong&gt;Context란?&lt;/strong&gt;&lt;br /&gt;
-애플리케이션이 가지고 있는 ‘환경 정보’에 대한 인터페이스로서, 이때의 ‘환경정보’란 애플리케이션의 패키지 이름, 리소스 정보 등 애플리케이션이 실행되고 있는 환경의 요소들을 일컫는다. &lt;br /&gt;
-Activity는 Context를 상속받기 때문에, 특정 Context 대신에 ‘자기자신’을 전달한다. 그러므로, 현재 실행되는 Activity의 애플리케이션 환경정보가 전달된다.&lt;br /&gt;&lt;/p&gt;
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td width=&quot;300&quot;&gt;구성요소&lt;/td&gt;
-    &lt;td width=&quot;700&quot;&gt;설명&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;Component name&lt;/td&gt;
-    &lt;td&gt;Component name은 실행하고자 하는 기본 구성요소의 명확한 이름이며, Intent가 명시인지, 암시인지 구분하는 요소가 된다.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;Action&lt;/td&gt;
-    &lt;td&gt;
-      Action은 수행할 작업을 의미한다. &lt;br /&gt;
-      'ACTION_VIEW'와 같은 작업은 Activity가 사용자에게 특정 화면을 보여주도록 요청한다. 따라서 ACTION_VIEW 액션은 갤러리 앱의 특정 사진을 보여줄 경우 등에도 사용된다.
-    &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;Data&lt;/td&gt;
-    &lt;td&gt;Data는 Action에 따라 필요한 Data를 함께 보낼 때 사용한다. 예를 들어 갤러리에서 특정 사진을 편집해야 하는 경우 Data에 사진 정보에 대한 데이터를 같이 보낼 수 있다.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;Category&lt;/td&gt;
-    &lt;td&gt;Category는 인텐트를 처리하는 구성 요소에 대한 '분류'를 의미한다. 예를 들어 'CATEGORY_LAUNCHER'는 이 Activity가 런처에서 보여지고 앱이 시작될 때 사용되는 화면임을 의미하는 정보이다.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;Extras&lt;/td&gt;
-    &lt;td&gt;작업을 수행하기 위해 필요한 추가 정보이다. 보통은 Key, Value 타입의 정보를 전달하며, Bundle 객체로 전달할 수 있다.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;Flags&lt;/td&gt;
-    &lt;td&gt;Intent에 대한 Meta정보이다. 특정 구성 요소를 실행할 때 추가 정보로 활용될 수 있다. 예를 들어 Activity를 실행할 때 현재가지 실행된 모든  Activity를 실행할 때 현재까지 실행된 모든 Activity 스택을 초기화하고 실행하는 등의 작업을 할 수 있다.&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;암시적 호출 : &lt;/font&gt;&lt;/strong&gt;시작하는 구성요소(Activity, Service)의 이름을 명확하게 적지는 않지만, 일반적인 작업 유형을 선언하여 그 작업을 수행할 수 있는 구성 요소를 호출한다.&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;예를 들어&lt;/font&gt;&lt;/strong&gt; &lt;strong&gt;작성하고 있는 앱에서 위치를 지도에서 표시하고 싶은 경우,&lt;/strong&gt;이 경우 직접 구현하는 것도 방법이지만, 이미 사용자의 핸드폰에 설치된 ‘지도 애플리케이션’을 사용할 수도 있다. 사용자의 핸드폰에 이미 설치된 지도 애플리케이션이 &lt;strong&gt;‘구글 지도’&lt;/strong&gt; 일수도, &lt;strong&gt;‘네이버 지도’&lt;/strong&gt;일수도 있으며, 또는 그 구성요소의 명확한 이름을 알 수 없는 경우도 있다. &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;바로 이러한 경우에 '암시적 인텐트'를 사용한다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-&lt;ol&gt;
-  &lt;li&gt;Intent는 구성 요소 간의 작업을 요청할 수 있는 메시지 객체이다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;Intent의 유형에는 명시적, 암시적 유형이 있다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;같은 애플리케이션 내에서 화면 전환을 위해서는 명시적 Intent를 생성하고, startActivity()함수를 사용한다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;암시적 Intent는 Component Name은 없고, 대신 작업 유형을 나타내는 Action을 지정한다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        <pubDate>Sun, 12 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/12/Android-Basic/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/12/Android-Basic/</guid>
-        
-        
-        <category>Android</category>
-        
-      </item>
-    
-      <item>
-        <title>Android Unit Testing</title>
-        <description>&lt;p&gt;실제로 Test case를 작성해가면서, Unit Test를 해 볼 것이다.&lt;br /&gt;
-~(test)Package는 안드로이드 기능과 상관없는 ‘Java’ 혹은 ‘Kotlin’코드를 테스트할 수 있다.&lt;br /&gt;
-~(androidTest)Package는 안드로이드 환경과 연고나된 코드를 테스트 할 수 있다. - 안드로이드 환경에서 테스트하는 것이기 때문에, 에뮬레이터나 안드로이드 기기가 필요하다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;기본적으로 Unit Test를 테스트하는 곳은 ~(Test)Package에서 작업을 한다.&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;'단위(Unit)테스트'는&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;① 보통 위 경우와 같이 예측과 실제 결과를 비교합니다. 과학 실험과 비슷하게 ‘가설’을 세우고, ‘각종 변인들을 통제’한다.이후에 실험의 결과가 가설의 예측 결과와 동일한지 확인을 한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;② 복잡한 소프트웨어를 작은 모듈로 분리하여, 코드가 정상적으로 동작하는지 확인한다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;③ 테스트를 빠르게 수행할 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;※ 하지만, “필요한 경우에 단위 테스트를 하되, 모든 기능에 대한 단위 테스트를 반드시 해야할 필요는 없다.” 그 이유는 종종 단위테스트에 너무 신경을 쓴 나머지, 프로그램이 구현해야 하는 중요한 비즈니스 로직보다 테스트를 위해서만 존재하는 코드들을 위해 많은 시간을 투자해야 되는 경우도 있기 때문이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;테스트-방법론test-driven-development--tdd-&quot;&gt;&lt;strong&gt;테스트 방법론&lt;/strong&gt;(Test-Driven Development : &lt;strong&gt;TDD&lt;/strong&gt;) &lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;‘테스트 주도 개발’ 등 테스트 방법론에서는 실제 로직에 해당하는 코드를 작성하기 전에 테스트 코드부터 만들 것을 권장한다.&lt;br /&gt;
-가령 테스트 주도 개발에서는 먼저 테스트를 만드고 실패한 뒤, &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;먼저 작성한 테스트 코드를 통과 가능한 코드로 만드는 방식으로 개발을 진행&lt;/font&gt;&lt;/strong&gt;한다. &lt;br /&gt;
-이 방법은 저번 운용보수 겐바에서 뉴스 어플의 batch처리를 수정하는 현장에서 일을 했을때, 단위테스트를 하면서 에러가 발생한 조건이 있다면, 이 조건에러없이 통과 가능하도록 기존의 코드를 수정하는 방식으로 진행했었는데, 이 방식이 바로 TDD(Test-Driven Development)방식이다.&lt;br /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Thu, 09 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/09/Unit-Testing-in-Android/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/09/Unit-Testing-in-Android/</guid>
-        
-        
-        <category>Android</category>
-        
-      </item>
-    
-      <item>
-        <title>Tests in Android</title>
-        <description>&lt;p&gt;&lt;strong&gt;안드로이드에는 어떤 종류의 테스트가?&lt;/strong&gt;&lt;br /&gt;
-총 세가지의 테스트 종류가 있다.&lt;br /&gt;
-① Local Unit Tests&lt;br /&gt;
-② Instrumentation Tests&lt;br /&gt;
-③ UI Test&lt;br /&gt;
-&lt;img src=&quot;/images/android/2020-04-10 android test.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;우선 &lt;strong&gt;Local Unit Tests&lt;strong&gt;에 대해서 살펴보자&lt;br /&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;①Local Computer&lt;br /&gt;
-② Java Virtual Machine(JVM)&lt;br /&gt;
-③ Very fast (not required to use emulator, run raw java code, sequence of method, logic based test)&lt;br /&gt;&lt;br /&gt;
-(Local Unit Tests는 별도의 emulator를 사용하지 않고, logic을 베이스로 java코드를 실행해서 하는 테스트이기 때문에 속도가 매우 빠르다)&lt;br /&gt;
-④ JUnit5, Mockito&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;그 다음으로 살펴볼 것은 &lt;strong&gt;Instrumentation Tests&lt;/strong&gt;이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;① Similar to local unit tests(Local Unit Tests와 매우 유사하지만, 조금 다르다)&lt;br /&gt;
-② Test Android functionality (Activity, Fragment, Services Life cycle) 검사 목적의 테스트&lt;br /&gt;
-③ Need a real device or emulator - framework&lt;br /&gt;
-④ JUnit4, Mockito&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;마지막으로 살펴볼 테스트는 &lt;strong&gt;UI테스트&lt;/strong&gt;이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;① Simulate a person using your app&lt;br /&gt;
-② Literally uses widgets&lt;br /&gt;
-  (Pressing a button, entering a text)&lt;br /&gt;
-③ Real device or emulator&lt;br /&gt;
-④ Expresso Library&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td&gt;
-      &lt;img src=&quot;/images/android/2020-04-10 Android Test folder.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;
-    &lt;/td&gt;
-    &lt;td&gt;
-      안드로이드 스튜디오에서 Project view로 전환하면 좌측의 폴더구조와 같이 androidTest, main, test폴더를 볼 수 있다.&lt;br /&gt;
-      우선 첫번째 androidTest 폴더의 경우, Instrumentation Tests와 UI 테스트를 하는 곳으로, Mockito, JUnit과 Expresso 라이브러리를 사용한다. &lt;br /&gt;
-      두번째 test폴더의 경우, Local Unit Tests를 하는 곳으로, Mockito와 JUnit 라이브러리를 사용한다.
-    &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;h2 id=&quot;professional-unit-tests&quot;&gt;Professional Unit Tests!&lt;/h2&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;새로운 Java component&lt;br /&gt;
-① ViewModels&lt;br /&gt;
-② Room Persistence&lt;br /&gt;
-③ Repository(MVVM)&lt;br /&gt;
-④ ‘Local’ Unit Testing&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;JUnit5 - 새로운 Junit 라이브러리&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;JUnit4 - 일부 라이브러리와 호환이 되지 않는 경우가 있다.&lt;/p&gt;
-
-&lt;p&gt;Mockito - Third part library이지만 대부분의 회사에서 사용되고 있는 라이브러리이다.&lt;br /&gt;
-Fake class! Mocks of objects (Fake objects) - Network request test, MVVM request, Repository server HTTP request, &lt;br /&gt;
-mock the class and certain 조건에 따른 데이터 처리 테스트를 해볼 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Testing with AndroidX&lt;/strong&gt;&lt;br /&gt;
-① Room Database&lt;br /&gt;
-② Room DAO&lt;br /&gt;
-③ ApplicationProvider&lt;br /&gt;
-④ Instant TaskExecutorRule&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Test-driven Development(TDD)&lt;/strong&gt;&lt;br /&gt;
-① Implement feature&lt;br /&gt;
-② Unit test feature&lt;br /&gt;
-③ Implement feature&lt;br /&gt;
-④ Unit test feature&lt;br /&gt;
-⑤ Repeat…&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;local-unit-tests&quot;&gt;Local Unit Tests&lt;/h2&gt;
-</description>
-        <pubDate>Thu, 09 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/09/Tests-in-Android/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/09/Tests-in-Android/</guid>
-        
-        
-        <category>Android</category>
-        
-      </item>
-    
-      <item>
-        <title>Java and Kotlin</title>
-        <description>&lt;h3 id=&quot;java와-kotlin-클래스의-차이점&quot;&gt;Java와 Kotlin 클래스의 차이점&lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;① 코들린 클래스와 Java 클래스의 차이점 중 하나는 코틀린은 ‘Getter, Setter’가 자동 생성된다.&lt;br /&gt;
-② 코틀린 클래스에서 ‘var’로 선언한 변수는 getter,setter 전부 생성되고, ‘val’키워드로 선언된 변수는 getter만 선언된다.&lt;br /&gt;
-③ 코틀린에서 field변수에 대한 setter method를 customize해서 사용해야 되는 경우가 있는데, 이 경우에는 다음과 같이 &lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var nickName = &quot;&quot;
-    set(value){
-      field = value.toLowerCase()
-    }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;위와 같은 문법을 사용하는 이유는 ‘Property의 이름’을 사용하는 경우, 자동으로 Setter, Getter가 호출되기 때문이다. &lt;br /&gt;
-접근자(Getter, Setter)에서 field키워드로 사용되는 개념을 ‘Property를 뒷받침하는 field’라는 의미의 ‘Backing Field’라 불린다.&lt;br /&gt;
-Kotlin에서는 field를 사용하지 않기 때문에 이렇게 field키워드를 사용해서 접근한다.&lt;/p&gt;
-
-&lt;p&gt;Property의 위임은 코틀린이 객체의 Property를 더욱 유연하게 활용할 수 있도록 지원하는 기능 &lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;property와-field의-차이점-&quot;&gt;Property와 Field의 차이점 &lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;코틀린은 기본적으로 Field를 사용하지 않는다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;Field는 클래스에 선언되어 있는, ‘클래스 변수’가 아닌 ‘인스턴스 변수’를 의미한다.&lt;br /&gt;
-필드는 외부에서 접근할 수 있는 Getter, Setter 메소드가 반드시 존재할 필요가 없다.따라서 Getter, Setter는 있건 없건 상관없다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;클래스의 인스턴스 변수들을 모두 Field라고 부릅니다. Getter, Setter가 있든 없든, 혹은 접근 제어자가 무엇이든 Field이다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;반면, Property는 조금 다르다!&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-① Field가 선언되어 있고 Getter, Setter가 있는 경우 Property이다.&lt;br /&gt;
-② Getter만 선언되어 있어서, 변수의 값을 읽을수만 있는 경우도 Property이다.&lt;br /&gt;
-③ 단순 Field는 Property가 아니다. &lt;strong&gt;ex) private int notProperty1 = 0;&lt;/strong&gt;&lt;br /&gt;
-④ 클래스 변수 역시 Property가 아니다. &lt;strong&gt;ex) private static int notProperty2;&lt;/strong&gt; &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;※ Property는 Field와 외부에서 접근 가능한 Getter 또는 Setter가 있는 경우이다. 더 정확히 말하면 Property는 Field와 접근 가능한 Getter, Setter의 조합을 의미한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;코틀린은 기본적으로 클래스의 상속을 불가능하다. &lt;br /&gt;
-이렇게 만든 이유는 Java분야의 유명서적 ‘Effective Java’에서는 상속에 대하여 ‘상속을 위한 설계와 문서를 갖추거나, 그렇지 않은 경우 상속을 금지하라’라고 조언한다. &lt;br /&gt;
-캡슐화의 주요 목적 중 하나는 클래스를 사용하는 측면에서 해당 클래스의 구체적인 사항을 모르게 하는 것입니다. 하지만, 구체적인 구현 클래스를 알고 있는 상태에서 구현해야하는 상황이 발생한다면, 이는 “캡슐화가 깨졌다”라고 볼 수 있다.&lt;br /&gt;
-Kotlin에서 상속을 허용하려면, ‘open’키워드를 사용해야 한다.&lt;br /&gt;
-코틀린에서 클래스의 메소드는 기본적으로 ‘final’상태이기 때문에, 클래스뿐만 아니라 메소드 역시 open처리를 해야 override할 수 있다!&lt;br /&gt;
-Override하는 함수에 대해서는 반드시 ‘override’키워드를 사용해야만 한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;위임--코틀린에서-상속의-단점을-줄이고-코드를-재사용할-수-있다&quot;&gt;‘위임’ : 코틀린에서 상속의 단점을 줄이고 코드를 재사용할 수 있다.&lt;br /&gt;&lt;/h1&gt;
-&lt;h3 id=&quot;클래스와-프로퍼티의-위임&quot;&gt;클래스와 프로퍼티의 위임&lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;객체 지향에서 위임이란?&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-클래스의 특정 기능들을 대신 처리해 주는 것을 말한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;클래스를 상속하지 않고 기존 클래스의 일부 메소드를 변경하거나 새로운 기능을 확장하는 방법은 ‘위임’이다. &lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;위임을 사용하는 대표적인 패턴에는 &lt;font color=&quot;Red&quot;&gt;데코레이터(Decorator)패턴&lt;/font&gt;이 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;'데코레이터 패턴'&lt;/font&gt;&lt;/strong&gt;은 그 이름처럼 특정 클래스의 기능에 추가 기능을 덧붙이는 방법이다.&lt;br /&gt;
-&lt;strong&gt;‘기존에 설계된 객체에서 책임을 전달하는 것’&lt;/strong&gt;이 ‘위임’입니다. 확장 기능은 자신이 실행하고, 기존의 기능은 그대로 기존 객체의 메소드에 전달하는 방식이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;데코레이터 패턴은 이런 위임을 활용한 패턴 중 하나로, 보통 기존 기능에 추가 기능을 덧붙이는 패턴이다. 데코레이터 패턴을 활용하면 기존 클래스를 상속받지 않은 상태로 새로운 추가 기능을 덧붙이거나 확장할 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;문제는 이런 Decorator 패턴의 경우, 단순한 경우에도 코드가 상당히 길어진다는 것이다. 인터페이스에 포함된 메소드가 많다면 코드가 매우 길어진다. 그 이유는 일단은 인터페이스의 모든 메소드를 구현해야 한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;코틀린은 클래스 위임을 언어 차원에서 제공하기 때문에, 훨씬 간결하게 표현할 수 있다.&lt;br /&gt;
-&lt;strong&gt;ex)&lt;/strong&gt; ‘by’ 명령어를 이용해서 인터페이스의 기능을 위임&lt;br /&gt;
-class DelegatingArrayList&lt;T&gt;(private val innerList: MutableCollection&lt;T&gt; = mutableListOf()) : MutableCollection&lt;T&gt; by innerList&lt;br /&gt;&lt;/T&gt;&lt;/T&gt;&lt;/T&gt;&lt;/p&gt;
-
-&lt;p&gt;→ 위의 코틀린 코드는 ‘innerList’라는 ArrayList타입의 Property가 있고, ‘Collection’인터페이스를 상속받고, &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;Collection 인터페이스의 기능을 'innerList'에 위임&lt;/font&gt;&lt;/strong&gt;하겠다”는 의미이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;프로퍼티 위임이란?&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-코틀린에서는 ‘클래스’뿐만 아니라 ‘프로퍼티’에 대해서도 ‘위임’을 제공한다. 코틀린의 ‘프로퍼티 위임’은 Getter, Setter 연산자를 위임할 수 있게 해준다.&lt;br /&gt;
-방법으로는 아래 세 가지 방법이 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;① Lazy 위임 : 프로퍼티의 초기화를 인스턴스 생성 시점이 아니라 프로퍼티를 사용하는 시점에 초기화하는 것 &lt;br /&gt;
-  &lt;strong&gt;→ 인스턴스 생성 시점에 모든 초기화를 진행한다면 전체적인 성능이 매우 저하된다. 그래서 일단은 초기화를 하지 않고 사용하다가 실제로 사용하는 시점에 초기화를 하는 것을 ‘게으른 초기화(lazy initialization)’라 하며, 프로그래밍에서 자주 사용되는 패턴 중 하나이다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;※ lateinit과 lazy는 게으른 초기화를 위해 사용한다는 측면에서 동일하지만, 그 외 특징은 꽤 다르다. &lt;br /&gt;
-  (1) lateinit은 lazy처럼 위임이 아닌 변수의 &lt;strong&gt;변경자(modifier)&lt;/strong&gt;로 사용한다. &lt;br /&gt;
-  변경자(modifier)란? 변수의 성질을 변경하는 것인데, ‘private, public, static, final’등도 모두 변경자이다. lateinit은 나중에 변수가 초기화될 것임을 표시하는 것이다. &lt;strong&gt;“이 프로퍼티는 이후 초기화되어 null이 아닐 것이 확실하니, 사용할때 null을 신경쓰지 않고 사용하겠다” 라고 컴파일러에게 알려주는 것이다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;② &lt;strong&gt;Observable 위임&lt;/strong&gt; : 주로 관찰하고자 하는 대상에 변경 사항이 생길 때, 변경된 사실을 관측자에게 알려주는 것이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;③ &lt;strong&gt;프로퍼티를 Map 객체에 위임&lt;/strong&gt; : 특정 Key에 해당하는 Value를 저장&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;singleton-패턴-및-object-클래스&quot;&gt;Singleton 패턴 및 Object 클래스&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;Singleton 패턴 : 한 개의 인스턴스 생성을 보장하고, 코드 어디에서나 접근 가능하게 하는 것이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td width=&quot;500&quot;&gt;
-      &lt;b&gt;자바에서의 Singleton class&lt;/b&gt;
-    &lt;/td&gt;
-    &lt;td width=&quot;500&quot;&gt;
-      &lt;b&gt;코틀린에서의 Singleton class&lt;/b&gt;&lt;br /&gt;
-      어차피 싱글턴 패턴은 거의 뻔한 코드를 사용하는 것이므로, 그냥 키워드로 제공한다. 단순히 object 키워드를 사용하는 것만으로 Java에서 꽤 복잡하게 작성한 코드들을 생략가능하다.
-    &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;
-      &lt;img src=&quot;/images/android/2020-04-11 SingletonJava.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;
-    &lt;/td&gt;
-    &lt;td&gt;
-      &lt;img src=&quot;/images/android/2020-04-11 Singleton Kotlin.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;
-    &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-
-&lt;h3 id=&quot;data-클래스-&quot;&gt;Data 클래스 &lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;Kotlin에서는 ‘toString()’, equals(), hashCode()’등의 함수를 자동으로 생성해주는 ‘Data’클래스를 지원한다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;클래스의-가시성-변경자-&quot;&gt;클래스의 가시성 변경자 &lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;클래스에서 ‘가시성 변경자’는 클래스의 메소드 혹은 필드에 대해 접근을 허용하는지 결정하는 역할을 한다.&lt;br /&gt;
-‘private, protected, default, public’ 키워드로 사용했던 ‘접근 제어자’와 같은 의미한다. 먼저 Java의 가시성 변경자와 의미에 대해서 알아보자. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;자바의 가시성 변경자(접근 제어자)&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td&gt;
-      변경자
-    &lt;/td&gt;
-    &lt;td&gt;
-      의미
-    &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;
-      default(기본 가시성)
-    &lt;/td&gt;
-    &lt;td&gt;
-      같은 패키지에서 접근 가능
-    &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;
-      private
-    &lt;/td&gt;
-    &lt;td&gt;
-      클래스 내부에서만 사용 가능하며 외부에 비공개
-    &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;
-      protected
-    &lt;/td&gt;
-    &lt;td&gt;
-      클래스와 상속받은 하위클래스에서만 사용 가능
-    &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;
-      public
-    &lt;/td&gt;
-    &lt;td&gt;
-      외부에서 모두 접근 가능
-    &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;코틀린의 가시성 변경자&lt;/strong&gt;&lt;br /&gt;
-코틀린에서는 함수나 프로퍼티가 꼭 클래스 내부에만 존재하는 것이 아니기 때문에 의미가 추가된다. ‘클래스 멤버일 때’의 의미와 ‘최상위 선언인 경우’ 그 의미가 조금 다르다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td&gt;변경자&lt;/td&gt;
-    &lt;td&gt;클래스 멤버&lt;/td&gt;
-    &lt;td&gt;최상위 선언&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;internal&lt;/td&gt;
-    &lt;td&gt;같은 모듈에서 접근 가능&lt;/td&gt;
-    &lt;td&gt;같은 모듈에서 접근 가능&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;private&lt;/td&gt;
-    &lt;td&gt;클래스 내부에서만 사용 가능하며, 외부에 비공개&lt;/td&gt;
-    &lt;td&gt;같은 파일에서만 접근 가능&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;protected&lt;/td&gt;
-    &lt;td&gt;클래스와 상속받은 하위 클래스에서 사용 가능&lt;/td&gt;
-    &lt;td&gt;최상위 선언에서는 사용 불가&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;public(기본 가시성)&lt;/td&gt;
-    &lt;td&gt;모든 곳에서 접근 가능&lt;/td&gt;
-    &lt;td&gt;모든 곳에서 접근 가능&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br /&gt;
-Java와 달리 코틀린은 같은 패키지에서 접근 가능한 ‘default’ 속성이 따로 없다. 대신에 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;같은 모듈일때 접근 가능한 변경자로써 'internal' 키워드&lt;/font&gt;&lt;/strong&gt;가 있습니다.&lt;br /&gt;
-여기서 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;모듈이란?&lt;/font&gt;&lt;/strong&gt; 무엇인가. 모듈은 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;한꺼번에 컴파일되어 묶이는 하나의 프로젝트 단위&lt;/font&gt;&lt;/strong&gt;라고 볼 수 있다. 현재 안드로이드 프로젝트를 기준으로 한다면 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;개별 'app'이 바로 '모듈의 단위'&lt;/font&gt;&lt;/strong&gt;라고 할 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;내부-클래스와-중첩-클래스&quot;&gt;내부 클래스와 중첩 클래스&lt;br /&gt;&lt;/h3&gt;
-
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;/td&gt;
-    &lt;td&gt;Java&lt;/td&gt;
-    &lt;td&gt;Kotlin&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;내부 클래스&lt;/td&gt;
-    &lt;td&gt;
-      클래스 내부에 선언된 클래스를 내부 클래스(Inner Class)라고 한다.&lt;br /&gt;
-      내부 클래스는 외부로 선언된 외부 클래스 객체가 생성되어야 존재할 수 있다.&lt;br /&gt;
-      내부 클래스에서는 외부 클래스의 필드에 접근 가능하다.&lt;br /&gt;
-    &lt;/td&gt;
-    &lt;td&gt;
-      코틀린은 내부 클래스를 선언하려면 inner 키워드를 사용하면 된다.&lt;br /&gt;
-      내부 클래스에서는 외부 클래스의 속성에 접근 가능하다.&lt;br /&gt;
-    &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;중첩 클래스&lt;/td&gt;
-    &lt;td&gt;
-      클래스 내부에 선언되어 있지만 static이 붙으면 중첩 클래스가 된다.&lt;br /&gt;
-      중첩 클래스는 외부에 있는 외부 객체가 없어도 존재할 수 있다.&lt;br /&gt;
-      중첩 클래스는 외부 클래스 필드에 접근이 불가하다.&lt;br /&gt;
-    &lt;/td&gt;
-    &lt;td&gt;
-      코틀린은 내부에 클래스를 선언하면 중첩클래스가 된다.&lt;br /&gt;
-      중첩 클래스에서는 외부 클래스 속성에 접근 불가하다.&lt;br /&gt;
-    &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-&lt;ol&gt;
-  &lt;li&gt;코틀린에서 클래스의 프로퍼티는 val의 경우 Getter가, var의 경우 Getter, Setter가 자동 생성된다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;필드란 ‘인스턴스 변수’를 의미하고 프로퍼티란 ‘필드와 접근자(Getter, Setter)의 조합’을 의미한다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;코틀린의 프로퍼티는 접근자(Getter, Setter)에 의해 결정되며, 필드를 사용하지 않는다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;코틀린은 클래스의 접근자에서 자신의 프로퍼티에 접근하기 위해 ‘field’키워드를 사용하고, 이것을 ‘Backing Field’라고 한다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;코틀린의 클래스는 기볹거으로 상속이 닫혀 있고, 상속을 허용하려면 ‘open’키워드를 사용해야 한다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;코틀린은 클래스를 위임하기 위해 ‘by’ 키워드를 사용할 수 있다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;코틀린은 프로퍼티도 위임이 가능하며, 위임을 하기 위해서는 역시 ‘by’키워드를 사용한다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;코틀린의 프로퍼티 위임은 Getter, Setter연산자를 구현한 클래스로 위임하거나, 표준 라이브러리에서 제공하는 ‘lazy, observable, map’등으로 위임할 수 있다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;코틀린은 자주 사용되는 ‘싱글턴(Singleton)’패턴을 대체하는 ‘object’클래스를 사용할 수 있다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;코틀린의 ‘Data’클래스에서는 ‘toString, equals, hashCode’메소드가 자동으로 구현된다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;코틀린의 클래스는 Java와 가시성이 일부 다르다. 특히 코틀린은 package변경자가 없고, 모듈 가시성인 ‘internal’을 지원한다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;코틀린은 클래스 내부에 클래스를 선언하는 경우 기본적으로 ‘중첩클래스’가 된다. Java와 같이 ‘내부 클래스’로 선언하려면 ‘inner’키워드를 사용한다. &lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        <pubDate>Thu, 09 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/09/Java-and-Kotlin/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/09/Java-and-Kotlin/</guid>
-        
-        
-        <category>Android</category>
-        
-      </item>
-    
-      <item>
-        <title>Using Git with Android Studio</title>
-        <description>&lt;h2 id=&quot;android-studio와-git을-함께-사용-&quot;&gt;Android Studio와 Git을 함께 사용 &lt;br /&gt;&lt;/h2&gt;
-&lt;p&gt;Android Built-in tool&lt;br /&gt;
-&lt;br /&gt;
-① &lt;strong&gt;Android studio에서 새로운 프로젝트를 생성한다.&lt;/strong&gt;&lt;br /&gt;
-ex)Project name : AndroidTest&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hyungilee@HYUNGIs-MacBook-Pro ~ % cd ./AndroidStudioProjects
-hyungilee@HYUNGIs-MacBook-Pro AndroidStudioProjects % ls
-AndroidTest	DinnerDecider	Test
-hyungilee@HYUNGIs-MacBook-Pro AndroidStudioProjects % cd ./AndroidTest
-hyungilee@HYUNGIs-MacBook-Pro AndroidTest %
-hyungilee@HYUNGIs-MacBook-Pro AndroidTest % pwd
-/Users/hyungilee/AndroidStudioProjects/AndroidTest
-hyungilee@HYUNGIs-MacBook-Pro AndroidTest % git branch
-fatal: not a git repository (or any of the parent directories): .git
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;② &lt;strong&gt;$git init&lt;/strong&gt;을 Android Studio IDE상에서 해준다.&lt;br /&gt;
-Android Studio에서 VCS(Version Control System) - Enable Version Control Integration - Git - [OK]&lt;br /&gt;
-&lt;br /&gt;
-③&lt;strong&gt;Git Repository 생성 완료&lt;/strong&gt;&lt;br /&gt;
-다시 git branch 명령어를 입력해보면, 아무것도 나타나지 않음을 확인할 수 있다.&lt;br /&gt;
-Android Studio의 프로젝트 Tree를 보기를 Android에서 Project로 변경.&lt;br /&gt;
-프로젝트의 하위에 .gitignore파일 내부를 확인.&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;(Push할때, 무시하고자하는 항목의 리스트를 .gitignore파일에 추가해준다)&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-.gitignore파일에 추가해야하는 내용에 대해서는 아래의 url에서 확인한다. → &lt;a href=&quot;http://gitignore.io/&quot;&gt;http://gitignore.io/&lt;/a&gt;&lt;br /&gt;
-(위의 url에서 AndroidStudio를 검색하면, default로 .gitignore파일에 추가해줄 내용을 확인할 수 있다. 이 내용을 .gitignore파일에 붙여넣어준다)
-이제 .gitignore파일의 수정까지 완료된 프로젝트를 GitHub 계정으로 Push해 줄 것이다.&lt;br /&gt;
-&lt;br /&gt;
-④ &lt;strong&gt;GitHub와 프로젝트를 연동하고, 프로젝트의 파일들을 Push한다.&lt;/strong&gt;&lt;br /&gt;
-Android Studio - VCS - Import into Version Control - Share Project on GitHub&lt;br /&gt;
-GitHub 계정을 입력&lt;br /&gt;
-Repository name : AndroidTest / Remote name: origin / Description : Testing out Android Git feature - Share &lt;br /&gt;
-Everything checked 확인 후 OK&lt;br /&gt;
-GitHub계정에서 확인해보면, 프로젝트 전체 파일이 Push 되었음을 확인할 수 있다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;※ &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;실습내용&lt;/font&gt;&lt;/strong&gt; : 안드로이드 프로젝트를 생성해서 GitHub와 연동하기&lt;br /&gt;
-① Android Project생성하기. (Project name : &lt;strong&gt;MVVMRecyclerViewJava&lt;/strong&gt;)&lt;br /&gt;
-② 안드로이드 프로젝트를 생성하고, Repository를 초기화 시켜주고, 추가된 파일을 tracking, commit해준다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hyungilee@HYUNGIs-MacBook-Pro AndroidStudioProjects % cd MVVMRecyclerViewJava
-hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava %
-hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava %
-hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git init
-Initialized empty Git repository in /Users/hyungilee/AndroidStudioProjects/MVVMRecyclerViewJava/.git/
-hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git branch
-hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git status
-On branch master
-
-No commits yet
-
-Untracked files:
-(use &quot;git add &amp;lt;file&amp;gt;...&quot; to include in what will be committed)
-  .gitignore
-  .idea/
-  app/
-  ......
-nothing added to commit but untracked files present (use &quot;git add&quot; to track)
-hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git add .
-hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git commit -m &quot;Initial commit&quot;
-[master (root-commit) b9d2268] Initial commit
-37 files changed, 882 insertions(+)
-create mode 100644 .gitignore
-......
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;③ Remote GitHub(Repository)에 해당 프로젝트를 push하도록 한다.&lt;/p&gt;
-  &lt;blockquote&gt;
-    &lt;p&gt;(1) 새로운 Repository를 GitHub에서 생성 (Repository name : &lt;strong&gt;MVVMRecyclerViewJava&lt;/strong&gt;)&lt;br /&gt;
-(2) Repository의 Http URL을 이용해서 &lt;strong&gt;$git remote add origin [Http URL]&lt;/strong&gt;을 해준다.&lt;br /&gt;
-(3) 생성한 프로젝트에 remote GitHub의 repository의 origin이 추가되었으므로, commit된 파일들을 push해준다.&lt;br /&gt;&lt;/p&gt;
-  &lt;/blockquote&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git remote add origin https://github.com/MikeHyungiLee/MVVMRecyclerViewJava.git
-  hyungilee@HYUNGIs-MacBook-Pro MVVMRecyclerViewJava % git push origin master
-  Enumerating objects: 70, done.
-  Counting objects: 100% (70/70), done.
-  Delta compression using up to 4 threads
-  Compressing objects: 100% (53/53), done.
-  Writing objects: 100% (70/70), 131.88 KiB | 4.25 MiB/s, done.
-  Total 70 (delta 0), reused 0 (delta 0)
-  To https://github.com/MikeHyungiLee/MVVMRecyclerViewJava.git
-  * [new branch]      master -&amp;gt; master
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Wed, 08 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/08/Using-Git-with-Android-Studio/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/08/Using-Git-with-Android-Studio/</guid>
-        
-        
-        <category>Git</category>
-        
-      </item>
-    
-      <item>
-        <title>Setting up Github</title>
-        <description>&lt;h2 id=&quot;github-initial-setting&quot;&gt;GitHub Initial Setting&lt;br /&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;https://help.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh&quot;&gt;GitHub SSH key setting 참고 Link&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent&quot;&gt;[Generating a new SSH key and adding it to the ssh-agent]&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;홈페이지의 Instruction을 따라서 SSH키를 generate한 뒤에, 개인 GitHub 계정에 setting해본다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hyungilee@HYUNGIs-MacBook-Pro ~ % ssh-keygen -t rsa -b 4096 -C &quot;mike.hyungi.lee@gmail.com&quot;
-Generating public/private rsa key pair.
-Enter file in which to save the key (/Users/hyungilee/.ssh/id_rsa):
-Created directory '/Users/hyungilee/.ssh'.
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
-Your identification has been saved in /Users/hyungilee/.ssh/id_rsa.
-Your public key has been saved in /Users/hyungilee/.ssh/id_rsa.pub.
-The key fingerprint is:
-SHA256:mNbD+8ugZkiabHbAxHz80dw8I++O9O0gRDtjrGEMqEs mike.hyungi.lee@gmail.com
-The key's randomart image is:
-+---[RSA 4096]----+
-|                 |
-|   .             |
-| o...  o.o       |
-| .+ oo.B+.=      |
-|.E . .B.So o     |
-|..o .o.= =.      |
-|.. = .. =..      |
-|  * o oo B.o     |
-| o . o. ..*oo    |
-+----[SHA256]-----+
-hyungilee@HYUNGIs-MacBook-Pro ~ % eval &quot;$(ssh-agent -s)&quot;
-Agent pid 5969
-
-hyungilee@HYUNGIs-MacBook-Pro .ssh % cat ./config
-Host *
-AddKeysToAgent yes
-UseKeychain yes
-IdentityFile ~/.ssh/id_rsa
-hyungilee@HYUNGIs-MacBook-Pro .ssh % pwd
-/Users/hyungilee/.ssh
-hyungilee@HYUNGIs-MacBook-Pro .ssh % ssh-add -K ~/.ssh/id_rsa
-Identity added: /Users/hyungilee/.ssh/id_rsa (mike.hyungi.lee@gmail.com)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;adding-a-new-ssh-key-to-your-github-account&quot;&gt;[Adding a new SSH key to your GitHub account]&lt;/h3&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hyungilee@HYUNGIs-MacBook-Pro .ssh % pbcopy &amp;lt; ~/.ssh/id_rsa.pub
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;생성된 SSH키를 클립보드에 복사한 후에, GitHub계정의 SSH keys Setting에 붙여넣고, 추가해준다.
-&lt;img src=&quot;/images/android/2020-04-08 Add SSH Key into GitHub setting.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Wed, 08 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/08/Setting-up-Github/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/08/Setting-up-Github/</guid>
-        
-        
-        <category>Git</category>
-        
-      </item>
-    
-      <item>
-        <title>Branch management</title>
-        <description>&lt;h2 id=&quot;git-branch-management&quot;&gt;Git branch management&lt;br /&gt;&lt;/h2&gt;
-
-&lt;p&gt;(1) &lt;strong&gt;develop branch 작성&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git branch // branch에 있는 전체 branch정보를 확인
-$ git branch develop // develop branch를 작성하기
-$ git checkout develop // develop branch를 checkout하기
-$ git checkout -b develop // develop branch를 작성함과 동시에 새 branch로 switch하기
-$ git push origin develop //remote에 develop 정보를 push하기
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;(2) &lt;strong&gt;feature작성&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git branch //지금 현재 branch가 feature branch인 것을 확인
-$ git branch feature/(feature branch이름) //feature branch를 작성
-$ git checkout feature/(feature branch이름) //feature branch를 checkout
-$ git checkout -b feature/layouts  //branch를 작성함과 동시에 새 branch로 switch하기
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;(2-1) &lt;strong&gt;feature branch 만들기.&lt;/strong&gt;&lt;br /&gt;
-① 새로운 기능 브랜치를 생성하려면 develop 브랜치에서 브랜치합니다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$git checkout -b myfeature develop //&quot;myfeature&quot;라는 이름의 브랜치를 만들고 동시에 전환
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;② 구현이 완료된 기능 분기를 develop에 통합하기.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git checkout develop //develop 브랜치로 전환합니다
-$ git merge --no-ff myfeature //--no-ff 옵션을 지정해두면, 기능 브랜치의 이력이나 Commit 기록을 추가로 남길 수 있습니다.
-Updating ea1b82a..05e9557 (Summary of changes)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;③ myfeature 지점은 삭제 해 둡니다&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git branch -d myfeature
-Deleted branch myfeature (was 05e9557).
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;④ GitHub remote repository의 develop branch에 작업한 내용 push하기.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git push origin develop
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;#코드를 수정한 후에,&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git add . // 수정된 파일을 tracking list에 추가시켜준다. “.”은 전체 파일을 의미하지만, 각 개별적인 파일을 추가하고 commit해주기 위해서는 구체적인 파일명과 확장자를 입력해주어야 한다.
-$ git commit -m “[commit message]&quot; // 로컬 Repository에 commit하기.
-$ git push origin feature/(feature branch이름)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;(3) &lt;strong&gt;develop브랜치를 merge시키기&lt;/strong&gt;&lt;br /&gt;
-     →Merge시키기 전에 merge시키고자 하는 branch의 전 단계 branch로 switch한다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; $ git checkout develop //feature/(feature branch이름)을 merge시키기 전에 develop branch로 switch한다.
- $ git merge feature/(feature branch이름) // feature branch를 develop branch에 merge시키기
- //merge시킬때, merge option을 사용해서 merge해보기.
- $ git merge --no-ff
- //일반적으로 git merge [branch]하는 것과 git merge --no-ff의 차이점은 아래 첨부한 사진과 같다.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-08  merge --no-ff.png&quot; alt=&quot;blog capture&quot; width=&quot;300&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;(4) 최종적으로 feature branch를 develop branch에 merge했다면, 이 feature branch는 삭제한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git branch -d feature/(feature branch명) // feature branch를 삭제
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;(5) 업데이트 된 develop branch를 master branch에 merge시킨다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git checkout master //master branch에 checkout하기
-$ git merge develop //develop branch를 master branch로 merge하기
-$ git push origin master // feature/(feature branch명)브랜치의 내용을 origin에 upload하기
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Wed, 08 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/08/Branch-management/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/08/Branch-management/</guid>
-        
-        
-        <category>Git</category>
-        
-      </item>
-    
-      <item>
-        <title>List and Recycler views</title>
-        <description>&lt;p&gt;이번에 포스팅에서는 ListView, RecyclerView, ViewHolder의 개념들에 대해서 공부하면서 간단한 어플을 만들어 볼 것이다.&lt;/p&gt;
-
-&lt;h3 id=&quot;-model-data-structure&quot;&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;① Model (Data structure)&lt;/font&gt;&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;우선적으로 생각해야되는 부분은 View에 보여줄 data의 구조이다.&lt;br /&gt;
-이번에 예시로 만들어 볼 어플에서는 categories와 product 항목이 있다. 따라서 이 항목들을 객체화할 class를 작성할 것이다.&lt;br /&gt;
-ex) Category, Product&lt;br /&gt;
-위의 View에 보여줄 data객체의 class는 전부 &lt;strong&gt;“models” package&lt;/strong&gt;안에 작성을 해줄 것이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;-controller&quot;&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;② Controller&lt;/font&gt;&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;다음으로 &lt;strong&gt;“controllers” package&lt;/strong&gt;를 작성해준다. 이 안에는 기본 생성되는 MainActivity가 위치한다.&lt;/p&gt;
-
-&lt;h3 id=&quot;-services&quot;&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;③ Services&lt;/font&gt;&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;다음으로 &lt;strong&gt;“services” package&lt;/strong&gt;를 작성해준다. 파일을 작성할때는 File type을 Object로 하고, 이름은 DataService로 작성한다.&lt;br /&gt;
-안에 작성하게 될 내용은, Google에서 “Kotlin object singleton” 이라고 검색을 해서 작성법에 대해서 이해하고 작성하면 된다. → &lt;a href=&quot;https://kotlinlang.org/docs/reference/object-declarations.html&quot;&gt;Kotlin object singleton&lt;/a&gt; &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 각 항목의 List data를 선언해준다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;object DataService {
-
-  val categories =  listOf(
-      Category(&quot;SHIRTS&quot;, &quot;shirtimage&quot;),
-      Category(&quot;HOODIES&quot;, &quot;hoodieimage&quot;),
-      Category(&quot;HATS&quot;, &quot;hatimage&quot;),
-      Category(&quot;DIGITAL&quot;, &quot;digitalgoodsimage&quot;),
-      ....
-      )
-
-  val hats = listOf(
-      Product(&quot;Devslopes Graphic Beanie&quot;,&quot;$18&quot;,&quot;hat1&quot;),
-      Product(&quot;Devslopes Graphic Black&quot;,&quot;$20&quot;,&quot;hat2&quot;),
-      ....
-      )
-
-  val hoodies = listOf(
-      Product(&quot;Devslopes Hoodie Gray&quot;,&quot;$28&quot;, &quot;hoodie1&quot;),
-      Product(&quot;Devslopes Hoodie Red&quot;,&quot;$30&quot;, &quot;hoodie2&quot;),
-      ....
-      )
-
-  val shirts = listOf(
-      Product(&quot;Devslopes Shirt black&quot;,&quot;$28&quot;, &quot;shirt1&quot;),
-      Product(&quot;Devslopes Shirt Red&quot;,&quot;$20&quot;, &quot;shirt2&quot;),
-      ....
-      )
-
-  val digitalGood = listOf&amp;lt;Product&amp;gt;()
-
-  fun getProducts(category: String) : List&amp;lt;Product&amp;gt;{
-      return when(category){
-          &quot;SHIRTS&quot;-&amp;gt; return shirts
-          &quot;HATS&quot; -&amp;gt; return hats
-          &quot;HOODIES&quot; -&amp;gt; return hoodies
-          else -&amp;gt; return digitalGood
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;ListView와 Adapter, Data의 관계[?]에 대해서 이해를 해보자. 우선 UI에는 ListView가 추가되어있고, 이 ListView에 표시하고자 하는 데이터가 필요하다. 이 Data는 raw data인데 이를 알맞게 ListView에 formatting해서 표시해주는 역할을 하는 것이 바로 &lt;strong&gt;Adapter&lt;/strong&gt;이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-08 data, adapter, ListView.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 Adapter는 Controller Package의 class에 작성해준다.
-자 그럼 이제 Android에서 기본적으로 제공되는 Layout을 활용해서 Adapter를 작성해 볼 것이다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class MainActivity : AppCompatActivity() {
-
-    lateinit var adapter: ArrayAdapter&amp;lt;Category&amp;gt;
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        adapter = ArrayAdapter(this,
-                               android.R.layout.simple_list_item_1,
-                               DataService.categories)
-        // ArrayAdapter([context], [android default layout], [data list object])                       
-        listView.adapter = adapter
-    }  
-}    
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;이제는 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;ListView를 Customize&lt;/font&gt;&lt;/strong&gt;해서 만들어 볼 것이다.&lt;br /&gt;
-새로운 레이아웃 파일을 생성한다. layout/category_list_item.xml 생성.&lt;/p&gt;
-
-&lt;p&gt;Customized ListAdapter&lt;br /&gt;
-① adapters package를 작성하기.  &lt;br /&gt;
-② CategoryAdapter class를 작성하고, &lt;strong&gt;BaseAdapter&lt;/strong&gt; class를 상속한다.&lt;br /&gt;
-③ &lt;strong&gt;getView()&lt;/strong&gt; : 가장 큰 mothod, &lt;strong&gt;getItem()&lt;/strong&gt; : position parameter를 사용해서 item을 취득하는 것, &lt;strong&gt;getItemId()&lt;/strong&gt; : 이 method는 사용되지 않을 것이므로, return 0 처리를 해준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;※ 우리가 저번시간에 Adapter를 초기했을때, 사용한 각 요소를 확인해보면, context와 layout요소 그리고 각 layout리스트에 초기화 시켜주기 위한 data set이 필요했다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;※ 우리는 이번 custom list view 클래스를 초기화시켜줄때, context와 data set을 parameter로써 선언해서 adapter를 초기화시켜 줄 것이다.&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td width=&quot;500&quot;&gt;
-      &lt;img src=&quot;/images/android/2020-04-08 custom adapter.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;
-    &lt;/td&gt;
-    &lt;td width=&quot;500&quot;&gt;
-      &lt;div&gt;
-          override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {&lt;br /&gt;
-          &lt;strong&gt;Position&lt;/strong&gt; - index path&lt;br /&gt;
-          &lt;strong&gt;convertView&lt;/strong&gt; - view that is displayed over and over&lt;br /&gt;
-          &lt;br /&gt;
-      &lt;/div&gt;
-    &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td width=&quot;500&quot;&gt;
-      &lt;img src=&quot;/images/android/2020-04-08 LayoutInflater.png&quot; alt=&quot;blog capture&quot; width=&quot;700&quot; title=&quot;capture img&quot; /&gt;
-    &lt;/td&gt;
-    &lt;td width=&quot;500&quot;&gt;
-      &lt;div&gt;
-        Inflater is an object that takes in XML layout like we have here in out layouts folder in this category list items and it turns it into an actual view that we can use in code.&lt;br /&gt;
-        We have inflated a view that we are calling category view from the XML file called category.&lt;br /&gt;
-        이 방법이 최선은 아니다. 왜냐하면 화면을 스크롤할때 마다 매번 getView 메소드가 호출되고 초기화되고 있기 때문이다.
-      &lt;/div&gt;
-    &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;red&quot;&gt;※ 개선후 코드&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td width=&quot;500&quot;&gt;
-      &lt;img src=&quot;/images/android/2020-04-09 getView.png&quot; alt=&quot;blog capture&quot; width=&quot;700&quot; title=&quot;capture img&quot; /&gt;
-    &lt;/td&gt;
-    &lt;td width=&quot;500&quot;&gt;
-      &lt;div&gt;
-        getView 메소드에서 화면의 UI요소가 매번 초기화되는 비효율적인 부분을 refactoring해줄 것이다.&lt;strong&gt;(Prevent from heavy computing)&lt;/strong&gt;&lt;br /&gt;  
-        viewHolder paradigm&lt;br /&gt;
-        오직 한 번 layout을 Inflate해준다. (레이아웃과 UI Element를 재활용한다)&lt;br /&gt;
-        ListView에서는 ViewHolder를 사용하는 것은 Option이지만, &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※RecyclerView에서는 ViewHolder를 필수적으로 사용해야한다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-
-
-      &lt;/div&gt;
-    &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-&lt;h3 id=&quot;recyclerview와-listview의-차이-&quot;&gt;RecyclerView와 ListView의 차이 &lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;RecyclerView를 사용하게 되면 ViewHolder의 사용은 필수이기 때문에 좀 더 부드러운 scroll과 최적화된 ListView를 사용할 수 있다. 그리고 큰 용량의 data set을 사용할때도 최적화시킬 수 있다.&lt;br /&gt;
-하지만, &lt;font color=&quot;Red&quot;&gt;&lt;u&gt;RecyclerView는 ListView와 같이 built-in method (onItemClickListener)같은 method를 제공하지는 않는다.&lt;/u&gt;&lt;/font&gt;&lt;br /&gt;
-RecyclerView를 사용할때는 standard SDK를 사용하지 않고, support library를 사용하기 위해 dependency를 추가해주어야 한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Support library란?&lt;/strong&gt;&lt;br /&gt;
-→ &lt;a href=&quot;https://developer.android.com/topic/libraries/support-library?hl=Language&quot;&gt;https://developer.android.com/topic/libraries/support-library?hl=Language&lt;/a&gt;
-&lt;br /&gt;
-AndroidX는 기존 Android 지원 라이브러리를 크게 개선한 것으로, androidx 패키지는 동일한 기능과 새로운 라이브러리를 제공하여 지원 라이브러리를 완전히 대체한다.&lt;br /&gt;
-&lt;br /&gt;
-The RecyclerView Support Library and RecyclerView AndroidX library are having the same purpose. The main difference is the package name. The AndroidX mainly a repackage and re-branded support library with the main purpose to ease the Android development process. All the support library capabilities is still existed in AndroidX, but the newest capabilities and development shifted to AndroidX now.&lt;/p&gt;
-
-&lt;p&gt;(Android Jetpack) Androidx를 사용해서 RecyclerView를 구현하는 경우에는 &lt;strong&gt;“implementation “androidx.recyclerview:recyclerview:1.1.0”&lt;/strong&gt;를 dependency에 추가한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※ RecyclerView Class 작성하기&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-① RecyclerView.Adapter를 상속받아서 &lt;strong&gt;RecyclerView클래스를 작성&lt;/strong&gt;해준다.&lt;br /&gt;
-② &lt;strong&gt;ViewHolder 내부 클래스를 작성&lt;/strong&gt;해준다. 기존의 ListView의 ViewHolder의 inner class에서는 아무것도 상속하지 않고 작성했지만, &lt;strong&gt;RecyclerView의 ViewHolder에서는 RecyclerView.ViewHolder를 상속해서 작성&lt;/strong&gt;해준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class CategoryRecycleAdapter : RecyclerView.Adapter&amp;lt;CategoryRecycleAdapter.holder&amp;gt;(){
-
-    inner class holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;③ RecyclerView class에도 override method들을 추가해준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class CategoryAdapter(val context: Context, val categories: List&amp;lt;Category&amp;gt;) : BaseAdapter {
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;RecyclerView class에도 다음과 같이 parameter에 context와 dataSet변수를 constructor로 초기화시켜서 처리해준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;④ RecyclerView 클래스의 Override method&lt;br /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;onBindViewHolder()&lt;/strong&gt; - display the data at the specified location &lt;br /&gt;
-(binding is the process of preparing a child view to display data according to the position within adapter)&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;onCreateViewHolder()&lt;/strong&gt; - When new holders are needed &lt;br /&gt;
-ListView에서의 같은 부분 :&lt;br /&gt;
-&lt;img src=&quot;/images/android/2020-04-09 onCreateViewHolder.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Holder inner class&lt;/strong&gt; - UI element binding &lt;br /&gt;
-ListView에서의 같은 부분 :&lt;br /&gt;
-&lt;img src=&quot;/images/android/2020-04-09 Holder inner class.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-    &lt;p&gt;기존의 ListView class의 getView method에서 UI element의 binding처리를 해주었다.&lt;br /&gt;
-&lt;strong&gt;이 작업을 RecyclerView에서는 Holder inner class에서 처리&lt;/strong&gt;해준다.&lt;br /&gt;
-&lt;strong&gt;이 Holder inner class에서만든 내용을 onBindViewHolder method에서 호출하기 위해 Holder inner class내부에 개별적인 method의 작성이 필요&lt;/strong&gt;하다.&lt;br /&gt;
-&lt;img src=&quot;/images/android/2020-04-09 onBindViewHolder.png&quot; alt=&quot;blog capture&quot; width=&quot;700&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;onCreateViewHolder()&lt;/strong&gt; - inflate the view for the very first time.&lt;br /&gt;
-RecyclerView가 사용할 layout이 없을때 layout inflate가 실행되는 method.&lt;br /&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;val view = LayoutInflater.from()&lt;/code&gt;&lt;br /&gt;
-layout을 inflate할때, 생성자를 통해 받은 context를 사용해도 되고, method자체에서 parameter로 받고 있는 parent변수를 받아서 처리해도 된다.&lt;br /&gt;
-&lt;img src=&quot;/images/android/2020-04-09 LayoutInflater.png&quot; alt=&quot;blog capture&quot; width=&quot;600&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;⑤  ListVie와 다르게 RecyclerView에서는 한 가지 더 설정해줘야하는 부분이 있다.&lt;br /&gt;
-    바로 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;Layout manager&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Layout manager - layout manager positions item views inside a recycler view and determines
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-09 Layout manager.png&quot; alt=&quot;blog capture&quot; width=&quot;600&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;이미 화면에 출력된 적이 있는 data set의 경우에는 재사용을 하고, 재사용을 할 경우에는, layout manager는 adapter에게 다른 컨텐츠 뷰로 교체할 것을 물을 것이다. &lt;br /&gt;
-이러한 컨셉은 불필요한 뷰의 생성과 매우 무거운 findViewById() lookup작업을 피함으로써 어플리케이션의 퍼포먼스를 좋게 만들 것이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-09 LayoutManager.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;⑥　RecyclerView Clicks&lt;/p&gt;
-
-&lt;p&gt;RecyclerView는 built-in onClickListener method가 없기 때문에, Lambda식으로 RecyclerView의 click 이벤트를 처리해줘야 한다.&lt;br /&gt;
-기존에 선언한 CategoryRecycleAdapter에서 Parameter로 넘겼던 context, dataset과 함께 &lt;strong&gt;itemClick:(Category)-&amp;gt;Unit&lt;/strong&gt; 넘겨줘야 한다.&lt;br /&gt;
-클릭을 했을때, Category 객체를 넘겨주지만, 결과적으로 아무것도 반환하지 않기 때문에, Unit으로 처리를 해준다.&lt;br /&gt;
-&lt;br /&gt;
-그 다음에는 이렇게 넘긴 itemClick 인수를 Holder inner class에 선언해준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-09 itemClick event.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;최종적으로 RecyclerView에서 Lambda식으로 선언을 하면 아래와 같이 RecyclerViewAdapter내의 메소드가 수정되어 있음을 알 수 있다.&lt;br /&gt;&lt;br /&gt;
-이렇게 처리를 하면, MainActivity에서 Holder inner class내의 itemView.setOnClickListener에 접근을 할 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 onclick event부분을 호출해서 adapter를 초기화 시켜줄때 click event 처리를 할 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-09 adapter setOnClick event.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;예시로 ProductAdapter 클래스로 기존에 작성했던 RecyclerViewAdapter를 작성해본다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-09 ProductAdapter.png&quot; alt=&quot;blog capture&quot; width=&quot;700&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;blockquote&gt;
-    &lt;p&gt;2020-04-08 LayoutInflater&lt;/p&gt;
-  &lt;/blockquote&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;※ 직접 내 GitHub에 Repository추가해서 실습하기 &lt;br /&gt;
-내 GitHub Repository 주소 :&lt;/p&gt;
-</description>
-        <pubDate>Wed, 08 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/08/List-and-RecyclerView/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/08/List-and-RecyclerView/</guid>
         
         
         <category>Android</category>

@@ -1,7 +1,0 @@
-I"w<blockquote>
-  <p>① gem dependencies를 설치한다.
-    $bundle update
-    $bundle install</p>
-</blockquote>
-
-:ET

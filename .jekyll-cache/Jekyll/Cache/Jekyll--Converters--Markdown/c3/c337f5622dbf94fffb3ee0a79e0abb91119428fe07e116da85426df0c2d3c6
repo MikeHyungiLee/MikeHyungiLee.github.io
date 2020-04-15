@@ -1,0 +1,15 @@
+I"�<h3 id="kotlin-singleton-example-with-mvvm-and-coroutines">Kotlin Singleton Example with MVVM and coroutines<br /></h3>
+
+<p>① Intent putExtra/getExtra <br /></p>
+
+<p>② Bundle bundle.putString/bundle.getString <br /></p>
+
+<p>③ Parcelable <br /></p>
+
+<p>④ SharedPreference <br /></p>
+
+<h3 id="전체적인-학습내용을-복습한다">전체적인 학습내용을 복습한다.<br /></h3>
+<ol>
+  <li><br /></li>
+</ol>
+:ET

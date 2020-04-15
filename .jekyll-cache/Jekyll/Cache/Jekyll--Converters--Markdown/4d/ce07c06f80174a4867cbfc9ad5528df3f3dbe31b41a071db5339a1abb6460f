@@ -1,8 +1,0 @@
-I"�<blockquote>
-  <p>① gem dependencies를 설치한다.</p>
-</blockquote>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$bundle update  
-$bundle install
-</code></pre></div></div>
-:ET

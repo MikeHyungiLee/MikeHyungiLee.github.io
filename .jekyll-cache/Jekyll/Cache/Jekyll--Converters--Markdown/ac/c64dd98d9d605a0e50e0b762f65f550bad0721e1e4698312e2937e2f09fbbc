@@ -1,0 +1,16 @@
+I"<h3 id="recyclerview을-javakotlin으로-작성하기">RecyclerView을 Java/Kotlin으로 작성하기<br /></h3>
+
+<p>① RecyclerView Class를 초기화시켜 줄 두 개의 변수 (Context와 DataSet 변수)를 Field변수로 선언해준다.<br />
+② 새로운 생성자를 작성해주고, 그 생성자 안에서 ①에서 작성한 field변수를 초기화시켜준다.<br />
+③ 내부 클래스를 작성해준다. (이 내부 클래스에서는 Layout상에 있는 View요소를 초기화시켜준다. - UI element binding)<br />
+④ 나머지 Override 메소드를 implementation해준다.<br />
+⑤ onCreateViewHolder() - 이 부분에서는 parent View가 ‘null’인 경우에 custom listItem View를 Inflate해주고 holder 변수를 초기화시켜주는 부분이다.<br />
+⑥ onBindViewHolder() - 구체적인 위치에 데이터를 보여주는 곳이다. 각 position마다 보여질 데이터를 초기화 시켜준다.</p>
+
+<h3 id="전체적인-학습내용을-복습한다">전체적인 학습내용을 복습한다.<br /></h3>
+<ol>
+  <li>View는 안드로이드의 UI 요소 중 가장 기본이 되는 요소이다.<br /></li>
+  <li>ViewGroup은 다른 여러 View를 포함시킬 수 있는 특별한 View이다. ViewGroup을 사용하면 View를 그룹화하여 관리할 수 있다.<br /></li>
+  <li>레이아웃은 ViewGroup의 실제 구현 클래스이며 자식 뷰를 어떻게 배치할지 결정한다. 자주 사용하는 레이아웃에는 LinearLayout, RelativeLayout, ConstraintLayout등이 있다.<br /></li>
+</ol>
+:ET

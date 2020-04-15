@@ -1,0 +1,25 @@
+I"�<h3 id="recyclerview을-javakotlin으로-작성하기---recyclerviewadapter작성하기">RecyclerView을 Java/Kotlin으로 작성하기 - RecyclerViewAdapter작성하기.<br /></h3>
+
+<p>① RecyclerView Class를 초기화시켜 줄 두 개의 변수 (Context와 DataSet 변수)를 Field변수로 선언해준다.<br />
+→ 위와 같이 생성자에서 직접 Context와 DataSet을 초기화해줘도 되지만, 내부에 다른 DataSet 필드 변수를 초기화 시켜주는 메소드를 작성해서 해줄 수 있다. <br /></p>
+
+<p>② 새로운 생성자를 작성해주고, 그 생성자 안에서 ①에서 작성한 field변수를 초기화시켜준다.<br />
+③ 내부 클래스를 작성해준다. (이 내부 클래스에서는 Layout상에 있는 View요소를 초기화시켜준다. - UI element binding)<br />
+④ 나머지 Override 메소드를 implementation해준다.<br />
+⑤ onCreateViewHolder() - 이 부분에서는 parent View가 ‘null’인 경우에 custom listItem View를 Inflate해주고 holder 변수를 초기화시켜주는 부분이다.<br />
+⑥ onBindViewHolder() - 구체적인 위치에 데이터를 보여주는 곳이다. 각 position마다 보여질 데이터를 초기화 시켜준다.<br /></p>
+
+<p><strong><font color="Red">※RecyclerView의 OnClickListener의 가장 최고의 연습방법에 대해서 알아보자.</font></strong><br /></p>
+
+<p>이 방법은 일전에 Bravo라는 프로젝트를 했을 당시에 성전이 형한테 배웠던 방법이다. RecyclerView 내에 있는 아이템 클릭 이벤트를 구현할때, 아이템 클릭시 자동으로 UI내부의 요소를 동시에 업데이트 해주고 싶었는데, 아래와 같은 방식으로 했더니 원하는대로 작동이 되었었다. 나중을 위해서 아래의 내용을 정리해둔다.<br /></p>
+
+<p>① 우선 RecyclerViewAdapter 클래스 안에 onClick 메소드를 하나 가지고 있는 interface를 작성한다.&lt;br?
+②
+③
+④</p>
+
+<h3 id="전체적인-학습내용을-복습한다">전체적인 학습내용을 복습한다.<br /></h3>
+<ol>
+  <li>RecyclerView를 사용할때 필요한 RecyclerViewAdapter클래스의 작성순서를 이미지 트레이닝한다.<br /></li>
+</ol>
+:ET

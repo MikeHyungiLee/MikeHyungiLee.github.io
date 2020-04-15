@@ -1,0 +1,100 @@
+I"�<h3 id="recyclerview을-작성하기---recyclerviewadapter작성하기">RecyclerView을 작성하기 - RecyclerViewAdapter작성하기.<br /></h3>
+
+<p>① RecyclerView Class를 초기화시켜 줄 두 개의 변수 (Context와 DataSet 변수)를 Field변수로 선언해준다.<br />
+→ 위와 같이 생성자에서 직접 Context와 DataSet을 초기화해줘도 되지만, 내부에 다른 DataSet 필드 변수를 초기화 시켜주는 메소드를 작성해서 해줄 수 있다. <br /></p>
+
+<p>② 새로운 생성자를 작성해주고, 그 생성자 안에서 ①에서 작성한 field변수를 초기화시켜준다.<br />
+③ 내부 클래스를 작성해준다. (이 내부 클래스에서는 Layout상에 있는 View요소를 초기화시켜준다. - UI element binding)<br />
+④ 나머지 Override 메소드를 implementation해준다.<br />
+⑤ onCreateViewHolder() - 이 부분에서는 parent View가 ‘null’인 경우에 custom listItem View를 Inflate해주고 holder 변수를 초기화시켜주는 부분이다.<br />
+⑥ onBindViewHolder() - 구체적인 위치에 데이터를 보여주는 곳이다. 각 position마다 보여질 데이터를 초기화 시켜준다.<br /></p>
+
+<p><strong><font color="Red">※RecyclerView의 OnClickListener의 가장 최고의 연습방법에 대해서 알아보자.(Java편)</font></strong><br /></p>
+
+<p>이 방법은 일전에 Bravo라는 프로젝트를 했을 당시에 성전이 형한테 배웠던 방법이다. RecyclerView 내에 있는 아이템 클릭 이벤트를 구현할때, 아이템 클릭시 자동으로 UI내부의 요소를 동시에 업데이트 해주고 싶었는데, 아래와 같은 방식으로 했더니 원하는대로 작동이 되었었다. 나중을 위해서 아래의 내용을 정리해둔다.<br /></p>
+
+<p>① 우선 RecyclerViewAdapter 클래스 안에 onClick 메소드를 하나 가지고 있는 interface를 작성한다.<br />
+② 그 다음에는 작성한 interface를 구현할 MainActivity에 가서 class에 implement해준다.<br />
+③ Adapter클래스의 ViewHolder 내부 클래스에도 interface를 상속시켜준다.<br /></p>
+
+<p>④ Adapter클래스의 Holder 내부 클래스에서 OnNicePlaceClickListener를 아래와 같이 선언해준다.<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    private ImageView mImage;
+    private TextView mTitle;
+    OnNicePlaceClickListener onNicePlaceClickListener;
+
+    public Holder(@NonNull View itemView, OnNicePlaceClickListener onNicePlaceClickListener) {
+        super(itemView);
+        mImage = itemView.findViewById(R.id.image);
+        mTitle = itemView.findViewById(R.id.image_name);
+        this.onNicePlaceClickListener = onNicePlaceClickListener;
+        itemView.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        onNicePlaceClickListener.onNicePlaceClick(getAdapterPosition());
+    }
+}
+
+public interface OnNicePlaceClickListener{
+    void onNicePlaceClick(int position);
+}
+</code></pre></div></div>
+
+<p>⑤ 기존에 onCreateViewHolder() 메소드 안에서 생성자 요소가 하나 추가 되었으므로, 외부 클래스 (Adapter)클래스에서도 필드 변수로 ‘mOnNicePlaceClickListener 인터페이스’를 선언해주고 생성자에서도 초기화를 시켜준다. <br />
+그 다음에 onCreateViewHolder() 메소드 안에서도 Holder 내부 클래스를 초기화 시켜주는 요소로 mOnNicePlaceClickListener를 추가해준다.<br /></p>
+
+<p>⑥ 그 다음으로 MainActivity에서 Adapter를 초기화 시켜줄때, 두번째 요소에 this를 넣어 초기화시켜준다.<br /></p>
+
+<p><strong><font color="Red">※RecyclerView의 OnClickListener의 가장 최고의 연습방법에 대해서 알아보자.(Kotlin편)</font></strong><br /></p>
+
+<p>RecyclerView는 built-in onClickListener 메소드가 없기 때문에, Lambda식으로 RecyclerView의 click이벤트를 처리해줘야 한다.<br />
+기존에 선언한 Aapter에서 Parameter로 <strong><font color="Red">itemClick:(T)-&gt;Unit</font></strong>를 넘겨줘야 한다.<br />
+클릭했을때, Category 객체를 넘겨주지만, 결과적으로 아무것도 반환하지 않기 때문에, Unit으로 처리를 한다.<br /></p>
+
+<p>ViewHolder(내부 클래스)의 Parameter에도 <strong><font color="Red">val itemClick: (Category) -&gt; Unit</font></strong>를 넘겨서 내부 메소드 내에 itemView.setOnClickListener{itemClick(category)}로 작성해준다.<br /></p>
+
+<p>⑦ Adapter클래스를 초기화시켜서 사용하는 클래스(MainActivity)에서 Lambda식으로 Adapter클래스를 초기화 시켜줄때　OnClickListener도 함께 초기화를 시켜준다.<br /></p>
+
+<p><strong><font color="Red">※ Kotlin에서는 위의 방법 이외에 앞서 Java에서 interface를 구현해서 클릭 이벤트를 구현했던 방식으로도 할 수 있다.</font></strong><br /></p>
+
+<p>①<strong>“OnItemClickListener”</strong>interface를 Adapter클래스에 추가한다.<br />
+②Adapter클래스의 Field변수로 OnItemClickListener를 선언한다.<br />
+③OnItemClickListener의 setter메소드를 작성한다.<br />
+④ViewHolder 내부 클래스 안에 아래와 같이 OnClickListener를 setting한다.<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>itemView.setOnClickListener{
+      mOnPostClickListener.onClick(blogPost)
+}
+</code></pre></div></div>
+
+<p>⑤MainActivity에서 adapter를 초기화 시키는 부분에서 interface의 setter 메소드를 사용해서 interface를 구현해준다.<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>private fun initRecyclerView(){
+    // apply 를 사용해서 layoutManager 와 adapter 를 지정해주었을때,
+    recycler_view.apply {
+        layoutManager = LinearLayoutManager(this@MainActivity)
+        blogAdapter = BlogRecyclerAdapter()
+        blogAdapter.setOnPostClickListener(onPostClickListener)
+        val topSpacingDecoration = TopSpacingItemDecoration(30)
+        addItemDecoration(topSpacingDecoration)
+        adapter = blogAdapter
+    }
+}
+
+// onPostClickListener
+private val onPostClickListener = object : BlogRecyclerAdapter.OnPostClickListener{
+    override fun onClick(blogPost: BlogPost) {
+      Toast.makeText(applicationContext, blogPost.username, Toast.LENGTH_SHORT).show()
+    }
+}
+</code></pre></div></div>
+
+<h3 id="전체적인-학습내용을-복습한다">전체적인 학습내용을 복습한다.<br /></h3>
+<ol>
+  <li>RecyclerView를 사용할때 필요한 RecyclerViewAdapter클래스의 작성순서를 이미지 트레이닝한다.<br /></li>
+</ol>
+:ET

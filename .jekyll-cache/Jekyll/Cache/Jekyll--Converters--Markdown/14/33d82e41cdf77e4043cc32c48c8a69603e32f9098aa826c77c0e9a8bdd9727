@@ -1,0 +1,48 @@
+I"?<h3 id="coroutine--"><strong>Coroutine ?</strong> <br /></h3>
+
+<p>‘Coroutine’에 대해 알아보기 전에 우선, ‘동기’와 ‘비동기’의 개념에 대해서 알아보자.<br />
+<strong><font color="Red">동기(Synchronous) : will run in the same thread.</font></strong><br />
+<strong><font color="Blue">ex1) 메인 스레드에서 실행</font></strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// 메인 스레드에서 실행
+fun runMain(){
+  val data = Weather.tomorrow()
+  println("Tomorrow weather : ${data}")
+}
+
+fun Weather.tomorrow() : String{
+  Thread.sleep(2000)
+  return "sunny"
+}
+</code></pre></div></div>
+
+<p><strong><font color="Red">비동기(Asynchronous) : will run in a different thread.</font></strong><br /></p>
+
+<p><strong><font color="Blue">ex2) Coroutine으로 비동기 스레드 처리</font></strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fun runMain() : Job = viewModelScope.launch{
+    val data = Weather.tomorrow()
+    println("Tomorrow weather : ${data}")
+}
+
+suspend fun Weather.tomorrow() : String{
+  delay(2000)
+  return "sunny"
+}
+</code></pre></div></div>
+
+<p>위의 ‘ex1’의 코드에서는 모두 Main Thread에서 실행하는 소스코드이다. 이는 동기적으로 호출해서 사용되고 있는 예이다.<br />
+동기적 처리는 2초 스레드가 차단되어버리는 문제가 있다. 이 스레드가 차단되는 동안에는 사용자의 조작이 얼어 버리기 때문에 응용 프로그램에서 이 코드를 작성하는 것은 현실적이지 않다. 한편 coroutin을 사용하면 결과가 나올 때까지 2초 사용자가 일반적으로 수행할 수 있다.<br /></p>
+
+<p>위의 차이가 나는 이유는 <strong>coroutine에서 스레드를 차단하는 대신 처리를 <font color="Red">"중단"</font>하기 때문이다.</strong><br />
+첫번째 소스 코드에서 Thread.sleep() 따라 2초 main thread를 점유(차단)하고, 그 동안 다른 작업을 하고 싶어도 메인 스레드가 사용할 수 없다. <br />
+한편 coroutine의 예에서 사용한 delay()함수는 2초간 차단하는 것이 아니라 <strong>main thread를 2초 동안 방출</strong>하고  main thread를 다시 취득하고 처리를 계속한다. main thread가 개방되는 동안 다른 process에 thread를 활용할 수 있다. 이것을<strong><font color="Red">"중단(suspend)"</font></strong>라고 한다.<br /></p>
+
+<p>위의 ‘ex2’의 코드에서 delay() 같은 <strong><font color="Red">중단이 발생하는 함수를 "suspend 함수"라 한다.</font></strong> 일반 함수는 중단하지 않기 때문에, suspend 함수를 호출할 수 없다. <br />
+<strong><font color="Red">※suspend 함수를 호출하려면 launch에서 호출하거나 함수에 suspend 키워드를 붙여서 suspend fun을 호출해야 한다.</font></strong><br /></p>
+
+<h3 id="coroutinescope"><strong>CoroutineScope</strong><br /></h3>
+
+<h3 id="전체적인-학습내용을-복습한다">전체적인 학습내용을 복습한다.<br /></h3>
+<p>1.</p>
+:ET

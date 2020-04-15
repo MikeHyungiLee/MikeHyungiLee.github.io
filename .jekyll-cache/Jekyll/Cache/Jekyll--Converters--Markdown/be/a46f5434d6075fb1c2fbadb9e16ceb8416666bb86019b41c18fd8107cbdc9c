@@ -1,5 +1,0 @@
-I"�<h3 id="java와-kotlin-클래스의-차이점">Java와 Kotlin 클래스의 차이점<br /></h3>
-<p>① 코들린 클래스와 Java 클래스의 차이점 중 하나는 코틀린은 ‘Getter, Setter’가 자동 생성된다.<br />
-② 코틀린 클래스에서 ‘var’로 선언한 변수는 getter,setter 전부 생성되고, ‘val’키워드로 선언된 변수는 getter만 선언된다.<br />
-③ <br /></p>
-:ET

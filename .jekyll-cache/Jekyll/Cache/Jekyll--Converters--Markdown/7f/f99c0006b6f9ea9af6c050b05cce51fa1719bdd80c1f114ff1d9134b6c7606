@@ -1,0 +1,26 @@
+I"q<h3 id="kotlin-singleton-example-with-mvvm-and-coroutines">Kotlin Singleton Example with MVVM and coroutines<br /></h3>
+
+<p>이번 Post에 정리할 내용은 아래와 같다.<br />
+2 examples :<br /></p>
+
+<p>1) Quick “how to”<br /></p>
+
+<p>2)Practical example<br />
+-Retrofit<br />
+-Coroutines<br />
+-MVVM<br /></p>
+
+<p>Singletons</p>
+
+<p>Instance of an object <br />
+reuse the instance <br />
+Retrofit instance <br />
+Repository instance <br />
+User sessions <br />
+Dagger<br /></p>
+
+<h3 id="전체적인-학습내용을-복습한다">전체적인 학습내용을 복습한다.<br /></h3>
+<ol>
+  <li><br /></li>
+</ol>
+:ET
