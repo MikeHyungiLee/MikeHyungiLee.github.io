@@ -5,8 +5,8 @@
     <description>Hyungi's Ideas &amp; Blogs</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 17 Apr 2020 05:27:30 +0900</pubDate>
-    <lastBuildDate>Fri, 17 Apr 2020 05:27:30 +0900</lastBuildDate>
+    <pubDate>Fri, 17 Apr 2020 05:32:31 +0900</pubDate>
+    <lastBuildDate>Fri, 17 Apr 2020 05:32:31 +0900</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -170,206 +170,6 @@ this는 “hoge”를 의미하며, 선택적이므로 {toUpperCase()}로 기술
         
         
         <category>Android-Kotlin</category>
-        
-      </item>
-    
-      <item>
-        <title>Kotlin Singleton Example with MVVM and coroutines</title>
-        <description>&lt;h3 id=&quot;kotlin-singleton-example-with-mvvm-and-coroutines&quot;&gt;Kotlin Singleton Example with MVVM and coroutines&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;이번 Post에 정리할 내용은 아래와 같다.&lt;br /&gt;
-2 examples :&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;1) Quick “how to”&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;2)Practical example&lt;br /&gt;
--Retrofit&lt;br /&gt;
--Coroutines&lt;br /&gt;
--MVVM&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;Singletons&lt;/p&gt;
-
-&lt;p&gt;Instance of an object &lt;br /&gt;
-reuse the instance &lt;br /&gt;
-Retrofit instance &lt;br /&gt;
-Repository instance &lt;br /&gt;
-User sessions &lt;br /&gt;
-Dagger(Dependency Injection/Provide Singleton)
-Dagger라이브러리는 좀 어렵다. 나중에 별도의 강의로 이해하도록 하자.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;자 이제 실제로 Singleton 패턴의 클래스를 Kotlin으로 작성해보자.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;① 우선 models패키지를 작성을 하고, 그 안에 User라는 data class를 작성해준다. &lt;br /&gt;
-② 다음으로 ExampleSingleton을 이름으로 하는 Object클래스를 작성한다. 이 클래스 안에는 앞서 작성한 User클래스를 아래와 같이 객체를 만들어준다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val singletonUser: User by lazy {
-  User(&quot;email@gmail.com&quot;, &quot;username&quot;, &quot;image.png&quot;)
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;lazy키워드를 사용해서 변수를 위임하면 실제로 해당 속성이 호출되서 사용될때, 초기화가 된다.&lt;br /&gt;
-(클래스가 인스턴스화되는 타이밍에는 해당 속성은 메모리상에 초기화되지 않는다) &lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;③ MainActivity의 onCreate 메소드 내에서 Singleton클래스 내부에서 작성한 singletonUser 변수의 hashCode를 확인해서 실제 화면의 configuration(portrait/landscape)가 변경이 되었을때, 같은 메모리 주소를 반환하고 있는지 확인해본다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;println(&quot;DEBUG: ${ExampleSingleton.singletonUser.hashCode()}&quot;)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;아래와 같이 화면의 configuration을 바꿨을때, 매번 같은 hashCode를 반환함을 알 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;D/EGL_emulation: eglMakeCurrent: 0xdb71a480: ver 3 0 (tinfo 0xdb70f7a0)
-I/System.out: DEBUG: -1198862957
-D/EGL_emulation: eglMakeCurrent: 0xdb71a480: ver 3 0 (tinfo 0xdb70f7a0)
-D/EGL_emulation: eglMakeCurrent: 0xdb71a480: ver 3 0 (tinfo 0xdb70f7a0)
-I/System.out: DEBUG: -1198862957
-D/EGL_emulation: eglMakeCurrent: 0xdb71a480: ver 3 0 (tinfo 0xdb70f7a0)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;④ 다음으로, api 패키지를 작성하고, MyRetrofitBuilder(Object클래스)와 ApiService 인터페이스를 작성해볼 것이다. &lt;br /&gt;
-MyRetrofitBuilder클래스를 Object클래스 타입으로 작성하는 이유는 Kotlin에서는 Object클래스로 작성한다는 의미가 바로 ‘Singleton’으로 작성하겠다는 의미이기 때문이다. ApiService인터페이스에서는 Retrofit을 사용해 통신상으로터 데이터를 취득하는 메소드를 작성할 것이다.&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;MyRetrofitBuilder.kt&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;object MyRetrofitBuilder {
-
-    const val BASE_URL = &quot;https://open-api.xyz/&quot;
-
-    // Singleton Retrofit builder
-    val retrofitBuilder: Retrofit.Builder by lazy {
-      Retrofit.Builder()
-      .baseUrl(BASE_URL)
-      .addConverterFactory(GsonConverterFactory.create())
-      // 서버로부터 호출되는 데이터의 형식은 JSON형태이므로, 이를 Convert할 Converter가 필요하다.
-      // Gson Converter = JSON objcet -&amp;gt; Java object
-    }
-
-    // Singleton apiService (Network request)
-    val apiService: ApiService by lazy {
-      retrofitBuilder
-      .build()
-      .create(ApiService::class.java)
-    }
-
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;ApiService.kt&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;interface ApiService {
-
-    @GET(&quot;placeholder/user/{userId}&quot;)
-    // 여기서 사용되는 suspend fun은 'coroutine'을 사용하기 위한 fun이다.
-    // use 'coroutine' fun return the date from network.
-    suspend fun getUser(
-        @Path(&quot;userId&quot;) userId: String
-    ): User
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;‘suspend fun’을 사용하면 ‘coroutine’을 사용한다는 의미이다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;⑤ &lt;strong&gt;Repository&lt;/strong&gt;패키지 추가하고, Repository Object클래스 작성하기.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;object Repository{
-
-    var job: CompletableJob? = null
-
-    fun getUser(userId: String): LiveData&amp;lt;User&amp;gt; {
-      // job을 초기화시켜준다.
-      job = Job()
-      return object: LiveData&amp;lt;User&amp;gt;(){
-          override fun onActive(){
-            super.onActive()
-            // 우선 job이 null인지 아닌지 검사를 한다.
-            job?.let{ theJob-&amp;gt;
-              // job이 null이 아닌경우, 실행을 한다.
-              // IO(Dispatchers)+theJob으로 유니크한 CoroutineScope를 background thread에 생성을 한다.
-              CoroutineScope(IO+theJob).launch{
-                val user = MyRetrofitBuilder.apiService.getUser(userId)
-                // live data를 background thread에 해줄 수 없으므로,
-                // 우선 MAIN 스레드로 전환을 하고, live data를 setting해주어야 한다.
-                withContext(Main){
-                  value = user
-                  theJob.complete()
-                }
-              }
-            }
-          }
-      }  
-    }
-    // job을 calcel하는 method이다.
-    fun cancelJob(){
-        job?.cancel()
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;⑥ MainViewModel 클래스를 작성한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class MainViewModel : ViewModel() {
-    private val _userId: MutableLiveData&amp;lt;String&amp;gt; = MutableLiveData()
-
-    // Transformations _userId에 변화가 생기면 .switchMap 이 trigger 되고 {}안에 코드가 실행된다.
-    val user: LiveData&amp;lt;User&amp;gt; = Transformations
-          .switchMap(_userId){
-              // 기존 _userId에 변화가 생겼으니, 업데이트를 해주어야 한다.
-              // 따라서, Repository.getUser를 통해서 새로운 uerId를 취득해서 위에 String변수를 초기화 시켜준다.
-              Repository.getUser(it)
-          }
-
-    fun setUserId(userId: String){
-         val update = userId
-
-         // 현재의 userId가 이미 setting 되었다면 종료한다.
-         if(_userId.value == update){
-              return
-          }
-         // 기존의 userId를 update된 새로운 userId로 초기화시킨다.
-          _userId.value = update
-    }  
-
-    // Repository에서 작성한 cancelJobs() 메소드를 viewModel클래스의 cancelJobs()메소드 안에 작성해준다.
-    fun cancelJobs(){
-        Repository.cancelJobs()
-    }    
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;⑦ MainActivity에서 작성한 MainViewModel클래스의 instance를 작성해서, Observe(변수의 변화가 감지되었을때)를 작성한다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class MainActivity : AppCompatActivity() {
-
-    lateinit var viewModel: MainViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
-        viewModel.user.observe(this, Observer {user -&amp;gt;
-            println(&quot;DBUG: $user&quot;)
-        })
-        viewModel.setUserId(&quot;1&quot;)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.cancelJobs()
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-&lt;ol&gt;
-  &lt;li&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        <pubDate>Wed, 15 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/15/Kotlin-Singleton-Example-with-MVVM-and-Coroutines0/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/15/Kotlin-Singleton-Example-with-MVVM-and-Coroutines0/</guid>
-        
-        
-        <category>Android-Architecture</category>
         
       </item>
     
@@ -1025,6 +825,117 @@ annotationProcessor &quot;android.arch.lifecycle:compiler:$archLifecycleVersion&
         
         
         <category>Android-Architecture</category>
+        
+      </item>
+    
+      <item>
+        <title>RecyclerView를 Java/Kotlin으로 작성하기</title>
+        <description>&lt;h3 id=&quot;recyclerview을-작성하기---recyclerviewadapter작성하기&quot;&gt;RecyclerView을 작성하기 - RecyclerViewAdapter작성하기.&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;① RecyclerView Class를 초기화시켜 줄 두 개의 변수 (Context와 DataSet 변수)를 Field변수로 선언해준다.&lt;br /&gt;
+→ 위와 같이 생성자에서 직접 Context와 DataSet을 초기화해줘도 되지만, 내부에 다른 DataSet 필드 변수를 초기화 시켜주는 메소드를 작성해서 해줄 수 있다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;② 새로운 생성자를 작성해주고, 그 생성자 안에서 ①에서 작성한 field변수를 초기화시켜준다.&lt;br /&gt;
+③ 내부 클래스를 작성해준다. (이 내부 클래스에서는 Layout상에 있는 View요소를 초기화시켜준다. - UI element binding)&lt;br /&gt;
+④ 나머지 Override 메소드를 implementation해준다.&lt;br /&gt;
+⑤ onCreateViewHolder() - 이 부분에서는 parent View가 ‘null’인 경우에 custom listItem View를 Inflate해주고 holder 변수를 초기화시켜주는 부분이다.&lt;br /&gt;
+⑥ onBindViewHolder() - 구체적인 위치에 데이터를 보여주는 곳이다. 각 position마다 보여질 데이터를 초기화 시켜준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※RecyclerView의 OnClickListener의 가장 최고의 연습방법에 대해서 알아보자.(Java편)&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 방법은 일전에 Bravo라는 프로젝트를 했을 당시에 성전이 형한테 배웠던 방법이다. RecyclerView 내에 있는 아이템 클릭 이벤트를 구현할때, 아이템 클릭시 자동으로 UI내부의 요소를 동시에 업데이트 해주고 싶었는데, 아래와 같은 방식으로 했더니 원하는대로 작동이 되었었다. 나중을 위해서 아래의 내용을 정리해둔다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;① 우선 RecyclerViewAdapter 클래스 안에 onClick 메소드를 하나 가지고 있는 interface를 작성한다.&lt;br /&gt;
+② 그 다음에는 작성한 interface를 구현할 MainActivity에 가서 class에 implement해준다.&lt;br /&gt;
+③ Adapter클래스의 ViewHolder 내부 클래스에도 interface를 상속시켜준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;④ Adapter클래스의 Holder 내부 클래스에서 OnNicePlaceClickListener를 아래와 같이 선언해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    private ImageView mImage;
+    private TextView mTitle;
+    OnNicePlaceClickListener onNicePlaceClickListener;
+
+    public Holder(@NonNull View itemView, OnNicePlaceClickListener onNicePlaceClickListener) {
+        super(itemView);
+        mImage = itemView.findViewById(R.id.image);
+        mTitle = itemView.findViewById(R.id.image_name);
+        this.onNicePlaceClickListener = onNicePlaceClickListener;
+        itemView.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        onNicePlaceClickListener.onNicePlaceClick(getAdapterPosition());
+    }
+}
+
+public interface OnNicePlaceClickListener{
+    void onNicePlaceClick(int position);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;⑤ 기존에 onCreateViewHolder() 메소드 안에서 생성자 요소가 하나 추가 되었으므로, 외부 클래스 (Adapter)클래스에서도 필드 변수로 ‘mOnNicePlaceClickListener 인터페이스’를 선언해주고 생성자에서도 초기화를 시켜준다. &lt;br /&gt;
+그 다음에 onCreateViewHolder() 메소드 안에서도 Holder 내부 클래스를 초기화 시켜주는 요소로 mOnNicePlaceClickListener를 추가해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;⑥ 그 다음으로 MainActivity에서 Adapter를 초기화 시켜줄때, 두번째 요소에 this를 넣어 초기화시켜준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※RecyclerView의 OnClickListener의 가장 최고의 연습방법에 대해서 알아보자.(Kotlin편)&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;RecyclerView는 built-in onClickListener 메소드가 없기 때문에, Lambda식으로 RecyclerView의 click이벤트를 처리해줘야 한다.&lt;br /&gt;
+기존에 선언한 Aapter에서 Parameter로 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;itemClick:(T)-&amp;gt;Unit&lt;/font&gt;&lt;/strong&gt;를 넘겨줘야 한다.&lt;br /&gt;
+클릭했을때, Category 객체를 넘겨주지만, 결과적으로 아무것도 반환하지 않기 때문에, Unit으로 처리를 한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;ViewHolder(내부 클래스)의 Parameter에도 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;val itemClick: (Category) -&amp;gt; Unit&lt;/font&gt;&lt;/strong&gt;를 넘겨서 내부 메소드 내에 itemView.setOnClickListener{itemClick(category)}로 작성해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;⑦ Adapter클래스를 초기화시켜서 사용하는 클래스(MainActivity)에서 Lambda식으로 Adapter클래스를 초기화 시켜줄때　OnClickListener도 함께 초기화를 시켜준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※ Kotlin에서는 위의 방법 이외에 앞서 Java에서 interface를 구현해서 클릭 이벤트를 구현했던 방식으로도 할 수 있다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;①&lt;strong&gt;“OnItemClickListener”&lt;/strong&gt;interface를 Adapter클래스에 추가한다.&lt;br /&gt;
+②Adapter클래스의 Field변수로 OnItemClickListener를 선언한다.&lt;br /&gt;
+③OnItemClickListener의 setter메소드를 작성한다.&lt;br /&gt;
+④ViewHolder 내부 클래스 안에 아래와 같이 OnClickListener를 setting한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;itemView.setOnClickListener{
+      mOnPostClickListener.onClick(blogPost)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;⑤MainActivity에서 adapter를 초기화 시키는 부분에서 interface의 setter 메소드를 사용해서 interface를 구현해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private fun initRecyclerView(){
+    // apply 를 사용해서 layoutManager 와 adapter 를 지정해주었을때,
+    recycler_view.apply {
+        layoutManager = LinearLayoutManager(this@MainActivity)
+        blogAdapter = BlogRecyclerAdapter()
+        blogAdapter.setOnPostClickListener(onPostClickListener)
+        val topSpacingDecoration = TopSpacingItemDecoration(30)
+        addItemDecoration(topSpacingDecoration)
+        adapter = blogAdapter
+    }
+}
+
+// onPostClickListener
+private val onPostClickListener = object : BlogRecyclerAdapter.OnPostClickListener{
+    override fun onClick(blogPost: BlogPost) {
+      Toast.makeText(applicationContext, blogPost.username, Toast.LENGTH_SHORT).show()
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;RecyclerView를 사용할때 필요한 RecyclerViewAdapter클래스의 작성순서를 이미지 트레이닝한다.&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Mon, 13 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/13/RecyclerView/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/13/RecyclerView/</guid>
+        
+        
+        <category>Android</category>
         
       </item>
     
