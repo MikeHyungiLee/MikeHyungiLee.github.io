@@ -1,29 +1,9 @@
 ---
 layout: post
-title:  Kotlin in Android
+title:  Kotlin "companion object"
 categories: Android-Kotlin
 comments: true
 ---
-
-### <strong>.apply ?</strong><br>
-
-우선 .apply를 사용해서 recyclerView의 LayoutManager와 adapter를 초기해준 아래 예를 같이 살펴보자. <br>
-
-    private fun initRecyclerView(){
-        // apply 를 사용해서 layoutManager 와 adapter 를 지정해주었을때,
-        recycler_view.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            blogAdapter = BlogRecyclerAdapter(context,[dataSet])
-            adapter = blogAdapter
-        }
-
-        // recycler_view를 지정해주면서 layoutManager 와 adapter 를 지정해주었을때
-        recycler_view.layoutManager = LinearLayoutManager(this@MainActivity)
-        blogAdapter = BlogRecyclerAdapter(this,[dataSet])
-        recycler_view.adapter = blogAdapter
-    }
-
-확실히 apply annotation을 사용해서 recycler_view를 초기화 시켜주면, 매번 recycler_view를 호출해서 사용하지 않아도 가볍게 layoutManager와 adapter 키워드만으로도 초기화 시켜줄 수 있다.
 
 ### <strong>companion object ?</strong><br>
 

@@ -1,0 +1,30 @@
+I"G<h3 id="android-jetpack-navigation-component">Android Jetpack Navigation Component<br /></h3>
+
+<p>이번 포스팅에서는 Jetpack Navigation Component를 활용하여 Fragment간의 전이 처리하는 것에 대해서 배워 볼 것이다.<br /></p>
+
+<p>① app gradle에 dependencies 추가하기 <br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def nav_version = "2.3.0-alpha05"
+// Kotlin
+implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+def material_version = "1.2.0-alpha05"
+implementation "com.google.android.material:material:$material_version"
+</code></pre></div></div>
+
+<p>navigation graph 기능</p>
+
+<p>(1) resouce - [New Resource File] - (File name : nav_graph / Resource type : Navigation)<br />
+(2) 위의 nav_graph 파일에 화면에 보여질 UI의 화면 설계구조를 구조화시킬 수 있다.<br />
+(3) activity_main.xml 에서 <fragment> tag로 화면을 채우는데 <strong>이 부분이 각각 생성한 Fragment layout을 inflate하는 부분</strong>이 될 것이다.<br />
+이 fragment tag안에 속성에서 살펴볼 것은, <strong>defaultNavHost = "true"와 app:navGraph = "@navigation/nav_graph" 인데 두번째 navGraph 속성은 navigation type의 layout에 생성할 layout의 구조를 setting하겠다는 의미이다.</strong><br /></fragment></p>
+
+<p>(4) 작성한 Fragment layout파일(*.xml)에서 가장 상단 tag의 속성에 <strong>tools:context = “xxxxxFragment” </strong>라고 지정해주어야 한다.<br />
+이 layout 파일이 어느 fragment 클래스 파일과 관련이 있는지 표시하기 위해서이다.<br /></p>
+
+<h3 id="전체적인-학습내용을-복습한다">전체적인 학습내용을 복습한다.<br /></h3>
+<ol>
+  <li><br /></li>
+</ol>
+:ET

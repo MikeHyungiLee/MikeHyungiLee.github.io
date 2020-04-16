@@ -1,0 +1,14 @@
+I"�<h3 id="coroutine--"><strong>Coroutine ?</strong> <br /></h3>
+
+<p>Work with Background thread <br />
+Coroutine은 AsyncTask 와 같이 Threading하는 방법 중에 하나이다.<br /></p>
+
+<p><strong>※ 아래와 같은 상황에서 Coroutine은 유용하게 쓰인다.</strong><br />
+① Request to network retrofit volley 등의 통신 라이브러리를 사용할때, Main Thread가 Block된다.
+② Accessing the internal SQLite database on the phone<br /></p>
+
+<p><strong><font color="Red">위의 두가지 경우에서 일반적으로 background thread가 사용이 된다.</font></strong><br /></p>
+
+<h3 id="전체적인-학습내용을-복습한다">전체적인 학습내용을 복습한다.<br /></h3>
+<p>1.</p>
+:ET

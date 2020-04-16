@@ -5,10 +5,10 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Kotlin in Android</title>
-	<meta name="description" content=".apply ?">
+	<title>Android Jetpack Navigation Component</title>
+	<meta name="description" content="Android Jetpack Navigation Component">
 	
-	<link rel="canonical" href="http://localhost:4000/2020/04/14/Android-Kotlin/">
+	<link rel="canonical" href="http://localhost:4000/2020/04/16/Android-Jetpack-Navigation-Component/">
 	<link rel="alternate" type="application/rss+xml" title="Lee Hyungi's Tech Blog" href="http://localhost:4000/feed.xml" />
 	
 	<!-- <link rel="stylesheet" href="/css/main.css"> -->
@@ -91,70 +91,72 @@
   <div id="myArticle" class="col-sm-9">
     <div class="post-area post">
       <header>
-        <h1>Kotlin in Android</h1>
-        <p>Apr 14, 2020</p>
+        <h1>Android Jetpack Navigation Component</h1>
+        <p>Apr 16, 2020</p>
       </header>
       <hr>
       <article>
-        <h3 id="apply-"><strong>.apply ?</strong><br /></h3>
+        <h3 id="android-jetpack-navigation-component">Android Jetpack Navigation Component<br /></h3>
 
-<p>우선 .apply를 사용해서 recyclerView의 LayoutManager와 adapter를 초기해준 아래 예를 같이 살펴보자. <br /></p>
+<p>이번 포스팅에서는 Jetpack Navigation Component를 활용하여 Fragment간의 전이 처리하는 것에 대해서 배워 볼 것이다.<br /></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>private fun initRecyclerView(){
-    // apply 를 사용해서 layoutManager 와 adapter 를 지정해주었을때,
-    recycler_view.apply {
-        layoutManager = LinearLayoutManager(this@MainActivity)
-        blogAdapter = BlogRecyclerAdapter(context,[dataSet])
-        adapter = blogAdapter
-    }
+<p><strong><font color="Blue">① app gradle에 dependencies 추가하기</font></strong> <br /></p>
 
-    // recycler_view를 지정해주면서 layoutManager 와 adapter 를 지정해주었을때
-    recycler_view.layoutManager = LinearLayoutManager(this@MainActivity)
-    blogAdapter = BlogRecyclerAdapter(this,[dataSet])
-    recycler_view.adapter = blogAdapter
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def nav_version = "2.3.0-alpha05"
+// Kotlin
+implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+def material_version = "1.2.0-alpha05"
+implementation "com.google.android.material:material:$material_version"
+</code></pre></div></div>
+
+<p>※ navigation graph 기능</p>
+
+<p>(1) resouce - [New Resource File] - (File name : nav_graph / Resource type : Navigation)<br />
+(2) 위의 nav_graph 파일에 화면에 보여질 UI의 화면 설계구조를 구조화시킬 수 있다.<br />
+(3) activity_main.xml 에서 <fragment> tag로 화면을 채우는데 <strong>이 부분이 각각 생성한 Fragment layout을 inflate하는 부분</strong>이 될 것이다.<br />
+이 fragment tag안에 속성에서 살펴볼 것은, <strong>defaultNavHost = "true"와 app:navGraph = "@navigation/nav_graph" 인데 두번째 navGraph 속성은 navigation type의 layout에 생성할 layout의 구조를 setting하겠다는 의미, 마지막으로 android:name="androidx.navigation.fragment.NavHostFragment"속성도 필수적으로 설정해주어야 한다.</strong><br /></fragment></p>
+
+<p>(4) 작성한 Fragment layout파일(*.xml)에서 가장 상단 tag의 속성에 <strong>tools:context = “xxxxxFragment” </strong>라고 지정해주어야 한다.<br />
+이 layout 파일이 어느 fragment 클래스 파일과 관련이 있는지 표시하기 위해서이다.<br /></p>
+
+<p><strong><font color="Blue">② MainActivity에서는 화면의 fragment 태그에서 fragment 레이아웃을 보여주는 기능만 하므로, 실질적인 Navigation 객체를 만들어서 처리해주는 것은 Fragment class에서 해줄 것이다.</font></strong><br /></p>
+
+<p>(1) onViewCreated() 메소드에서 property로 선언한 NavController 타입의 변수를 초기화시켜준다. <br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    // reference of the view
+    navController = Navigation.findNavController(view)
+    view_transactions_btn.setOnClickListener(this)
+    send_money_btn.setOnClickListener(this)
+    view_balance_btn.setOnClickListener(this)
 }
 </code></pre></div></div>
 
-<p>확실히 apply annotation을 사용해서 recycler_view를 초기화 시켜주면, 매번 recycler_view를 호출해서 사용하지 않아도 가볍게 layoutManager와 adapter 키워드만으로도 초기화 시켜줄 수 있다.</p>
+<p>이 MainFragment도 nav_graph에 등록된 Fragment이기 때문에 navController객체의 생성이 가능하다. <br /></p>
 
-<h3 id="companion-object-"><strong>companion object ?</strong><br /></h3>
+<p>(2) 이제 이 navController를 이용해서 각 버튼의 onClickListener의 이벤트를 구현할 것이다.<br /></p>
 
-<p>Kotlin은 클래스에 static 필드를 갖게 할 수는 없지만, companion object의 구조를 이용해서 Java의 static 메소드와 동일한 동작을 수행할 수 있다.<br /></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data class Book(val title: String, val price: Int){
-    companion object {
-        const val FREE_PRICE = 0
-        fun newFreeBook(title: String) = Book(title, FREE_PRICE)
-    }
-}
-
-fun main(){
-  val book = Book.newFreeBook("Free Kotlin")
-  println(book)
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>override fun onClick(v: View?) {
+  // backStack관리가 자동으로 이루어지기 때문에 편리하다.
+  when(v!!.id){
+      R.id.view_transactions_btn -&gt; navController.navigate(R.id.action_mainFragment_to_viewTransactionFragment)
+      R.id.send_money_btn -&gt; navController.navigate(R.id.action_mainFragment_to_chooseRecipientFragment)
+      R.id.view_balance_btn -&gt; navController.navigate(R.id.action_mainFragment_to_viewBalanceFragment)
+  }
 }
 </code></pre></div></div>
 
-<p>위와 같이 companion object 뒤의 {}안에는 일반 클래스의 본체와 같이 구현을 한다. 위와 같이 도우미 개체를 정의하면 Book 클래스 안에 내재 된 싱글 톤 인스턴스(Singleton Instance)가 생성되며, Book.[Field name]형태로 액세스 할 수 있다. <br /></p>
+<p>위의 ②-(1)과 (2)의 과정을 다른 Fragment에서도 작성을 작성해준다. <br /></p>
 
-<p>companion object는 <strong><font color="Red">자체가 클래스 정의를 가지고 있으며, 외부에서 정의 된 클래스의 인스턴스가 아니다.</font></strong><br />
-Book.xxx()라는 접근방식을 보면, 마치 Book 클래스의 싱글톤 인스턴스가 만들어지고 있는 것처럼 보이지만, Book인스턴스가 만들어지는 것은 아니다.<br />
-위의 Book.xxx()라는 문장은 사실 <strong>Book.Companion.xxx()</strong>이 생략 기법이다. 이 점에서 companion object는 Book 클래스의 인스턴스와는 별개임을 알 수 있다.<br /></p>
-
-<p>위와 같이 companion object{}의 형태로 작성할 수 있지만, 이 companion object에 이름을 넣어줄 수도 있다.<br /></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data class Book(val title: String, val price: Int){
-    companion object Factory{
-      const val FREE_PRICE = 0
-      fun freeBook(title: String) = Book(title, FREE_PRICE)
-    }
-}
-</code></pre></div></div>
-
-<p>위의 도우미 객체는 Book.Factory.[Field name] 형태로 액세스 할 수 있다.<br />
-<strong>companion object는 클래스 내에서 하나 밖에 정의할 수 없다.</strong></p>
+<p><strong><font color="Blue">③ 다음 과정에서는 animation, bundle을 추가하는 과정이다.</font></strong><br /></p>
 
 <h3 id="전체적인-학습내용을-복습한다">전체적인 학습내용을 복습한다.<br /></h3>
-<p>1.</p>
+<ol>
+  <li><br /></li>
+</ol>
 
       </article>
       <hr>
@@ -180,8 +182,8 @@ Book.xxx()라는 접근방식을 보면, 마치 Book 클래스의 싱글톤 인�
     </div>
 	<script>
 		var disqus_config = function () {
-			this.page.url = "http://mikehyungilee.github.io/2020/04/14/Android-Kotlin/"; 
-			this.page.identifier = "/2020/04/14/Android Kotlin"; 
+			this.page.url = "http://mikehyungilee.github.io/2020/04/16/Android-Jetpack-Navigation-Component/"; 
+			this.page.identifier = "/2020/04/16/Android Jetpack Navigation Component"; 
 		};
 		(function() {
 			var d = document, s = d.createElement('script');

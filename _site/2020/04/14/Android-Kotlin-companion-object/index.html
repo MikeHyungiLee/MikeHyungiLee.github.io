@@ -5,10 +5,10 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>FragmentManager</title>
-	<meta name="description" content="Activities와 Fragments 사이에서 값 전달하기">
+	<title>Kotlin "companion object"</title>
+	<meta name="description" content="companion object ?">
 	
-	<link rel="canonical" href="http://localhost:4000/2020/04/14/FragmentManager/">
+	<link rel="canonical" href="http://localhost:4000/2020/04/14/Android-Kotlin-companion-object/">
 	<link rel="alternate" type="application/rss+xml" title="Lee Hyungi's Tech Blog" href="http://localhost:4000/feed.xml" />
 	
 	<!-- <link rel="stylesheet" href="/css/main.css"> -->
@@ -91,25 +91,49 @@
   <div id="myArticle" class="col-sm-9">
     <div class="post-area post">
       <header>
-        <h1>FragmentManager</h1>
+        <h1>Kotlin "companion object"</h1>
         <p>Apr 14, 2020</p>
       </header>
       <hr>
       <article>
-        <h3 id="activities와-fragments-사이에서-값-전달하기">Activities와 Fragments 사이에서 값 전달하기<br /></h3>
+        <h3 id="companion-object-"><strong>companion object ?</strong><br /></h3>
 
-<p>① Intent putExtra/getExtra <br /></p>
+<p>Kotlin은 클래스에 static 필드를 갖게 할 수는 없지만, companion object의 구조를 이용해서 Java의 static 메소드와 동일한 동작을 수행할 수 있다.<br /></p>
 
-<p>② Bundle bundle.putString/bundle.getString <br /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data class Book(val title: String, val price: Int){
+    companion object {
+        const val FREE_PRICE = 0
+        fun newFreeBook(title: String) = Book(title, FREE_PRICE)
+    }
+}
 
-<p>③ Parcelable <br /></p>
+fun main(){
+  val book = Book.newFreeBook("Free Kotlin")
+  println(book)
+}
+</code></pre></div></div>
 
-<p>④ SharedPreference <br /></p>
+<p>위와 같이 companion object 뒤의 {}안에는 일반 클래스의 본체와 같이 구현을 한다. 위와 같이 도우미 개체를 정의하면 Book 클래스 안에 내재 된 싱글 톤 인스턴스(Singleton Instance)가 생성되며, Book.[Field name]형태로 액세스 할 수 있다. <br /></p>
+
+<p>companion object는 <strong><font color="Red">자체가 클래스 정의를 가지고 있으며, 외부에서 정의 된 클래스의 인스턴스가 아니다.</font></strong><br />
+Book.xxx()라는 접근방식을 보면, 마치 Book 클래스의 싱글톤 인스턴스가 만들어지고 있는 것처럼 보이지만, Book인스턴스가 만들어지는 것은 아니다.<br />
+위의 Book.xxx()라는 문장은 사실 <strong>Book.Companion.xxx()</strong>이 생략 기법이다. 이 점에서 companion object는 Book 클래스의 인스턴스와는 별개임을 알 수 있다.<br /></p>
+
+<p>위와 같이 companion object{}의 형태로 작성할 수 있지만, 이 companion object에 이름을 넣어줄 수도 있다.<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data class Book(val title: String, val price: Int){
+    companion object Factory{
+      const val FREE_PRICE = 0
+      fun freeBook(title: String) = Book(title, FREE_PRICE)
+    }
+}
+</code></pre></div></div>
+
+<p>위의 도우미 객체는 Book.Factory.[Field name] 형태로 액세스 할 수 있다.<br />
+<strong>companion object는 클래스 내에서 하나 밖에 정의할 수 없다.</strong></p>
 
 <h3 id="전체적인-학습내용을-복습한다">전체적인 학습내용을 복습한다.<br /></h3>
-<ol>
-  <li><br /></li>
-</ol>
+<p>1.</p>
 
       </article>
       <hr>
@@ -135,8 +159,8 @@
     </div>
 	<script>
 		var disqus_config = function () {
-			this.page.url = "http://mikehyungilee.github.io/2020/04/14/FragmentManager/"; 
-			this.page.identifier = "/2020/04/14/FragmentManager"; 
+			this.page.url = "http://mikehyungilee.github.io/2020/04/14/Android-Kotlin-companion-object/"; 
+			this.page.identifier = "/2020/04/14/Android Kotlin companion object"; 
 		};
 		(function() {
 			var d = document, s = d.createElement('script');

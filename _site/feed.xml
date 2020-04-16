@@ -5,9 +5,373 @@
     <description>Hyungi's Ideas &amp; Blogs</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 15 Apr 2020 18:49:52 +0900</pubDate>
-    <lastBuildDate>Wed, 15 Apr 2020 18:49:52 +0900</lastBuildDate>
+    <pubDate>Fri, 17 Apr 2020 05:27:30 +0900</pubDate>
+    <lastBuildDate>Fri, 17 Apr 2020 05:27:30 +0900</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Android Jetpack Navigation Component</title>
+        <description>&lt;h3 id=&quot;android-jetpack-navigation-component&quot;&gt;Android Jetpack Navigation Component&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;이번 포스팅에서는 Jetpack Navigation Component를 활용하여 Fragment간의 전이 처리하는 것에 대해서 배워 볼 것이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;① app gradle에 dependencies 추가하기&lt;/font&gt;&lt;/strong&gt; &lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def nav_version = &quot;2.3.0-alpha05&quot;
+// Kotlin
+implementation &quot;androidx.navigation:navigation-fragment-ktx:$nav_version&quot;
+implementation &quot;androidx.navigation:navigation-ui-ktx:$nav_version&quot;
+
+def material_version = &quot;1.2.0-alpha05&quot;
+implementation &quot;com.google.android.material:material:$material_version&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;※ navigation graph 기능&lt;/p&gt;
+
+&lt;p&gt;(1) resouce - [New Resource File] - (File name : nav_graph / Resource type : Navigation)&lt;br /&gt;
+(2) 위의 nav_graph 파일에 화면에 보여질 UI의 화면 설계구조를 구조화시킬 수 있다.&lt;br /&gt;
+(3) activity_main.xml 에서 &lt;fragment&gt; tag로 화면을 채우는데 &lt;strong&gt;이 부분이 각각 생성한 Fragment layout을 inflate하는 부분&lt;/strong&gt;이 될 것이다.&lt;br /&gt;
+이 fragment tag안에 속성에서 살펴볼 것은, &lt;strong&gt;defaultNavHost = &quot;true&quot;와 app:navGraph = &quot;@navigation/nav_graph&quot; 인데 두번째 navGraph 속성은 navigation type의 layout에 생성할 layout의 구조를 setting하겠다는 의미, 마지막으로 android:name=&quot;androidx.navigation.fragment.NavHostFragment&quot;속성도 필수적으로 설정해주어야 한다.&lt;/strong&gt;&lt;br /&gt;&lt;/fragment&gt;&lt;/p&gt;
+
+&lt;p&gt;(4) 작성한 Fragment layout파일(*.xml)에서 가장 상단 tag의 속성에 &lt;strong&gt;tools:context = “xxxxxFragment” &lt;/strong&gt;라고 지정해주어야 한다.&lt;br /&gt;
+이 layout 파일이 어느 fragment 클래스 파일과 관련이 있는지 표시하기 위해서이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;② MainActivity에서는 화면의 fragment 태그에서 fragment 레이아웃을 보여주는 기능만 하므로, 실질적인 Navigation 객체를 만들어서 처리해주는 것은 Fragment class에서 해줄 것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;(1) onViewCreated() 메소드에서 property로 선언한 NavController 타입의 변수를 초기화시켜준다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    // reference of the view
+    navController = Navigation.findNavController(view)
+    view_transactions_btn.setOnClickListener(this)
+    send_money_btn.setOnClickListener(this)
+    view_balance_btn.setOnClickListener(this)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이 MainFragment도 nav_graph에 등록된 Fragment이기 때문에 navController객체의 생성이 가능하다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;(2) 이제 이 navController를 이용해서 각 버튼의 onClickListener의 이벤트를 구현할 것이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;override fun onClick(v: View?) {
+  // backStack관리가 자동으로 이루어지기 때문에 편리하다.
+  when(v!!.id){
+      R.id.view_transactions_btn -&amp;gt; navController.navigate(R.id.action_mainFragment_to_viewTransactionFragment)
+      R.id.send_money_btn -&amp;gt; navController.navigate(R.id.action_mainFragment_to_chooseRecipientFragment)
+      R.id.view_balance_btn -&amp;gt; navController.navigate(R.id.action_mainFragment_to_viewBalanceFragment)
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위의 ②-(1)과 (2)의 과정을 다른 Fragment에서도 작성을 작성해준다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;③ 다음 과정에서는 animation, bundle을 추가하는 과정이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Thu, 16 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/16/Android-Jetpack-Navigation-Component/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/16/Android-Jetpack-Navigation-Component/</guid>
+        
+        
+        <category>Android</category>
+        
+      </item>
+    
+      <item>
+        <title>Android Kotlin 범위 함수 사용정리</title>
+        <description>&lt;p&gt;이번 포스팅에서는 Kotlin 범위 함수 사용에 대해서 정리한다.&lt;br /&gt;
+&lt;strong&gt;Kotlin의 표준 라이브러리에는 “범위함수”라는 4가지 기능&lt;/strong&gt;이 있다.&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;let, with, run, apply&lt;/font&gt;&lt;/strong&gt;이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;let-&quot;&gt;&lt;strong&gt;.let ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val s = &quot;hoge&quot;.let{it.toUpperCase()}
+println(s) // HOGE
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위의 코드에서 알 수 있듯이 &lt;strong&gt;let은 어떤 형태의 확장 기능&lt;/strong&gt;이다.&lt;br /&gt;
+위의 예에서는 String 인스턴스를 “hoge”를 it으로 받아 처리하고 있다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;다른 예시로, &lt;strong&gt;예를 들어 String? 변수 foo의 대소 표현을 얻고 싶은 경우에는 아래와 같이 작성할 수 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val upperCase : String? = foo?.let{it.toUpperCase()}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;foo가 null인 경우에는 ?. 호출에 의해 let이 실행되지 않고 null을 반환한다.&lt;br /&gt;
+foo가 null이 아닌경우, let이 실행 it.toUpperCase()에 의해 foo 대문자 표현을 반환한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;with-&quot;&gt;&lt;strong&gt;with ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val s = with(&quot;hoge&quot;){this.toUpperCase()}
+println(s) // HOGE
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위의 코드에서 알 수 있듯이 &lt;strong&gt;let과 달리 확장함수&lt;/strong&gt;가 없다.&lt;br /&gt;
+첫 번째 인수에 &lt;strong&gt;임의의 형태 T&lt;/strong&gt;를 취한다. &lt;br /&gt;
+this는 “hoge”를 의미하며, 선택적이므로 {toUpperCase()}로 기술해도 된다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;다른 예시로, &lt;strong&gt;예를 들어 String? 변수 foo의 대소 표현을 얻고 싶은 경우에는 아래와 같이 작성할 수 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val upperCase : String? = foo?.let{it.toUpperCase()}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;foo가 null인 경우에는 ?. 호출에 의해 let이 실행되지 않고 null을 반환한다.&lt;br /&gt;
+foo가 null이 아닌경우, let이 실행 it.toUpperCase()에 의해 foo 대문자 표현을 반환한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;run-&quot;&gt;&lt;strong&gt;run ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val s = &quot;hoge&quot;.run{toUpperCase()}
+println(s) // HOGE
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;let 그리고 with이 합쳐진 버전이다.&lt;/strong&gt;&lt;br /&gt;
+첫 번째 인수에 &lt;strong&gt;임의의 형태 T&lt;/strong&gt;를 취한다. &lt;br /&gt;
+this는 “hoge”를 의미하며, 선택적이므로 {toUpperCase()}로 기술해도 된다.&lt;br /&gt;
+인스턴스를 생성하고 각종 설정을 한 후 실제로 바로 사용하기 위해서 사용된다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;apply-&quot;&gt;&lt;strong&gt;.apply ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;우선 .apply를 사용해서 recyclerView의 LayoutManager와 adapter를 초기해준 아래 예를 같이 살펴보자. &lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private fun initRecyclerView(){
+    // apply 를 사용해서 layoutManager 와 adapter 를 지정해주었을때,
+    recycler_view.apply {
+        layoutManager = LinearLayoutManager(this@MainActivity)
+        blogAdapter = BlogRecyclerAdapter(context,[dataSet])
+        adapter = blogAdapter
+    }
+
+    // recycler_view를 지정해주면서 layoutManager 와 adapter 를 지정해주었을때
+    recycler_view.layoutManager = LinearLayoutManager(this@MainActivity)
+    blogAdapter = BlogRecyclerAdapter(this,[dataSet])
+    recycler_view.adapter = blogAdapter
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;확실히 apply annotation을 사용해서 recycler_view를 초기화 시켜주면, 매번 recycler_view를 호출해서 사용하지 않아도 가볍게 layoutManager와 adapter 키워드만으로도 초기화 시켜줄 수 있다.&lt;/p&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;1.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 16 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/16/Android-Kotlin-%EB%B2%94%EC%9C%84-%ED%95%A8%EC%88%98-%EC%82%AC%EC%9A%A9%EC%A0%95%EB%A6%AC/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/16/Android-Kotlin-%EB%B2%94%EC%9C%84-%ED%95%A8%EC%88%98-%EC%82%AC%EC%9A%A9%EC%A0%95%EB%A6%AC/</guid>
+        
+        
+        <category>Android-Kotlin</category>
+        
+      </item>
+    
+      <item>
+        <title>Kotlin Singleton Example with MVVM and coroutines</title>
+        <description>&lt;h3 id=&quot;kotlin-singleton-example-with-mvvm-and-coroutines&quot;&gt;Kotlin Singleton Example with MVVM and coroutines&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;이번 Post에 정리할 내용은 아래와 같다.&lt;br /&gt;
+2 examples :&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;1) Quick “how to”&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;2)Practical example&lt;br /&gt;
+-Retrofit&lt;br /&gt;
+-Coroutines&lt;br /&gt;
+-MVVM&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Singletons&lt;/p&gt;
+
+&lt;p&gt;Instance of an object &lt;br /&gt;
+reuse the instance &lt;br /&gt;
+Retrofit instance &lt;br /&gt;
+Repository instance &lt;br /&gt;
+User sessions &lt;br /&gt;
+Dagger(Dependency Injection/Provide Singleton)
+Dagger라이브러리는 좀 어렵다. 나중에 별도의 강의로 이해하도록 하자.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;자 이제 실제로 Singleton 패턴의 클래스를 Kotlin으로 작성해보자.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;① 우선 models패키지를 작성을 하고, 그 안에 User라는 data class를 작성해준다. &lt;br /&gt;
+② 다음으로 ExampleSingleton을 이름으로 하는 Object클래스를 작성한다. 이 클래스 안에는 앞서 작성한 User클래스를 아래와 같이 객체를 만들어준다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val singletonUser: User by lazy {
+  User(&quot;email@gmail.com&quot;, &quot;username&quot;, &quot;image.png&quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;lazy키워드를 사용해서 변수를 위임하면 실제로 해당 속성이 호출되서 사용될때, 초기화가 된다.&lt;br /&gt;
+(클래스가 인스턴스화되는 타이밍에는 해당 속성은 메모리상에 초기화되지 않는다) &lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;③ MainActivity의 onCreate 메소드 내에서 Singleton클래스 내부에서 작성한 singletonUser 변수의 hashCode를 확인해서 실제 화면의 configuration(portrait/landscape)가 변경이 되었을때, 같은 메모리 주소를 반환하고 있는지 확인해본다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;println(&quot;DEBUG: ${ExampleSingleton.singletonUser.hashCode()}&quot;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;아래와 같이 화면의 configuration을 바꿨을때, 매번 같은 hashCode를 반환함을 알 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;D/EGL_emulation: eglMakeCurrent: 0xdb71a480: ver 3 0 (tinfo 0xdb70f7a0)
+I/System.out: DEBUG: -1198862957
+D/EGL_emulation: eglMakeCurrent: 0xdb71a480: ver 3 0 (tinfo 0xdb70f7a0)
+D/EGL_emulation: eglMakeCurrent: 0xdb71a480: ver 3 0 (tinfo 0xdb70f7a0)
+I/System.out: DEBUG: -1198862957
+D/EGL_emulation: eglMakeCurrent: 0xdb71a480: ver 3 0 (tinfo 0xdb70f7a0)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;④ 다음으로, api 패키지를 작성하고, MyRetrofitBuilder(Object클래스)와 ApiService 인터페이스를 작성해볼 것이다. &lt;br /&gt;
+MyRetrofitBuilder클래스를 Object클래스 타입으로 작성하는 이유는 Kotlin에서는 Object클래스로 작성한다는 의미가 바로 ‘Singleton’으로 작성하겠다는 의미이기 때문이다. ApiService인터페이스에서는 Retrofit을 사용해 통신상으로터 데이터를 취득하는 메소드를 작성할 것이다.&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;MyRetrofitBuilder.kt&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;object MyRetrofitBuilder {
+
+    const val BASE_URL = &quot;https://open-api.xyz/&quot;
+
+    // Singleton Retrofit builder
+    val retrofitBuilder: Retrofit.Builder by lazy {
+      Retrofit.Builder()
+      .baseUrl(BASE_URL)
+      .addConverterFactory(GsonConverterFactory.create())
+      // 서버로부터 호출되는 데이터의 형식은 JSON형태이므로, 이를 Convert할 Converter가 필요하다.
+      // Gson Converter = JSON objcet -&amp;gt; Java object
+    }
+
+    // Singleton apiService (Network request)
+    val apiService: ApiService by lazy {
+      retrofitBuilder
+      .build()
+      .create(ApiService::class.java)
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;ApiService.kt&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;interface ApiService {
+
+    @GET(&quot;placeholder/user/{userId}&quot;)
+    // 여기서 사용되는 suspend fun은 'coroutine'을 사용하기 위한 fun이다.
+    // use 'coroutine' fun return the date from network.
+    suspend fun getUser(
+        @Path(&quot;userId&quot;) userId: String
+    ): User
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;‘suspend fun’을 사용하면 ‘coroutine’을 사용한다는 의미이다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;⑤ &lt;strong&gt;Repository&lt;/strong&gt;패키지 추가하고, Repository Object클래스 작성하기.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;object Repository{
+
+    var job: CompletableJob? = null
+
+    fun getUser(userId: String): LiveData&amp;lt;User&amp;gt; {
+      // job을 초기화시켜준다.
+      job = Job()
+      return object: LiveData&amp;lt;User&amp;gt;(){
+          override fun onActive(){
+            super.onActive()
+            // 우선 job이 null인지 아닌지 검사를 한다.
+            job?.let{ theJob-&amp;gt;
+              // job이 null이 아닌경우, 실행을 한다.
+              // IO(Dispatchers)+theJob으로 유니크한 CoroutineScope를 background thread에 생성을 한다.
+              CoroutineScope(IO+theJob).launch{
+                val user = MyRetrofitBuilder.apiService.getUser(userId)
+                // live data를 background thread에 해줄 수 없으므로,
+                // 우선 MAIN 스레드로 전환을 하고, live data를 setting해주어야 한다.
+                withContext(Main){
+                  value = user
+                  theJob.complete()
+                }
+              }
+            }
+          }
+      }  
+    }
+    // job을 calcel하는 method이다.
+    fun cancelJob(){
+        job?.cancel()
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;⑥ MainViewModel 클래스를 작성한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class MainViewModel : ViewModel() {
+    private val _userId: MutableLiveData&amp;lt;String&amp;gt; = MutableLiveData()
+
+    // Transformations _userId에 변화가 생기면 .switchMap 이 trigger 되고 {}안에 코드가 실행된다.
+    val user: LiveData&amp;lt;User&amp;gt; = Transformations
+          .switchMap(_userId){
+              // 기존 _userId에 변화가 생겼으니, 업데이트를 해주어야 한다.
+              // 따라서, Repository.getUser를 통해서 새로운 uerId를 취득해서 위에 String변수를 초기화 시켜준다.
+              Repository.getUser(it)
+          }
+
+    fun setUserId(userId: String){
+         val update = userId
+
+         // 현재의 userId가 이미 setting 되었다면 종료한다.
+         if(_userId.value == update){
+              return
+          }
+         // 기존의 userId를 update된 새로운 userId로 초기화시킨다.
+          _userId.value = update
+    }  
+
+    // Repository에서 작성한 cancelJobs() 메소드를 viewModel클래스의 cancelJobs()메소드 안에 작성해준다.
+    fun cancelJobs(){
+        Repository.cancelJobs()
+    }    
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;⑦ MainActivity에서 작성한 MainViewModel클래스의 instance를 작성해서, Observe(변수의 변화가 감지되었을때)를 작성한다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class MainActivity : AppCompatActivity() {
+
+    lateinit var viewModel: MainViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+        viewModel.user.observe(this, Observer {user -&amp;gt;
+            println(&quot;DBUG: $user&quot;)
+        })
+        viewModel.setUserId(&quot;1&quot;)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.cancelJobs()
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Wed, 15 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/15/Kotlin-Singleton-Example-with-MVVM-and-Coroutines0/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/15/Kotlin-Singleton-Example-with-MVVM-and-Coroutines0/</guid>
+        
+        
+        <category>Android-Architecture</category>
+        
+      </item>
     
       <item>
         <title>Kotlin Singleton Example with MVVM and coroutines</title>
@@ -236,32 +600,6 @@ MyRetrofitBuilder클래스를 Object클래스 타입으로 작성하는 이유�
       </item>
     
       <item>
-        <title>FragmentManager</title>
-        <description>&lt;h3 id=&quot;activities와-fragments-사이에서-값-전달하기&quot;&gt;Activities와 Fragments 사이에서 값 전달하기&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;① Intent putExtra/getExtra &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;② Bundle bundle.putString/bundle.getString &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;③ Parcelable &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;④ SharedPreference &lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-&lt;ol&gt;
-  &lt;li&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        <pubDate>Tue, 14 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/14/FragmentManager/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/14/FragmentManager/</guid>
-        
-        
-        <category>Android</category>
-        
-      </item>
-    
-      <item>
         <title>Image libraries</title>
         <description>&lt;h3 id=&quot;image-library&quot;&gt;Image Library&lt;br /&gt;&lt;/h3&gt;
 
@@ -301,29 +639,8 @@ Glide.with(mContext)
       </item>
     
       <item>
-        <title>Kotlin in Android</title>
-        <description>&lt;h3 id=&quot;apply-&quot;&gt;&lt;strong&gt;.apply ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;우선 .apply를 사용해서 recyclerView의 LayoutManager와 adapter를 초기해준 아래 예를 같이 살펴보자. &lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private fun initRecyclerView(){
-    // apply 를 사용해서 layoutManager 와 adapter 를 지정해주었을때,
-    recycler_view.apply {
-        layoutManager = LinearLayoutManager(this@MainActivity)
-        blogAdapter = BlogRecyclerAdapter(context,[dataSet])
-        adapter = blogAdapter
-    }
-
-    // recycler_view를 지정해주면서 layoutManager 와 adapter 를 지정해주었을때
-    recycler_view.layoutManager = LinearLayoutManager(this@MainActivity)
-    blogAdapter = BlogRecyclerAdapter(this,[dataSet])
-    recycler_view.adapter = blogAdapter
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;확실히 apply annotation을 사용해서 recycler_view를 초기화 시켜주면, 매번 recycler_view를 호출해서 사용하지 않아도 가볍게 layoutManager와 adapter 키워드만으로도 초기화 시켜줄 수 있다.&lt;/p&gt;
-
-&lt;h3 id=&quot;companion-object-&quot;&gt;&lt;strong&gt;companion object ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
+        <title>Kotlin &quot;companion object&quot;</title>
+        <description>&lt;h3 id=&quot;companion-object-&quot;&gt;&lt;strong&gt;companion object ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
 
 &lt;p&gt;Kotlin은 클래스에 static 필드를 갖게 할 수는 없지만, companion object의 구조를 이용해서 Java의 static 메소드와 동일한 동작을 수행할 수 있다.&lt;br /&gt;&lt;/p&gt;
 
@@ -363,8 +680,8 @@ Book.xxx()라는 접근방식을 보면, 마치 Book 클래스의 싱글톤 인�
 &lt;p&gt;1.&lt;/p&gt;
 </description>
         <pubDate>Tue, 14 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/14/Android-Kotlin/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/14/Android-Kotlin/</guid>
+        <link>http://localhost:4000/2020/04/14/Android-Kotlin-companion-object/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/14/Android-Kotlin-companion-object/</guid>
         
         
         <category>Android-Kotlin</category>
@@ -506,6 +823,127 @@ viewModelScope . cancel ()
       </item>
     
       <item>
+        <title>Android Kotlin Coroutine Basic</title>
+        <description>&lt;h3 id=&quot;coroutine--&quot;&gt;&lt;strong&gt;Coroutine ?&lt;/strong&gt; &lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;Work with Background thread &lt;br /&gt;
+Coroutine은 AsyncTask 와 같이 Threading하는 방법 중에 하나이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-16 coroutine thread.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;※ 아래와 같은 상황에서 Coroutine은 유용하게 쓰인다.&lt;/strong&gt;&lt;br /&gt;
+① Request to network retrofit volley 등의 통신 라이브러리를 사용할때, Main Thread가 Block된다.&lt;br /&gt;
+② Accessing the internal SQLite database on the phone. ex) Room database&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;위의 두가지 경우에서 일반적으로 background thread가 사용이 된다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;simulate network request and internal room database.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Sequence&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+(1) Get the result value from background thread.&lt;br /&gt;
+(2) Take the result and then display on the main thread.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Android 개발을 하다보면 Network나 내부 데이터베이스로부터 데이터를 취득해서 순차적으로 취득한 데이터를 처리해야 되는 경우가 있다. &lt;br /&gt;
+이런 경우는 이미 경험을 해봤었기 때문에 얼마나 큰 문제인지 알고 있다. 이 문제를 해결하기 위해서는 RxJava나 callback함수를 사용해서 작성을 하면, 코드가 매우 복잡해지기 때문에, Coroutine을 사용해서 작성을 하면 Simple하게 코드를 작성할 수 있다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;① Gradle에 Coroutine과 관련된 dependencies를 추가한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def coroutines_version = &quot;1.2.1&quot;
+implementation &quot;org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version&quot;
+implementation &quot;org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;② debug용으로 log를 확인하기 위해 “logThread” 메소드를 작성한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private fun logThread(methodName: String){
+    println(&quot;debug: ${methodName}: ${Thread.currentThread().name}&quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;③ 테스트용으로 Api로부터 결과값을 가져오는 메소드(suspend)를 두개 작성한다. 이는 순차적으로 취득하는 데이터를 최종적으로 Main thread의 UI요소에 반영하기 위함이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private suspend fun getResult1FromApi():String{
+    logThread(&quot;getResult1FromApi&quot;)
+    delay(1000) // sleep single coroutine
+    //Thread.sleep(1000) // sleep all coroutine
+    return RESULT_1 // &quot;Result #1&quot;
+}
+
+private suspend fun getResult2FromApi(): String{
+    logThread(&quot;getResult2FromApi&quot;)
+    delay(1000)
+    return RESULT_2 // &quot;Result #2&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;④ 위에서 작성한 Api취득 메소드를 fakeApiResult() 메소드(suspend) 내에서 처리하도록 작성한다. &lt;br /&gt;
+   여기서 테스트해볼 것은 api로부터 취득한 값을 UI상에 표시하는 테스트를 해볼 것이다. 하지만 &lt;strong&gt;현재 fakeApiResult()메소드가 실행되는 thread는 Main thread가 아닌 Background thread&lt;/strong&gt;이므로, &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;UI에서 처리하기 위해서는 취득한 값을 &quot;Main thread&quot;로 보내서 UI에 표시처리해야 한다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private suspend fun fakeApiResult(){
+    val result1 = getResult1FromApi()
+    println(&quot;debug: $result1&quot;)
+    setTextOnMainThread(result1)
+
+    // result1 부분이 처리된 후에 result2부분이 순차적으로 실행될 것이다.
+    val result2 = getResult2FromApi()
+    setTextOnMainThread(result2)
+    //text.setText(result1) //이 작업은 crash 될 것이다.
+    // 그 이유는 background thread 에서 작업을 하고 있고,
+    // 실제 UI와 interact 하고 있는 thread 는 Main thread 이기 때문이다.
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;setTextOnMainThread() 메소드 (Main thread로 thread를 전환하여 취득한 결과 값을 UI반영하기)&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private suspend fun setTextOnMainThread(input: String){
+    //CoroutineScope(Main)로 하거나
+    withContext(Main){
+      setNewText(input)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;UI 상에 있는 TextView에 text를 setting하는 메소드&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private fun setNewText(input: String){
+    val newText = text.text.toString() + &quot;\n$input&quot;
+    text.text = newText
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;⑤ 마지막으로 onCreate()메소드에 작성한 코드를 살펴보자. 이 코드에서 주목해야 될 부분은 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;CoroutineScope&quot;&lt;/font&gt;&lt;/strong&gt;이다. CoroutineScope의 option으로는 &lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;IO, Main, Default&lt;/font&gt;&lt;/strong&gt;가 있다. 각 option은 다른 Thread 기능을 하는데, &lt;strong&gt;IO(Input/Output) thread의 경우, Network, local database interaction 기능&lt;/strong&gt;을 하며, &lt;strong&gt;Main thread&lt;/strong&gt;의 경우, UI 요소와 상호작용하는 역할을 한다. 이외에 Default option은 heavy competition work를 다룰때 사용한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;override fun onCreate(savedInstanceState: Bundle?) {
+      super.onCreate(savedInstanceState)
+      setContentView(R.layout.activity_main)
+
+      button.setOnClickListener{
+          // IO(Network, local database interaction),
+          // Main(Main thread, interact with UI),
+          // Default(heavy competition work)
+          CoroutineScope(IO).launch {
+              //launch (coroutine builder)
+              fakeApiResult()
+          }
+      }
+}    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;참고 : &lt;a href=&quot;https://codelabs.developers.google.com/codelabs/kotlin-coroutines/#0&quot;&gt;Android coroutines codelab&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;1.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 14 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/14/Android-Kotlin-Coroutine-basic/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/14/Android-Kotlin-Coroutine-basic/</guid>
+        
+        
+        <category>Android-Kotlin</category>
+        
+      </item>
+    
+      <item>
         <title>MVVM Architecture Image Training</title>
         <description>&lt;h2 id=&quot;mvvm-architecture&quot;&gt;MVVM Architecture&lt;br /&gt;&lt;/h2&gt;
 
@@ -587,417 +1025,6 @@ annotationProcessor &quot;android.arch.lifecycle:compiler:$archLifecycleVersion&
         
         
         <category>Android-Architecture</category>
-        
-      </item>
-    
-      <item>
-        <title>RecyclerView를 Java/Kotlin으로 작성하기</title>
-        <description>&lt;h3 id=&quot;recyclerview을-작성하기---recyclerviewadapter작성하기&quot;&gt;RecyclerView을 작성하기 - RecyclerViewAdapter작성하기.&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;① RecyclerView Class를 초기화시켜 줄 두 개의 변수 (Context와 DataSet 변수)를 Field변수로 선언해준다.&lt;br /&gt;
-→ 위와 같이 생성자에서 직접 Context와 DataSet을 초기화해줘도 되지만, 내부에 다른 DataSet 필드 변수를 초기화 시켜주는 메소드를 작성해서 해줄 수 있다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;② 새로운 생성자를 작성해주고, 그 생성자 안에서 ①에서 작성한 field변수를 초기화시켜준다.&lt;br /&gt;
-③ 내부 클래스를 작성해준다. (이 내부 클래스에서는 Layout상에 있는 View요소를 초기화시켜준다. - UI element binding)&lt;br /&gt;
-④ 나머지 Override 메소드를 implementation해준다.&lt;br /&gt;
-⑤ onCreateViewHolder() - 이 부분에서는 parent View가 ‘null’인 경우에 custom listItem View를 Inflate해주고 holder 변수를 초기화시켜주는 부분이다.&lt;br /&gt;
-⑥ onBindViewHolder() - 구체적인 위치에 데이터를 보여주는 곳이다. 각 position마다 보여질 데이터를 초기화 시켜준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※RecyclerView의 OnClickListener의 가장 최고의 연습방법에 대해서 알아보자.(Java편)&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 방법은 일전에 Bravo라는 프로젝트를 했을 당시에 성전이 형한테 배웠던 방법이다. RecyclerView 내에 있는 아이템 클릭 이벤트를 구현할때, 아이템 클릭시 자동으로 UI내부의 요소를 동시에 업데이트 해주고 싶었는데, 아래와 같은 방식으로 했더니 원하는대로 작동이 되었었다. 나중을 위해서 아래의 내용을 정리해둔다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;① 우선 RecyclerViewAdapter 클래스 안에 onClick 메소드를 하나 가지고 있는 interface를 작성한다.&lt;br /&gt;
-② 그 다음에는 작성한 interface를 구현할 MainActivity에 가서 class에 implement해준다.&lt;br /&gt;
-③ Adapter클래스의 ViewHolder 내부 클래스에도 interface를 상속시켜준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;④ Adapter클래스의 Holder 내부 클래스에서 OnNicePlaceClickListener를 아래와 같이 선언해준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-    private ImageView mImage;
-    private TextView mTitle;
-    OnNicePlaceClickListener onNicePlaceClickListener;
-
-    public Holder(@NonNull View itemView, OnNicePlaceClickListener onNicePlaceClickListener) {
-        super(itemView);
-        mImage = itemView.findViewById(R.id.image);
-        mTitle = itemView.findViewById(R.id.image_name);
-        this.onNicePlaceClickListener = onNicePlaceClickListener;
-        itemView.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        onNicePlaceClickListener.onNicePlaceClick(getAdapterPosition());
-    }
-}
-
-public interface OnNicePlaceClickListener{
-    void onNicePlaceClick(int position);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;⑤ 기존에 onCreateViewHolder() 메소드 안에서 생성자 요소가 하나 추가 되었으므로, 외부 클래스 (Adapter)클래스에서도 필드 변수로 ‘mOnNicePlaceClickListener 인터페이스’를 선언해주고 생성자에서도 초기화를 시켜준다. &lt;br /&gt;
-그 다음에 onCreateViewHolder() 메소드 안에서도 Holder 내부 클래스를 초기화 시켜주는 요소로 mOnNicePlaceClickListener를 추가해준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;⑥ 그 다음으로 MainActivity에서 Adapter를 초기화 시켜줄때, 두번째 요소에 this를 넣어 초기화시켜준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※RecyclerView의 OnClickListener의 가장 최고의 연습방법에 대해서 알아보자.(Kotlin편)&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;RecyclerView는 built-in onClickListener 메소드가 없기 때문에, Lambda식으로 RecyclerView의 click이벤트를 처리해줘야 한다.&lt;br /&gt;
-기존에 선언한 Aapter에서 Parameter로 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;itemClick:(T)-&amp;gt;Unit&lt;/font&gt;&lt;/strong&gt;를 넘겨줘야 한다.&lt;br /&gt;
-클릭했을때, Category 객체를 넘겨주지만, 결과적으로 아무것도 반환하지 않기 때문에, Unit으로 처리를 한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;ViewHolder(내부 클래스)의 Parameter에도 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;val itemClick: (Category) -&amp;gt; Unit&lt;/font&gt;&lt;/strong&gt;를 넘겨서 내부 메소드 내에 itemView.setOnClickListener{itemClick(category)}로 작성해준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;⑦ Adapter클래스를 초기화시켜서 사용하는 클래스(MainActivity)에서 Lambda식으로 Adapter클래스를 초기화 시켜줄때　OnClickListener도 함께 초기화를 시켜준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※ Kotlin에서는 위의 방법 이외에 앞서 Java에서 interface를 구현해서 클릭 이벤트를 구현했던 방식으로도 할 수 있다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;①&lt;strong&gt;“OnItemClickListener”&lt;/strong&gt;interface를 Adapter클래스에 추가한다.&lt;br /&gt;
-②Adapter클래스의 Field변수로 OnItemClickListener를 선언한다.&lt;br /&gt;
-③OnItemClickListener의 setter메소드를 작성한다.&lt;br /&gt;
-④ViewHolder 내부 클래스 안에 아래와 같이 OnClickListener를 setting한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;itemView.setOnClickListener{
-      mOnPostClickListener.onClick(blogPost)
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;⑤MainActivity에서 adapter를 초기화 시키는 부분에서 interface의 setter 메소드를 사용해서 interface를 구현해준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private fun initRecyclerView(){
-    // apply 를 사용해서 layoutManager 와 adapter 를 지정해주었을때,
-    recycler_view.apply {
-        layoutManager = LinearLayoutManager(this@MainActivity)
-        blogAdapter = BlogRecyclerAdapter()
-        blogAdapter.setOnPostClickListener(onPostClickListener)
-        val topSpacingDecoration = TopSpacingItemDecoration(30)
-        addItemDecoration(topSpacingDecoration)
-        adapter = blogAdapter
-    }
-}
-
-// onPostClickListener
-private val onPostClickListener = object : BlogRecyclerAdapter.OnPostClickListener{
-    override fun onClick(blogPost: BlogPost) {
-      Toast.makeText(applicationContext, blogPost.username, Toast.LENGTH_SHORT).show()
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-&lt;ol&gt;
-  &lt;li&gt;RecyclerView를 사용할때 필요한 RecyclerViewAdapter클래스의 작성순서를 이미지 트레이닝한다.&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        <pubDate>Mon, 13 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/13/RecyclerView/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/13/RecyclerView/</guid>
-        
-        
-        <category>Android</category>
-        
-      </item>
-    
-      <item>
-        <title>뷰(View), 뷰 그룹(ViewGroup), 레이아웃(Layout)</title>
-        <description>&lt;h3 id=&quot;view와-viewgroup-layout의-개념&quot;&gt;View와 ViewGroup, Layout의 개념&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;‘View’란?&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;UI의 구성 요소 중 가장 추상화된 개념으로서, 화면에 표시되는 가장 기본적인 요소를 말한다.&lt;br /&gt;
-ex) 그림, 텍스트, 버튼 등 화면에 표시되는 모든 요소가 View로 간주된다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;‘ViewGroup이란?’&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;ViewGroup은 View를 상속받으면서 특별히 여러 개의 구성 요소들을 포함하는 View이다. ViewGroup은 여러 개의 View들을 자식 뷰(Child View)로 가지면서 View의 위치를 조정하고 그룹화하여 관리할 수 있다. ViewGroup에 포함되어 있는 ‘View’를 가르켜 ‘자식 뷰(Child View)’라고 하고, ViewGroup을 ‘부모 뷰(Parent View)’라고 한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;ViewGroup은 View를 Group형태로 포함시킬 수 있는 클래스의 추상화된 개념으로, 실제로 사용되는 것이 ViewGroup를 상속받은 ‘Layout’이다.&lt;br /&gt;
-‘Layout’은 포함된 View를 배치할 수 있는 클래스이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-&lt;ol&gt;
-  &lt;li&gt;View는 안드로이드의 UI 요소 중 가장 기본이 되는 요소이다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;ViewGroup은 다른 여러 View를 포함시킬 수 있는 특별한 View이다. ViewGroup을 사용하면 View를 그룹화하여 관리할 수 있다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;레이아웃은 ViewGroup의 실제 구현 클래스이며 자식 뷰를 어떻게 배치할지 결정한다. 자주 사용하는 레이아웃에는 LinearLayout, RelativeLayout, ConstraintLayout등이 있다.&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-</description>
-        <pubDate>Sun, 12 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/12/Android-View,-ViewGroup,-Layout/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/12/Android-View,-ViewGroup,-Layout/</guid>
-        
-        
-        <category>Android</category>
-        
-      </item>
-    
-      <item>
-        <title>Layout 종류와 개념</title>
-        <description>&lt;h3 id=&quot;linear-레이아웃의-개념과-orientation&quot;&gt;Linear 레이아웃의 개념과 Orientation&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;‘LinearLayout’이란?&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;LinearLayout은 포함된 자식 뷰를 ‘선형’으로 배치시키는 레이아웃이다. 선형으로 배치하기 때문에, ‘가로 혹은 ‘세로’방향 등 두가지 방법으로 배치할 수 있다.&lt;br /&gt;
-LinearLayout의 Orientation 속성값은 ‘none’, ‘horizontal’, ‘vertical’로 선택할 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;LinearLayout의 속성&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-① gravity, layout_gravity속성에 대해서 이해해보자.&lt;br /&gt;&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td&gt;속성&lt;/td&gt;
-    &lt;td&gt;설명&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;gravity&lt;/td&gt;
-    &lt;td&gt;객체가 자신의 경계 내에서 X축과 Y축의 내용을 배치하는 방법을 지정한다. 설정한 값은 단일 행이나 열 내의 모든 자식 뷰의 가로 및 세로 정렬에 영향을 준다.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;layout_gravity&lt;/td&gt;
-    &lt;td&gt;View 자신의 위치를 부모 뷰를 기준으로 정렬하는 속성이다. 구성 요소를 셀 그룹에 배치하는 방법을 지정한다. 기본값은 'LEFT | BASELINE'이다.&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br /&gt;
-→ ‘Margin’과 ‘Padding’, 이 두가지 요소는 비슷하면서도 서로 달라 자칫 헷갈리기 쉬우니 여기서 개념을 확실히 잡아 두는 것이 중요하다.&lt;br /&gt;
-‘배치기준(center, left, right)’이 먼저 적용이 되고, 그 적용된 기준선에 대해 ‘margin값’이 적용된다는 것을 알 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Margin과 Padding&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td&gt;속성&lt;/td&gt;
-    &lt;td&gt;설명&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;layout_margin(외부 여백)&lt;/td&gt;
-    &lt;td&gt;뷰의 왼쪽, 위쪽, 오른쪽 및 아래쪽에 추가 공간을 지정한다.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;padding(내부 여백)&lt;/td&gt;
-    &lt;td&gt;왼쪽, 위쪽, 오른쪽 및 아래쪽 가장자리의 padding을 픽셀 단위로 설정한다. padding은 view의 가장자리와 view의 내용 사이의 간격을 지정한다.&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br /&gt;
-‘Padding’속성은 Marginㄹ과 달리 View 자기 자신의 영역이 움직이는 것이 아니다. 대신 View가 Drawing하는 내부 컨텐츠가 View 기준선으로부터의 여백을 결정한다.&lt;br /&gt;
-※’Margin’은 View의 기준선에 여백을 설정하여, &lt;strong&gt;View의 영역 자체를 옮기는 것이고,&lt;/strong&gt;Padding은 View의 기준선은 그대로 있지만 &lt;strong&gt;그려야 할 내부 컨텐츠의 영역에 여백을 주는 것&lt;/strong&gt;이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;weight 속성&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-‘weight’속성은 ViewGroup 전체 크기에서 View가 갖는 크기의 비중을 설정하는 속성이다.&lt;br /&gt;
-기존에 알지 못했던 ‘weightSum’속성에 대해서 알아보자.&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;'weightSum'&lt;/font&gt;&lt;/strong&gt;속성은 자신의 비중총합을 설정할 수 있는 속성이다. &lt;br /&gt;
-&lt;strong&gt;※ View가 비율로 지정될 쪽의 사이즈를 ‘0dp’로 지정해야한다.(안드로이드 개발자 레퍼런스)&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;레이아웃 중첩(nested)&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;‘LinearLayout의 중첩’&lt;/strong&gt;이란? LinearLayout 안에 또 LinearLayout 등을 넣는 것을 의미한다. 이렇게 하는 이유는 LinearLayout은 ‘가운데 또는 세로’, 즉 어느 한 방향의 배치 기준만 가질 수 있기 때문이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-12 nested layout.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;500&quot; /&gt;  &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;‘안드로이드의 지원 라이브러리(Support Library)’&lt;/strong&gt;는 프레임워크에는 포함되지 않았지만, 많은 유용한 기능을 포함하고 있다. 안드로이드를 개발할때, 좀 더 편리하게 개발할 수 있도록 도와주는 라이브러리이다. 이런 라이브러리들이 프레임워크가 아닌 별도의 라이브러리가 된 가장 큰 이유는 ‘하위 호환성’때문이다. 하위 버전에서는 새로운 버전에서 생긴 UI요소들을 사용할 수 없기 때문이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;relativelayout-레이아웃의-개념&quot;&gt;RelativeLayout 레이아웃의 개념&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;‘RelativeLayout’이란?&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;‘RelativeLayout’은 View를 ‘부모 뷰’ 또는 ‘다른 View’와의 상대적인 위치 관계 기반으로 배치한다.&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;RelativeLayout의 속성&lt;/font&gt;&lt;/strong&gt;을 크게 보면 &lt;strong&gt;2가지&lt;/strong&gt; 정도로 생각할 수 있는데, 하나는 &lt;strong&gt;부모 뷰를 기준으로 배치하는 것&lt;/strong&gt;이고, &lt;strong&gt;다른 하나&lt;/strong&gt;는 &lt;strong&gt;부모 뷰가 같은 형제 뷰를 기준으로 배치하는 것&lt;/strong&gt;이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※RelativeLayout을 사용할때의 주의점&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-① View객체를 화면이 아닌 [Component Tree]에 Drag&amp;amp;Drop해야한다. 그 이유는 ‘상대적인 배치’ 기준인 ‘RelativeLayout’상태에서 화면으로 직접 끌어 옮기면 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;다른 뷰와의 관계, margin 값이 자동으로 생성되어 버리기 때문&lt;/font&gt;&lt;/strong&gt;이다. 그렇기 때문에 RelativeLayout상태에서는 &lt;strong&gt;XML에 코드를 직접 View의 속성을 정의&lt;/strong&gt;하거나, [Design]탬에서 [Component Tree]에 버튼을 추가한 후 속성을 변경하여 배치하는 것이 좋다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;RelativeLayout에서 View의 배치는 &lt;strong&gt;‘edge’&lt;/strong&gt;를 기준으로 이루어지므로, ‘edge’에 대한 이해가 선행된다면 전체적인 이해 또한 보다 수월해진다.&lt;br /&gt;
-View에서의 ‘edge’는 일종의 ‘기준선’을 의미한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;※기준선 구조 그림&lt;/strong&gt;&lt;br /&gt;
-&lt;img src=&quot;/images/android/2020-04-12 Relativelayout alignment.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;500&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;rtlright-to-left-지원&quot;&gt;&lt;strong&gt;RTL(Right To Left) 지원&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;앞서서 부모 뷰를 기준으로 하여 상대적으로 뷰들을 배치하는 방법에 대해서 배워보았다. 그런데 ‘alignParentStart’와 ‘alignParentEnd’속성은 무엇인가?&lt;br /&gt;
-‘alignParentStart’와 ‘alignParentLeft’는 똑같은 동작을 하는데, 사실 두 속성의 차이는 ‘RTL(Right To Left)보기 지원’과 관련이 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;우선&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;'RTL'&lt;/font&gt;&lt;/strong&gt;이란 무엇일까요? 이는 &lt;strong&gt;화면을 보는 방식&lt;/strong&gt;을 의미한다. 사실 국가마다 조금씩 차이가 있지만, 한국의 경우에는 일반적으로 &lt;strong&gt;LTR(Left To Right)방식&lt;/strong&gt;을 사용한다. 즉 &lt;strong&gt;왼쪽에서 오른쪽으로 화면을 본다는 의미&lt;/strong&gt;이다. &lt;strong&gt;RTL(Right To Left)&lt;/strong&gt;은 거꾸로 &lt;strong&gt;오른쪽에서 왼쪽으로 보는 방식&lt;/strong&gt;이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;형제-뷰-기준-배치&quot;&gt;&lt;strong&gt;형제 뷰 기준 배치&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;이번에 배울 내용은 부모 뷰가 기준이 아닌 &lt;strong&gt;‘형제 뷰를 기준으로 배치하는 방법’&lt;/strong&gt;이다. 형제 뷰란, 같은 뷰를 공유하는 View들을 의미한다.&lt;br /&gt;
-&lt;strong&gt;형제 뷰의 기준선을 일치시키는 방법으로 지정하는 것&lt;/strong&gt;이다.&lt;br /&gt;
-&lt;strong&gt;ex) layout_alignLeft = “@+id/button14”&lt;/strong&gt;라는 명령은 &lt;strong&gt;“자기 자신의 왼쪽 기준선을 ‘button14’의 왼쪽 기준선과 일치시킨다.”&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-13 RelativeLayout(2).png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;700&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;위의 그림 이외에 &lt;strong&gt;‘layout_alignBaseLine’&lt;/strong&gt;이라는 속성이 있다. 이 속성은 다른 속성들과는 다르게  &lt;strong&gt;View의 테두리 기준선이 아닌 컨텐츠의 기준선을 맞춘다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;linearlayout과-relativelayout의-장단점-비교-&quot;&gt;LinearLayout과 RelativeLayout의 장단점 비교 &lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;RelativeLayout은&lt;/strong&gt; LinearLayout에 비해 View의 중첩을 줄일 수 있는 장점이 있다. 앞서 LinearLayout을 배울때, View의 정렬 방향이 바뀌면서  LinearLayout 안에 또 다른 LinearLayout을 넣어야 했지만, &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;'레이아웃의 중첩'은 UI 성능을 떨어뜨리는 주요 원인 중 하나가 된다.&lt;/font&gt;&lt;/strong&gt;그런 면을 볼때 RelativeLayout의 장점을 활용해서 레이아웃을 만들어보는 것도 좋다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※RelativeLayout으로 레이아웃을 작성할때, 주의해야될 점&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-① &lt;strong&gt;‘기준’으로 잡을 View를 찾아야 한다.&lt;/strong&gt;&lt;br /&gt;
-② 레이아웃 편집은 &lt;strong&gt;[Text]탭&lt;/strong&gt;에서 타이핑하여 진행해야 한다. 그 이유는 &lt;strong&gt;RelativeLayout&lt;/strong&gt;은 마우스로 글어 View를 배치할 경우 자동으로 ‘margin 및 관계’가 생성되어 오히려 편집이 어려워지기 때문이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;constraintlayout-레이아웃의-개념&quot;&gt;ConstraintLayout 레이아웃의 개념&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;‘ConstraintLayout’이란?&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;ConstraintLayout은 &lt;strong&gt;RelativeLayout과 LinearLayout을 완전히 대체 가능한 &lt;font color=&quot;Red&quot;&gt;'ConstraintLayout'&lt;/font&gt;에 대해 학습한다.&lt;/strong&gt;‘ConstraintLayout’은 ‘제약조건’을 기반으로 View를 배치하는 레이아웃으로, Android SDK에 기본적으로 포함된 것은 아니지만, Google에서 제공하는 ‘Support 라이브러리’로 제공되며 매우 강력하다.&lt;br /&gt;
-&lt;strong&gt;Google은 레이아웃을 작성할 때 ConstraintLayout을 사용할 것을 권장하고 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;Constraint 레이아웃과 제약&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;ConstraintLayout의 모든 View에는 적어도 하나씩의 ‘수평제약’과 ‘수직 제약’이 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-13 ConstraintLayout(1).png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;400&quot; /&gt;&lt;br /&gt;
-다음과 같이 ‘수평’,’수직에 기준한 제약을 각 각 하나식 등록을 하게 되면, Button의 위치를 결정할 수 있게 된다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;다른-뷰와의-제약-관계&quot;&gt;다른 뷰와의 제약 관계&lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;기존에 추가한 버튼에 새로 추가한 버튼을 ‘수평’, ‘수직’Constraint관계로 엮어준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-13 ConstraintLayout(2).png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;400&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;ConstraintLayout의 강력한 기능인 &lt;font color=&quot;Red&quot;&gt;'Bias'&lt;/font&gt;&lt;/strong&gt;에 대해서 알아보자.&lt;br /&gt;
-이 &lt;strong&gt;‘Bias’기능은 수평 또는 수직 방향으로 제약을 2개 추가하게 되면 더는 제약을 지킬 수 없는 상태가 된다. 이 경우 Constraint는 매우 유용한 기능인 ‘Bias’를 사용할 수 있다.&lt;/strong&gt;&lt;br /&gt;
-&lt;img src=&quot;/images/android/2020-04-13 ConstraintLayout(3).png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;600&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;위의 캡쳐를 보면, 아래에 위치한 버튼은 좌측 제약은 좌측 상단에 위치한 버튼과 연결되어 있고, 우측제약은 부모 뷰와 연결이 되어 있는 것을 알 수 있다. 이 경우는 현재 크기로는 양쪽 제약을 모두 지킬 수 없는 상태이다.&lt;br /&gt;
-이렇게 &lt;strong&gt;서로 동시에 성립할 수 없는 제약 상태가 되면, &lt;/strong&gt; ConstraintLayout은 각 제약을 마치 ‘서로 당기는 힘’처럼 사용한다. &lt;br /&gt;
-아래 위치한 버튼의 좌측 제약과 우측 제약이 같은 힘으로 버튼을 당긴다고 생각해보자.&lt;br /&gt;
-이때 ‘Bias(선호도)’는 ‘퍼센테이지’로 표현된다. 기본값은 ‘50’으로 양쪽 제약 가운데에 배치되지만, 그 값을 변경함으로써 뷰의 위치를 퍼센테이지로 결정하게 된다. 즉 제약의 margin을 지키는 범위 내에서 자유롭게 배치할 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-13 ConstraintLayout(4).png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;600&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;위의 캡쳐는 ‘Bias(선호도)’를 ‘20’으로 조정한 결과이다. 버튼의 위치가 제약을 지키는 범위 내에서 20% 지점에 위치한 것을 확인할 수 있다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;수평 제약에 대한 Bias 설정을 해봤으니, 수직 제약도 추가하여 수직제약에 대한 Bias도 확인해보자.&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;aspect-ratio&quot;&gt;Aspect Ratio&lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;‘ConstraintLayout’의 크기의 기준은 &lt;strong&gt;‘wrap_content, match_constraint, fixed_size’&lt;/strong&gt;등의 3가지 경우가 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;여기서 ‘match_constraint’로 ‘layout_width’나 ‘layout_height’의 속성 중 하나를 지정하게 되면, View의 크기 비율을 지정할 수 있다. &lt;strong&gt;‘aspectRatio(종횡비, 가로와 세로의 비율)’&lt;/strong&gt; 속성이 그것이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;circle-제약&quot;&gt;Circle 제약&lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;layout_constraintCircle&lt;/strong&gt;속성은 특정 뷰를 기준으로 View를 원형으로 배치되도록 하는 기능이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td width=&quot;400&quot;&gt;
-      &lt;img src=&quot;/images/android/2020-04-13 Circle Constraint.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;300&quot; /&gt;&lt;br /&gt;
-    &lt;/td&gt;
-    &lt;td width=&quot;400&quot;&gt;
-      &lt;img src=&quot;/images/android/2020-04-13 Circle constraint(1).png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;300&quot; /&gt;&lt;br /&gt;
-    &lt;/td&gt;
-    &lt;td width=&quot;400&quot;&gt;
-      이 Circle 제약에서는 하단에 위치한 버튼 위에 TextView를 위치시키고, 이 TextView의 위치는 타켓이 되는 뷰의 중점을 기준으로 '각도'와 '떨어진 거리'를 각각 'circleAngle'과 'circleRadius'값들로 설정한다.&lt;br /&gt;
-      이는 화면의 해상도가 바뀌어도 정확한 'angle' 방향에 위치하게 되는 강력한 기능이다.&lt;br /&gt;
-
-      ① layout_constraintCircle &lt;br /&gt;
-      ② layout_constraintCircleAngle &lt;br /&gt;
-      ③ layout_constraintCircleRadius &lt;br /&gt;
-
-    &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;가이드라인guideline&quot;&gt;가이드라인(Guideline)&lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;‘Guideline’은 뷰를 더 쉽게 배치할 수 있도록 ‘기준선’을 추가하는 것이다.&lt;/strong&gt;‘수직’과 ‘수평’의 두 가지 종류가 있는데, 우선 ‘vertical guideline’에 대해서 살펴보자.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;‘Component Tree’&lt;/strong&gt;에서 ConstraintLayout을 우클릭하고, [Helpers] - [Add ~ Guideline]&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;가이드라인의 상단부에 타입을 바꿀 수 있는 버튼이 있는데, 이를 클릭하면 &lt;strong&gt;‘begin, end, percent’&lt;/strong&gt;순으로 전환됨을 확인할 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 가이드 라인은 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;특히 '퍼센트(비율)'로 배치할 때 매우 유용하다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-예를 들어 특정 버튼이 상단으로부터 ‘80%’, 크기는 ‘10%’, 좌측에서 ‘30%’ 떨어진 곳에 위치한다면, 화면의 사이즈가 바뀌어도 걔속 비율상 같은 ‘크기’와 같은 ‘위치’로 존재하게 된다. 단 constraintGuidePercent 속성을 입력할때는 ‘constraintGuideBegin’, ‘constraintGuideEnd’등 다른 속성은 반드시 지워야 한다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;체인chain&quot;&gt;체인(Chain)&lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;‘ConstraintLayout’에서 ‘Chain’은 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;가로축 또는 세로축을 기준으로 여러 개의 View를 그룹처럼 관리하게 해 주는데,&lt;/font&gt;&lt;/strong&gt;별도로 속성이 존재하는 것이 아니라 ‘2개의 뷰가 서로를 참조’하고 있으면 Chain으로 묶인다.&lt;br /&gt;
-이렇게 ‘상호 제약’이 걸린 상태가 바로 ‘체인(Chain)’이다. 여러 개의 View가 체인으로 연결되어 있을 때 그 첫 번째 View를 가르켜 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;'Chain Head'&lt;/font&gt;&lt;/strong&gt;라고 부른다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 ‘Chain Head’를 담당하는 View에는 Chain 스타일을 지정할 수 있는데, 이 Chain Head를 담당하는 뷰에서 지정 가능한 스타일은 아래와 같다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td&gt;스타일&lt;/td&gt;
-    &lt;td&gt;설명&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;CHAIN_SPREAD&lt;/td&gt;
-    &lt;td&gt;각 View들이 동일한 간격으로 펼쳐지게 한다.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;CHAIN_SPREAD_INSIDE&lt;/td&gt;
-    &lt;td&gt;CHAIN SPREAD처럼 펼쳐지지만 View의 양끝은 펼치지 않는다. 즉 여백을 두지 않는다.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;CHAIN_PACKED&lt;/td&gt;
-    &lt;td&gt;View 사이에 여백을 두어 펼치지 않고 딱 붙게 한다. CHAIN_PACKED상태에서는 Bias로 'PACKED'된 뷰의 위치를 조정할 수 있다.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;WEIGHTED CHAIN&lt;/td&gt;
-    &lt;td&gt;체인으로 묶인 View의 일부가 'match_constraint'인 경우 '비율'로서 크기를 지정할 수 있다.&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-13 ConstraintLayout chain.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;600&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;※ ConstraintLayout으로 레이아웃 작성하&lt;/strong&gt;&lt;br /&gt;
-① 제약의 중심이 될 가이드라인을 생성하기.&lt;br /&gt;
-② 레이아웃상에 각 View를 위치시키고, 필요에 따라 각 가이드라인에 제약조건을 걸어 각 View요소를 위치시킨다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-13 ConstraintLayout guideline layout.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;300&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;LinearLayout ?&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;레이아웃은 ViewGroup의 실제 구현 클래스이며 자식 뷰를 어떻게 배치할지 결정한다. 자주 사용하는 레이아웃에는 LinearLayout, RelativeLayout, ConstraintLayout등이 있다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;LinearLayout은 가로 또는 세로로 뷰를 순차적으로 배치한다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;LinearLayout의 배치 기준은 gravity, layout_gravity 속성을 이용하여 변경이 가능하다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;gravity 속성은 뷰 자신의 컨텐츠 또는 자식 뷰들의 배치 기준을 변경한다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;layout_gravity 속성은 부모 뷰 안에서 뷰 자신의 배치 기준을 변경한다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;Margin 속성은 뷰가 부모 뷰로부터 떨어진 여백을 설정한다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;Padding 속성은 자신의 컨텐츠 또는 자식 뷰들이 떨어지는 영역을 설정한다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;LinearLayout의 weight 속성을 사용하면, View의 크기를 비율로 설정할 수 있다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;LinearLayout에서 여러 개의 뷰 중 한 개만 weight 속성을 설정하면, weight를 설정하지 않은 다른 뷰가 그려지고 남은 영역의 전부를 차지하게 된다. &lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;LinearLayout에서 정렬 기준(Orientation)이 다양한 UI를 만들려면 레이아웃을 중첩해서 사용해야 한다.&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;RelativeLayout ?&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;RelativeLayout은 ‘부모 뷰’또는 ‘형제 뷰’와의 관계를 지정하여 View를 배치한다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;RelativeLayout의 ‘align관련 속성은 자신의 기준선과 부모 뷰, 형제 뷰의 기준선을 맞추는 것이다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;RTL(Right To Left)지원이란 국가마다 다른 ‘보기 방식의 지원’을 의미한다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;RTL 지원을 적용하려면 left대신 start, right대신 end를 사용하는 것이 좋다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;RelativeLayout을 사용하면 상대적인 관계지정이 되기 때문에 레이아웃 중첩을 줄일 수 있다.&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;ConstraintLayout ?&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;ConstraintLayout은 레이아웃 편집창에서 사용하는 미리보기만을 위한 속성이 있다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;ConstraintLayout은 뷰의 위치를 결정하기 위해 제약 조건을 사용한다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;각 뷰는 상/하/좌/우 제약을 의미하는 ‘constraintTop, constraintBottom, constraintLeft, constraintRight’ 속성이 있다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;수평 제약과 수직 제약 각각 1개 이상의 제약이 있어야 View의 위치를 결정&lt;strong&gt;할 수 있다.&lt;br /&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;각 뷰의 상/하/좌/우 제약을 다른 뷰 또는 부모 뷰의 면과 연결하면 제약이 지정된다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;제약조건은 마치 RelativeLayout의 관걔와 비슷하며, 제약 조건 이후 여백(margin)을 설정할 수 있다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;제약 조건이 수평/ 수직에 대하여 양방향으로 설정된 경우, 두 제약을 동시에 지킬 수 없는 상태가 되는데, 이때 ConstraintLayout은 선호도(Bias)값을 설정하여, 제약을 지키는 범위 내에서 뷰를 퍼센티지로 배치할 수 있다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;Circle 제약은 뷰를 원형으로 배치할 수 있게 하는 강력한 기능이다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;ConstraintLayout은 뷰를 쉽게 배치할 수 있도록 돕는 가이드라인을 제공한다. 가이드라인 역시 View로 취급되며, 방향과 여백으로 위치를 지정하거나 퍼센트로 위치를 지정할 수 있다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;뷰의 제약이 서로를 참조하고 있는 형태를 Chain이라고 한다. 이 Chain을 활용하면, 별도의 레이아웃 없이 View를 그룹화하여 관리할 수 있다.&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;ConstraintLayout은 뷰의 중첩을 줄일 수 있어 UI 성능 향상에 유리하다.&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        <pubDate>Sun, 12 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/12/Android-Layout-conception/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/12/Android-Layout-conception/</guid>
-        
-        
-        <category>Android</category>
         
       </item>
     

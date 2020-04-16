@@ -1,0 +1,37 @@
+I"<h3 id="coroutine--"><strong>Coroutine ?</strong> <br /></h3>
+
+<p>Work with Background thread <br />
+Coroutine은 AsyncTask 와 같이 Threading하는 방법 중에 하나이다.<br /></p>
+
+<p><strong>※ 아래와 같은 상황에서 Coroutine은 유용하게 쓰인다.</strong><br />
+① Request to network retrofit volley 등의 통신 라이브러리를 사용할때, Main Thread가 Block된다.<br />
+② Accessing the internal SQLite database on the phone. ex) Room database<br /></p>
+
+<p><strong><font color="Red">위의 두가지 경우에서 일반적으로 background thread가 사용이 된다.</font></strong><br /></p>
+
+<p>simulate network request and internal room database.<br /></p>
+
+<p><strong><font color="Blue">Sequence</font></strong><br />
+(1) Get the result value from background thread.<br />
+(2) Take the result and then display on the main thread.<br /></p>
+
+<p>Android 개발을 하다보면 Network나 내부 데이터베이스로부터 데이터를 취득해서 순차적으로 취득한 데이터를 처리해야 되는 경우가 있다. <br />
+이런 경우는 이미 경험을 해봤었기 때문에 얼마나 큰 문제인지 알고 있다. 이 문제를 해결하기 위해서는 RxJava나 callback함수를 사용해서 작성을 하면, 코드가 매우 복잡해지기 때문에, Coroutine을 사용해서 작성을 하면 Simple하게 코드를 작성할 수 있다. <br /></p>
+
+<p>① Gradle에 Coroutine과 관련된 dependencies를 추가한다.<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def coroutines_version = "1.2.1"
+implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+</code></pre></div></div>
+
+<p>②
+③
+④
+⑤</p>
+
+<p>참고 : <a href="https://codelabs.developers.google.com/codelabs/kotlin-coroutines/#0">Android coroutines codelab</a></p>
+
+<h3 id="전체적인-학습내용을-복습한다">전체적인 학습내용을 복습한다.<br /></h3>
+<p>1.</p>
+:ET
