@@ -180,8 +180,12 @@ MyRetrofitBuilder클래스를 Object클래스 타입으로 작성하는 이유�
             viewModel.cancelJobs()
         }
     }
+<br>
 
+※ 노트필기 캡쳐 <br>
+<img src="/images/android/MVVM Kotlin note.png" alt="blog capture" title="capture img" width="600"><br>
 
+※ 실습했던 Repository : [https://github.com/MikeHyungiLee/MVVMArchitectureKotlin](https://github.com/MikeHyungiLee/MVVMArchitectureKotlin)
 
 
 ### 전체적인 학습내용을 복습한다.<br>

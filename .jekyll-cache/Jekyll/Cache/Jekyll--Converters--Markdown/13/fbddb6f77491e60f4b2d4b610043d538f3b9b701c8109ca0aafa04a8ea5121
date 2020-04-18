@@ -1,0 +1,13 @@
+I"�<h3 id="android-core">Android Core<br /></h3>
+
+<p>① Android Core <br /><br />
+첫번째 항목으로 <strong>안드로이드 코어</strong>에 대해서 알아보자. <br /><br />
+안드로이드는 Linux 기반 운영 체제로 주로 모바일 장치용으로 설계되어있다. Android 어플리케이션은 멀티 태스킹이 가능하며 Java, Kotlin 또는 C++로 작성이 되어 있다. <br /></p>
+
+<p><strong><font color="Blue">AAD 인증 시험을 위해서 Android 개발자는 아래의 체크리스트 내용을 수행해야 한다. </font></strong><br />
+(1) Android 시스템의 아키텍처에 대한 이해할 수 있다.
+(2) Android 앱의 기본 빌딩 블록을 설명할 수 있다.
+(3) Android 앱을 빌드하고 실행하는 방법을 알 수 있다. 
+(4) Toast 또는 Snackbar를 사용하여 간단한 메시지를 팝업으로 표시할 수 있어야 한다.<br />
+(5)</p>
+:ET
