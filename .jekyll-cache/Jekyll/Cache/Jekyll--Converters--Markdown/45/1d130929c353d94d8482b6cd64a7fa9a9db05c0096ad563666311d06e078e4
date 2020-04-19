@@ -1,0 +1,121 @@
+I"<h3 id="coroutine-jobs-in-kotlin-"><strong>Coroutine Jobs in Kotlin ?</strong><br /></h3>
+
+<p><strong>참고</strong>:<a href="https://www.youtube.com/watch?v=67bdklHmXA8">https://www.youtube.com/watch?v=67bdklHmXA8</a><br /></p>
+
+<p>MVVM(Model View View Model)<br /></p>
+
+<p>Why Design Pattern?<br /></p>
+
+<p>(1) Makes the code more understandable.<br />
+(2) Makes the code maintainable for long run.<br />
+(3) Makes the project loosely coupled.<br />
+(4) Makes the code testable.<br />
+(5) Making changes, adding new features are easy.<br />
+<strong>Design Patter에 따라서 앱을 만들면, 나중에 다른 개발자들이 앱을 파악하는데 매우 도움이 되고, 더 나아가 코드를 운용보수하는데도 도움이 된다. </strong><br />
+<strong>또한 코드를 테스트하고, 새로운 기능을 추가를 쉽게 할 수 있다.</strong><br /></p>
+
+<p><strong><font color="Red">Architectural Principles</font></strong><br /></p>
+
+<p>(1) Separation of Concerns<br /></p>
+
+<p>(2) Drive UI from Model <br /></p>
+
+<p>Why MVVM?<br />
+(1) MVC <br />
+(2) MVP <br />
+(3) MVVM (Google recommend) <br /></p>
+
+<p>기존에 살펴보았던 MVVM Design Pattern의 구조를 다시 되짚어보면,<br />
+(1) UI를 담당하는 Activity/Fragment<br />
+(2) Life cycle을 담당하는 ViewModel [LiveData] <br />
+(3) ViewModel에서 데이터를 취득하는 경로 “Repository”<br />
+(4) “Repository”에 데이터를 제공하는 <strong>“Room - SQLite” Local database(=Model)</strong>, 원격 서버에서 데이터를 제공하는 <strong>“Remote Data Source” - “Retrofit - WebService”</strong><br /></p>
+
+<p>위의 구조로 구성되어있는 것을 배웠다. 앱은 기본적으로 <strong>Model(Local storage)</strong>를 통해 우선적으로 데이터를 취득한다.<br />
+따라서, 인터넷 연결에 문제가 생겨도 앱의 사용에 있어서는 문제가 없게 된다.<br /></p>
+
+<p>이제 Kotlin으로 Room Database를 포함한 프로젝트를 생성해보자.<br /></p>
+
+<p><strong>App level의 gradle에 아래의 dependencies를 추가해준다.</strong><br />
+상단에는 아래의 apply plugin: 을 선언해주고,</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//kotlin kapt and navigation safeargs plugin
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs"
+</code></pre></div></div>
+
+<p>android{} 안에 buildTypes의 아래에 추가해준다. (dataBinding compiler 추가)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dataBinding{
+    enabled = true
+}
+</code></pre></div></div>
+
+<p>(1) Retrofit and GSON<br />
+(2) Kotlin Coroutines<br />
+(3) ViewModel and LiveData<br />
+(4) New Material design<br />
+(5) Kodein Dependency Injection<br />
+(6) Android Room<br />
+(7) Android Navigation Architecture<br /></p>
+
+<p><strong>Project level의 gradle에 아래의 class Path를 추가해준다.</strong><br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//Android Navigation Safe Args Classpath
+classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0-alpha02"
+</code></pre></div></div>
+
+<p><strong>“gradle.properties”에 아래의 내용을 추가해준다.</strong><br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>android.databinding.enableV2=true
+</code></pre></div></div>
+
+<p><strong><font color="Red">※ Project package 구성</font></strong><br /></p>
+
+<table>
+  <tr>
+    <td>Package(level-1)</td>
+    <td>Package(level-2)</td>
+    <td>Package(level-3)</td>
+  </tr>
+  <tr>
+    <td>① data<br /></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>② ui <br /></td>
+    <td>auth</td>
+    <td>(I) AuthListener.kt <br />
+        (C) AuthViewModel.kt<br />
+        (C) LoginActivity.kt<br />
+        (C) SignupActivity.kt<br />
+    </td>
+  </tr>
+  <tr>
+    <td>③ util <br /></td>
+    <td>
+       → ViewUtils.kt <br />
+      (1) Context. 확장함수 형태로 toast 메시지를 띄우는 메소드를 작성<br />
+    </td>
+    <td></td>
+  </tr>
+</table>
+
+<p>① data<br />
+② ui <br />
+  -auth <br />
+   → (I) AuthListener.kt <br />
+     (C) AuthViewModel.kt<br />
+     (C) LoginActivity.kt<br />
+     (C) SignupActivity.kt<br /></p>
+
+<p>-home <br /></p>
+
+<p>③ util <br />
+    → ViewUtils.kt <br />
+      (1) Context. 확장함수 형태로 toast 메시지를 띄우는 메소드를 작성<br /></p>
+
+<h3 id="전체적인-학습내용을-복습한다">전체적인 학습내용을 복습한다.<br /></h3>
+<p>1.</p>
+:ET

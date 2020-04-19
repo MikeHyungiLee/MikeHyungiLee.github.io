@@ -1,0 +1,18 @@
+I"<<h3 id="coroutine-jobs-in-kotlin-"><strong>Coroutine Jobs in Kotlin ?</strong><br /></h3>
+
+<p><strong>참고</strong>:<a href="https://www.youtube.com/watch?v=67bdklHmXA8">https://www.youtube.com/watch?v=67bdklHmXA8</a><br /></p>
+
+<p>MVVM(Model View View Model)<br /></p>
+
+<p>Why Design Pattern?<br /></p>
+
+<p>(1) Makes the code more understandable.
+(2) Makes the code maintainable for long run.
+(3) Makes the project loosely coupled.
+(4) Makes the code testable.
+(5) Making changes, adding new features are easy. 
+Design Patter에 따라서 앱을 만들면, 나중에 다른 개발자들이 앱을 파악하는데 매우 도움이 되고, 더 나아가 코드를 운용보수하는데도 도움이 된다.</p>
+
+<h3 id="전체적인-학습내용을-복습한다">전체적인 학습내용을 복습한다.<br /></h3>
+<p>1.</p>
+:ET

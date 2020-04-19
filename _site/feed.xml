@@ -5,9 +5,369 @@
     <description>Hyungi's Ideas &amp; Blogs</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 18 Apr 2020 18:26:21 +0900</pubDate>
-    <lastBuildDate>Sat, 18 Apr 2020 18:26:21 +0900</lastBuildDate>
+    <pubDate>Sun, 19 Apr 2020 20:54:17 +0900</pubDate>
+    <lastBuildDate>Sun, 19 Apr 2020 20:54:17 +0900</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Java MVVM Part4 ~ 6</title>
+        <description>&lt;p&gt;&lt;strong&gt;#4 Android MVVM Architecture Tutorial - User Login using Retrofit&lt;br /&gt;&lt;/strong&gt;
+&lt;strong&gt;#5 Android MVVM Architecture Tutorial - Room Database Setup&lt;br /&gt;&lt;/strong&gt;
+&lt;strong&gt;#6 Android MVVM Architecture Tutorial - Using Coroutines&lt;br /&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;참고&lt;/strong&gt;:&lt;a href=&quot;https://www.youtube.com/watch?v=67bdklHmXA8&amp;amp;list=PLk7v1Z2rk4hjVaZ8DZKe8iT9RIM9OUrwp&amp;amp;index=1&quot;&gt;https://www.youtube.com/watch?v=67bdklHmXA8&amp;amp;list=PLk7v1Z2rk4hjVaZ8DZKe8iT9RIM9OUrwp&amp;amp;index=1&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;Retrofit API에 대해서 더 자세하게 알고 싶다면, &lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Retrofit Android Tutorial - What is REST API ?&lt;br /&gt;
+&lt;a href=&quot;https://www.youtube.com/watch?v=30GSz20AHV4&amp;amp;t=10&quot;&gt;https://www.youtube.com/watch?v=30GSz20AHV4&amp;amp;t=10&lt;/a&gt; &lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Retrofit Android Tutorial - Sign Up using Retrofit POST&lt;br /&gt;
+&lt;a href=&quot;https://www.youtube.com/watch?v=xtCmFEaQENc&amp;amp;t=3&quot;&gt;https://www.youtube.com/watch?v=xtCmFEaQENc&amp;amp;t=3&lt;/a&gt; &lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Android Room Tutorial - Building a Basic Notes App&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=9iF2qEF28Do&amp;amp;list=PLk7v1Z2rk4hg_ywZffPgRTmJoy2XWs02d&quot;&gt;https://www.youtube.com/watch?v=9iF2qEF28Do&amp;amp;list=PLk7v1Z2rk4hg_ywZffPgRTmJoy2XWs02d&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;※ 노트정리 (Part4 ~ 5)&lt;br /&gt;
+&lt;img src=&quot;/images/android/2020-04-19/2020-04-19 Room database note.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이번 Part4, 5에서는 작성했던 AuthViewModel클래스와 Repository클래스를 연결하는 작업을 해볼 것이다.&lt;br /&gt;
+폴더 구조는 위에 첨부한 노트필기에서와 같이 data패키지가 있고, 그 아래에 있는 network 패키지(remote data source)와 db 패키지(model - Room database)로 구성되어 있다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Api interface 작성하기&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;blockquote&gt;
+    &lt;p&gt;우선 data 패키지 아래에 network 패키지를 작성하고, MyApi 인터페이스를 작성해준다.&lt;br /&gt;
+이 인터페이스 내부에서는 remote server에서의 email과 password를 User에 의해 입력받은 email과 password과 비교해서 로그인이 성공했는지 실패했는지 확인할 수 있는 userLogin() 메소드가 있다. &lt;br /&gt;&lt;/p&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;위에서 작성한 Api 인터페이스를 UserRepository 클래스에 구현해준다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;blockquote&gt;
+    &lt;p&gt;클래스 내부에 userLogin() 메소드를 작성해주고, 이 메소드는  LiveData&lt;String&gt;를 반환해준다.&lt;br /&gt;
+반환되는 LiveData&lt;String&gt; 값은 MyApi 인터페이스에서 작성해준 userLogin메소드의 callback 함수로부터 반환된 값을 기준으로 한다.&lt;br /&gt;&lt;/String&gt;&lt;/String&gt;&lt;/p&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※ Room database setup&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+다음으로 구성해줄 부분은 &lt;strong&gt;“model”&lt;/strong&gt;부분으로, 기존의 data클래스 아래에 &lt;strong&gt;db&lt;/strong&gt; 패키지를 작성해주고, 그 아래에 필요한 코드를 구성해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;db패키지의 아래에는&lt;/strong&gt; &lt;br /&gt;
+① Room database를 초기화 시켜주고, Dao의 getter abstract 메소드가 위치한다. - (C)AppDatabase&lt;br /&gt;
+② Room database로부터 데이터를 insert, select하는 @Dao interface를 작성한다. - (I)UserDao&lt;br /&gt;
+③ db 클래스 내부에 entities 패키지를 작성해주고, 보내줄 데이터의 entity클래스를 작성한다. - (data C)User&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;1.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 19 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/19/Android-Kotlin-MVVM-Part4/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/19/Android-Kotlin-MVVM-Part4/</guid>
+        
+        
+        <category>Android-Architecture</category>
+        
+      </item>
+    
+      <item>
+        <title>Kotlin Coroutine Jobs(Beginner)</title>
+        <description>&lt;h3 id=&quot;coroutine-jobs-in-kotlin-&quot;&gt;&lt;strong&gt;Coroutine Jobs in Kotlin ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;참고&lt;/strong&gt;:&lt;a href=&quot;https://www.youtube.com/watch?v=UsHTxOILP5g&quot;&gt;https://www.youtube.com/watch?v=UsHTxOILP5g&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;이번 포스팅에서는 Coroutine Job에 대해서 샘플 어플을 만들어가면서 알아볼 것이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;인터넷을 통해서 데이터를 취득하는 도중에 속도가 느리거나 timeout, 작업(Job)을 취소해야되는 경우, 과거에는 AsyncTask를 통해서 작업을 조작하는 것은 매우 어렵고 번거로웠다.(현재 deprecated되었다) &lt;br /&gt;
+이후에 개선되서 나온 것이 “RxJava”이다. 이 RxJava로 기존의 복잡했던 작업들이 좀 더 간단하게 처리할 수 있게 되었다. 각각의 option들이 잘 되어있어서 편리하게 처리할 수 있다는 장점이 있다.(에러가 발생하였을때, 등등..)&lt;br /&gt;
+그 다음은 “Coroutine”이다. Coroutine은 RxJava보다 더 편리하게 각각의 작업들은 간단하게 컨트롤할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-18 coroutine job(1).png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;300&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;우선 샘플 어플의 처리과정을 정리해보자. &lt;br /&gt;
+이 어플은 화면에 ProgressBar가 있고, 버튼과 TextView가 있다.&lt;br /&gt;
+버튼을 눌렀을때 background thread에 해당 task가 실행이 되고, 그 task의 진행상태가 progress bar에 반영이 된다.&lt;br /&gt;
+(1) task실행이 완료되었을때, TextView에 “Job is complete”표시가 된다.&lt;br /&gt;
+(2) 실행되는 도중에 “CANCEL JOB #1”을 누르면 “resetting job” Toast 메시지가 표시가 된다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※ 내부 처리 작성하기&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;① Field 변수로 Progress bar 관련 변수 &lt;strong&gt;“PROGRESS_MAX=100, PROGRESS_START, JOB_TIME=400(ms)”&lt;/strong&gt;와 CompletableJob변수 &lt;strong&gt;“job”&lt;/strong&gt;변수를 선언해준다. &lt;br /&gt;
+② “START JOB #1” 버튼을 클릭했을때, job 변수가 초기화되어 있지 않은 경우 job을 초기화시켜주고, Task 작업을 실행해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Coroutine Job의 초기화 메소드&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fun initJob(){
+    // button의 text를 setting
+    job_button.text = &quot;start Job #1&quot;
+    // 초기 TextView의 text를 &quot;&quot;로 초기화
+    updateJobCompleteTextView(&quot;&quot;)
+    // job변수의 초기화
+    job = Job()
+    // job이 취소되거나 완성되었을때 실행되는 invokeOnCompletion 처리하기
+    job.invokeOnCompletion{
+      it?.message.let{
+        var msg = it
+        if(msg.isNullOrBlank()){
+          msg = &quot;Unknown cancellation error&quot;
+        }
+        println(&quot;${job}was cancelled. Reason: $msg&quot;)
+        showToast(msg)
+      }
+    }
+    job_progress_bar.max = PROGRESS_MAX
+    job_progress_bar.progress = PROGRESS_START
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;③ job을 초기화할때 사용한 updateJobCompleteTextView(), showToast() 메소드 작성하기&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private fun updateJobCompleteTextView(text: String){
+  // GlobalScope를 사용해서 UI요소인 TextView를 업데이트  
+  GlobalScope.launch(Main){
+    job_complete_text.text = text
+  }
+}
+
+private fun showToast(text: String){
+  // GlobalScope를 사용해서 어디서든 Toast 메세지를 보여줄 수 있도록 처리
+  GlobalScope.launch(Main){
+    Toast.makeText(this@MainActivity, text, Toast.LENGTH_SHORT).show()
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;④ Job을 reset하는 메소드를 작성하기&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private fun resetJob(){
+  if(job.isActive || job.isCompleted){
+    job.cancel(CancellationException(&quot;Resetting job&quot;))
+  }
+  // job이 취소된 후에 job이 다시 사용될 수 있도록 job을 초기화시켜준다.
+  initJob()
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;⑤ 확장함수를 사용해서 startJobOrCancel() 메소드를 작성하기&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private fun ProgressBar.startJobOrCancel(job: Job){
+  // ProgressBar를 this로 접근할 수 있다.
+  if(this.progress &amp;gt; 0){
+    // ProgressBar의 값이 0보다 크다면, job을 reset한다.
+    resetJob()
+  }else{
+    job_button.text = &quot;Cancel job #1&quot;
+    CoroutineScope(IO+job).launch{
+      // job을 background thread(IO+job)에서 실행하기
+      // 동시에 progress bar의 상태를 업데이트 해준다.
+      for(i in PROGRESS_START .. PROGRESS_MAX){
+        delay((JOB_TIME/PROGRESS_MAX).toLong())
+        this@startJobOrCancel.progress = i
+      }
+      // Main thread를 통해 TextView에 &quot;Job is complete&quot;를 업데이트해주기
+      updateJobCompleteTextView(&quot;Job is complete&quot;)
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;⑥ onCreate() 메소드에 job_button의 setOnClickListener() 이벤트 처리해주기&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;job_button.setOnClickListener {
+    if(!::job.isInitialized){
+        initJob()
+    }
+    job_progress_bar.startJobOrCancel(job)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;1.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 18 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/18/Android-Kotlin-Coroutine-Jobs(Beginner)/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/18/Android-Kotlin-Coroutine-Jobs(Beginner)/</guid>
+        
+        
+        <category>Android-Kotlin</category>
+        
+      </item>
+    
+      <item>
+        <title>Java MVVM Part1 ~ 3</title>
+        <description>&lt;h3 id=&quot;1-android-mvvm-architecture-tutorial---introduction&quot;&gt;#1 Android MVVM Architecture Tutorial - Introduction&lt;br /&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;2-android-mvvm-architecture-tutorial---project-setup&quot;&gt;#2 Android MVVM Architecture Tutorial - Project Setup&lt;br /&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;3-android-mvvm-architecture-tutorial---using-data-binding&quot;&gt;#3 Android MVVM Architecture Tutorial - Using Data Binding&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;참고&lt;/strong&gt;:&lt;a href=&quot;https://www.youtube.com/watch?v=67bdklHmXA8&amp;amp;list=PLk7v1Z2rk4hjVaZ8DZKe8iT9RIM9OUrwp&amp;amp;index=1&quot;&gt;https://www.youtube.com/watch?v=67bdklHmXA8&amp;amp;list=PLk7v1Z2rk4hjVaZ8DZKe8iT9RIM9OUrwp&amp;amp;index=1&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;MVVM(Model View View Model)&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Why Design Pattern?&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;(1) Makes the code more understandable.&lt;br /&gt;
+(2) Makes the code maintainable for long run.&lt;br /&gt;
+(3) Makes the project loosely coupled.&lt;br /&gt;
+(4) Makes the code testable.&lt;br /&gt;
+(5) Making changes, adding new features are easy.&lt;br /&gt;
+&lt;strong&gt;Design Patter에 따라서 앱을 만들면, 나중에 다른 개발자들이 앱을 파악하는데 매우 도움이 되고, 더 나아가 코드를 운용보수하는데도 도움이 된다. &lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;또한 코드를 테스트하고, 새로운 기능을 추가를 쉽게 할 수 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;Architectural Principles&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;(1) Separation of Concerns&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;(2) Drive UI from Model &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Why MVVM?&lt;br /&gt;
+(1) MVC &lt;br /&gt;
+(2) MVP &lt;br /&gt;
+(3) MVVM (Google recommend) &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;기존에 살펴보았던 MVVM Design Pattern의 구조를 다시 되짚어보면,&lt;br /&gt;
+(1) UI를 담당하는 Activity/Fragment&lt;br /&gt;
+(2) Life cycle을 담당하는 ViewModel [LiveData] &lt;br /&gt;
+(3) ViewModel에서 데이터를 취득하는 경로 “Repository”&lt;br /&gt;
+(4) “Repository”에 데이터를 제공하는 &lt;strong&gt;“Room - SQLite” Local database(=Model)&lt;/strong&gt;, 원격 서버에서 데이터를 제공하는 &lt;strong&gt;“Remote Data Source” - “Retrofit - WebService”&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 구조로 구성되어있는 것을 배웠다. 앱은 기본적으로 &lt;strong&gt;Model(Local storage)&lt;/strong&gt;를 통해 우선적으로 데이터를 취득한다.&lt;br /&gt;
+따라서, 인터넷 연결에 문제가 생겨도 앱의 사용에 있어서는 문제가 없게 된다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이제 Kotlin으로 Room Database를 포함한 프로젝트를 생성해보자.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;App level의 gradle에 아래의 dependencies를 추가해준다.&lt;/strong&gt;&lt;br /&gt;
+상단에는 아래의 apply plugin: 을 선언해주고,&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//kotlin kapt and navigation safeargs plugin
+apply plugin: 'kotlin-kapt'
+apply plugin: &quot;androidx.navigation.safeargs&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;android{} 안에 buildTypes의 아래에 추가해준다. (dataBinding compiler 추가)&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dataBinding{
+    enabled = true
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;(1) Retrofit and GSON&lt;br /&gt;
+(2) Kotlin Coroutines&lt;br /&gt;
+(3) ViewModel and LiveData&lt;br /&gt;
+(4) New Material design&lt;br /&gt;
+(5) Kodein Dependency Injection&lt;br /&gt;
+(6) Android Room&lt;br /&gt;
+(7) Android Navigation Architecture&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Project level의 gradle에 아래의 class Path를 추가해준다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//Android Navigation Safe Args Classpath
+classpath &quot;androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0-alpha02&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;“gradle.properties”에 아래의 내용을 추가해준다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;android.databinding.enableV2=true
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※ Project package 구성&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Package(level-1)&lt;/font&gt;&lt;/strong&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Package(level-2)&lt;/font&gt;&lt;/strong&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Package(level-3)&lt;/font&gt;&lt;/strong&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;① data&lt;br /&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;② ui &lt;br /&gt;&lt;/td&gt;
+    &lt;td&gt;auth&lt;/td&gt;
+    &lt;td&gt;(I) AuthListener.kt &lt;br /&gt;
+        (C) AuthViewModel.kt&lt;br /&gt;
+        (C) LoginActivity.kt&lt;br /&gt;
+        (C) SignupActivity.kt&lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;/td&gt;
+    &lt;td&gt;home&lt;/td&gt;
+    &lt;td&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;③ util &lt;br /&gt;&lt;/td&gt;
+    &lt;td&gt;
+       → ViewUtils.kt &lt;br /&gt;
+      (1) Context. 확장함수 형태로 toast 메시지를 띄우는 메소드를 작성&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;위의 도표와 같은 구조로 패키지를 구성하였다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-19/2020-04-19 data binding note(1).png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음으로 할 작업은 로그인 페이지 처리부분을 구현할 것이다.&lt;br /&gt;
+Login할때 UI(Activity/Fragment)상에서 ID와 Password를 입력하고, 입력한 데이터가 ViewModel, Repository, Remote Data Source 순으로 이동해가면서 Validation 체크를 하게 된다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이때 Login할때 입력했던 데이터(ID, Password)는 editText에 입력한 값을 getter 메소드로 취득해서 처리하지 않고, &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;Data binding처리&quot;&lt;/font&gt;&lt;/strong&gt;를 해서 처리를 해줄 것이다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;노트필기 캡쳐의 하단부에 작성한 Data binding하는 방법에 대한 내용을 다시 한 번 정리해본다.&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;※ Data binding하는 방법&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+(1) 기존의 layout 파일에서 Top-level tag를 감싸는 &lt;layout&gt;&lt;/layout&gt; 태그를 만들어준다.&lt;br /&gt;
+    (만들어준 layout태그에 &lt;strong&gt;xmlns:~&lt;/strong&gt;로 시작하는 tag를 &lt;layout&gt; 안에 붙여넣는다)&lt;br /&gt;
+(2) 이제 실제 binding해줄 &lt;data&gt; 태그를 &lt;layout&gt;과 &amp;lt;androidx.~&amp;gt;(실제 UI 구성 코드) 사이에 작성해준다. data tag는 아래와 같은 형태로 작성해준다. &lt;br /&gt;&lt;/layout&gt;&lt;/data&gt;&lt;/layout&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;data&amp;gt;
+    &amp;lt;variable name=&quot;viewmodel&quot;
+              type=&quot;(viewModel class의 full경로)&quot;/&amp;gt;
+&amp;lt;/data&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;(3) UI 구성코드에 있는 editText(email, Password)의 text 속성에 &lt;strong&gt;”@={viewmodel.email}”&lt;/strong&gt; 와 같은 형태로 작성해준다. &lt;strong&gt;onclick 속성의 경우에는 “@{viewmodel:onLoginButtonClick}”과 같은 형태로 작성해준다.&lt;/strong&gt; &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-19/2020-04-19 data binding note(2).png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이제는 AuthViewModel 클래스와 LoginActivity의 관계 성립을 위해 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;AuthListener 인터페이스&lt;/font&gt;를 작성한다.&lt;/strong&gt;&lt;br /&gt;
+AuthListener 인터페이스에는 “성공, 실패, 시작”했을때 Toast 메시지를 처리할 메소드를 작성해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;LoginActivity에는 AuthListener를 구현해서 override 메소드를 구현한다.&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;이제 Activity 클래스와 AuthViewModel 클래스를 binding해줄 것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+onCreate()메소드에서 &lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// binding의 타입은 레이아웃의 이름을 기준으로 layout name conversion이 일어난다.
+val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_Login)
+
+val viewModel = ViewModelProviders.of(this).get(AuthViewModel::class.java)
+// layout파일에서 사용할 viewmodel 에 실제 viewmodel 클래스 객체를 주입시켜준다.
+binding.viewmodel = viewModel
+// LoginActivity에서 구현을 해줬기 때문에 &quot;this&quot; 해주면 된다.
+viewModel.authListener = this
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;이제 실제 remote server로 입력한 email과 password를 비교하여 로그인 처리를 할 수 있도록 AuthViewModel과 Repository의 상호작용 처리하는 부분을 배워 볼 것이다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
+&lt;p&gt;1.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 18 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/18/Android-Kotlin-MVVM-Part1-3/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/18/Android-Kotlin-MVVM-Part1-3/</guid>
+        
+        
+        <category>Android-Architecture</category>
+        
+      </item>
     
       <item>
         <title>Android-To Do App for AAD Exam.</title>
@@ -576,229 +936,6 @@ MyRetrofitBuilder클래스를 Object클래스 타입으로 작성하는 이유�
         
         
         <category>Android</category>
-        
-      </item>
-    
-      <item>
-        <title>Image libraries</title>
-        <description>&lt;h3 id=&quot;image-library&quot;&gt;Image Library&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;① Glide library&lt;/font&gt;&lt;/strong&gt; &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;(1) dependencies 추가하기&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//Glide library
-def glideVersion = '4.11.0'
-implementation &quot;com.github.bumptech.glide:glide:$glideVersion&quot;
-// Glide v4 uses this new annotation processor
-annotationProcessor &quot;com.github.bumptech.glide:compiler:$glideVersion&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;(2) ImageView에 보여줄 이미지를 binding하는 부분에서 아래와 같이 Glide 라이브러리로 바인딩해준다.&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;[Basic Usage]&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// Set the image
-RequestOptions defaultOptions = new RequestOptions()
-                                .error(R.drawable.ic_launcher_background);
-Glide.with(mContext)
-            .setDefaultRequestOptions(defaultOptions)
-            .load(mNicePlaces.get(position).getImageUrl())
-            .into(((Holder)holder).mImage);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;1.&lt;/p&gt;
-</description>
-        <pubDate>Tue, 14 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/14/Image-Library/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/14/Image-Library/</guid>
-        
-        
-        <category>Android-Libraries</category>
-        
-      </item>
-    
-      <item>
-        <title>Kotlin &quot;companion object&quot;</title>
-        <description>&lt;h3 id=&quot;companion-object-&quot;&gt;&lt;strong&gt;companion object ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;Kotlin은 클래스에 static 필드를 갖게 할 수는 없지만, companion object의 구조를 이용해서 Java의 static 메소드와 동일한 동작을 수행할 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;data class Book(val title: String, val price: Int){
-    companion object {
-        const val FREE_PRICE = 0
-        fun newFreeBook(title: String) = Book(title, FREE_PRICE)
-    }
-}
-
-fun main(){
-  val book = Book.newFreeBook(&quot;Free Kotlin&quot;)
-  println(book)
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;위와 같이 companion object 뒤의 {}안에는 일반 클래스의 본체와 같이 구현을 한다. 위와 같이 도우미 개체를 정의하면 Book 클래스 안에 내재 된 싱글 톤 인스턴스(Singleton Instance)가 생성되며, Book.[Field name]형태로 액세스 할 수 있다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;companion object는 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;자체가 클래스 정의를 가지고 있으며, 외부에서 정의 된 클래스의 인스턴스가 아니다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-Book.xxx()라는 접근방식을 보면, 마치 Book 클래스의 싱글톤 인스턴스가 만들어지고 있는 것처럼 보이지만, Book인스턴스가 만들어지는 것은 아니다.&lt;br /&gt;
-위의 Book.xxx()라는 문장은 사실 &lt;strong&gt;Book.Companion.xxx()&lt;/strong&gt;이 생략 기법이다. 이 점에서 companion object는 Book 클래스의 인스턴스와는 별개임을 알 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;위와 같이 companion object{}의 형태로 작성할 수 있지만, 이 companion object에 이름을 넣어줄 수도 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;data class Book(val title: String, val price: Int){
-    companion object Factory{
-      const val FREE_PRICE = 0
-      fun freeBook(title: String) = Book(title, FREE_PRICE)
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;위의 도우미 객체는 Book.Factory.[Field name] 형태로 액세스 할 수 있다.&lt;br /&gt;
-&lt;strong&gt;companion object는 클래스 내에서 하나 밖에 정의할 수 없다.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;1.&lt;/p&gt;
-</description>
-        <pubDate>Tue, 14 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/14/Android-Kotlin-companion-object/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/14/Android-Kotlin-companion-object/</guid>
-        
-        
-        <category>Android-Kotlin</category>
-        
-      </item>
-    
-      <item>
-        <title>Android Kotlin Coroutine(비동기 처리)</title>
-        <description>&lt;h3 id=&quot;coroutine--&quot;&gt;&lt;strong&gt;Coroutine ?&lt;/strong&gt; &lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;‘Coroutine’에 대해 알아보기 전에 우선, ‘동기’와 ‘비동기’의 개념에 대해서 알아보자.&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;동기(Synchronous) : will run in the same thread.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;ex1) 메인 스레드에서 실행&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// 메인 스레드에서 실행
-fun runMain(){
-  val data = Weather.tomorrow()
-  println(&quot;Tomorrow weather : ${data}&quot;)
-}
-
-fun Weather.tomorrow() : String{
-  Thread.sleep(2000)
-  return &quot;sunny&quot;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;비동기(Asynchronous) : will run in a different thread.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;ex2) Coroutine으로 비동기 스레드 처리&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fun runMain() : Job = viewModelScope.launch{
-    val data = Weather.tomorrow()
-    println(&quot;Tomorrow weather : ${data}&quot;)
-}
-
-suspend fun Weather.tomorrow() : String{
-  delay(2000)
-  return &quot;sunny&quot;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;위의 ‘ex1’의 코드에서는 모두 Main Thread에서 실행하는 소스코드이다. 이는 동기적으로 호출해서 사용되고 있는 예이다.&lt;br /&gt;
-동기적 처리는 2초 스레드가 차단되어버리는 문제가 있다. 이 스레드가 차단되는 동안에는 사용자의 조작이 얼어 버리기 때문에 응용 프로그램에서 이 코드를 작성하는 것은 현실적이지 않다. 한편 coroutin을 사용하면 결과가 나올 때까지 2초 사용자가 일반적으로 수행할 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;위의 차이가 나는 이유는 &lt;strong&gt;coroutine에서 스레드를 차단하는 대신 처리를 &lt;font color=&quot;Red&quot;&gt;&quot;중단&quot;&lt;/font&gt;하기 때문이다.&lt;/strong&gt;&lt;br /&gt;
-첫번째 소스 코드에서 Thread.sleep() 따라 2초 main thread를 점유(차단)하고, 그 동안 다른 작업을 하고 싶어도 메인 스레드가 사용할 수 없다. &lt;br /&gt;
-한편 coroutine의 예에서 사용한 delay()함수는 2초간 차단하는 것이 아니라 &lt;strong&gt;main thread를 2초 동안 방출&lt;/strong&gt;하고  main thread를 다시 취득하고 처리를 계속한다. main thread가 개방되는 동안 다른 process에 thread를 활용할 수 있다. 이것을&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;중단(suspend)&quot;&lt;/font&gt;&lt;/strong&gt;라고 한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;위의 ‘ex2’의 코드에서 delay() 같은 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;중단이 발생하는 함수를 &quot;suspend 함수&quot;라 한다.&lt;/font&gt;&lt;/strong&gt; 일반 함수는 중단하지 않기 때문에, suspend 함수를 호출할 수 없다. &lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※suspend 함수를 호출하려면 launch에서 호출하거나 함수에 suspend 키워드를 붙여서 suspend fun을 호출해야 한다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;※ 이처럼 coroutine은 기본적으로 사용이 어렵지 않다. 기본적으로 &lt;font color=&quot;Red&quot;&gt;&quot;launch()&quot;&lt;/font&gt;에서 비동기 작업을 시작하고, &lt;font color=&quot;Red&quot;&gt;중단함수(launch{}내에서 실행할 함수)는 suspend로 선언해서 사용&lt;/font&gt;한다.&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;coroutinescope-&quot;&gt;&lt;strong&gt;CoroutineScope ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;‘ex2’ 예제 코드를 살펴보면 viewModelScope에 대한 launch{…}　호출로, &lt;strong&gt;coroutine을 시작하는 기능을 가진 개체를 &lt;font color=&quot;Red&quot;&gt;&quot;CoroutineScope&quot;&lt;/font&gt;&lt;/strong&gt;라고 한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 ‘CoroutineScope’는 coroutine의 &lt;strong&gt;시작뿐만 아니라 시작한 coroutine을 적절하게 종료하는 역할을 담당하고 있다.&lt;/strong&gt;&lt;br /&gt;
-예를 들어 Android KTX로 제공되는 &lt;strong&gt;“viewModelScope”&lt;/strong&gt;를 닫을때 coroutine을 자동으로 취소해준다.&lt;br /&gt;
-Android에서 사용자 조작에 의한 처리를 하는 경우, “viewModelScope”에서 시작하는 것이 좋다. 병렬 프로그래밍을 하는데 있어 간과하기 쉬운 취소 처리도 CoroutineScope가 제대로 해줄 수 있게 되어있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val  job  =  runMain ()
-// 개별적으로 작업을 취소한다.  
-job . cancel ()
-
-runMain ()
-
-// viewModelScope를 cancel()하게 되면, viewModelScope에서 실행 한 작업을 모두 취소 할 수 있다.
-viewModelScope . cancel ()  
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;launch-내에서-호출해서-사용할-suspend-함수를-작성하는-방법에-대해-알아보자&quot;&gt;&lt;strong&gt;launch{} 내에서 호출해서 사용할 suspend 함수를 작성하는 방법에 대해 알아보자.&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;① 블록처리를 suspend 함수로 변환&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;suspend fun Weather.tomorrow():String = withContext(Dispatchers.IO){
-    Thread.sleep(2000)
-    &quot;Text&quot;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;→ &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;withContext(Dispatchers.IO){...}&lt;/font&gt;&lt;/strong&gt;에서 다른 스레드를 사용하여 실행하고, withContext() 처리가 완료되기 전까지 메인 스레드를 개방할 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;② 콜백함수를 suspend 함수로 변환&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fun Weather.tomorrow(callback : (String) -&amp;gt; Unit) : Unit {
-  // 2초 후 처리를 호출하도록 타이머를 설정한다.
-  // callback 처리는 메인 스레드에서 행해지고, 그동안 스레드가 해제된다.
-  val handler = Handler()
-  handler.postDelayed({callback(&quot;Text&quot;)}, 2000)
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;suspendCoroutine{...}를 사용해서 suspend함수로 변환&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;suspend fun Weathers.tomorrow() : String = suspendCoroutine{ c -&amp;gt;
-  // 2초 후 처리를 호출하도록 타이머를 설정한다.
-  // callback 처리는 메인 스레드에서 행해지고, 그동안 스레드가 해제된다.
-  val handler = Handler()
-  handler.postDelayed({c.resume(&quot;Text&quot;)}, 2000)
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;suspendCancellableCoroutine{...}를 사용해서 suspend함수로 변환하는 것을 추천&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;suspend fun Weather.tomorrow() : String = suspendCancellableCoroutine{ c -&amp;gt;
-  // cancel 대응을 위한 코드 ① : 콜백 처리를 위한 변수
-  val callback = Runnable {
-      // 취소 대응을 위한 코드 ②
-      if(c.isActive) c.resume(&quot;Text&quot;)
-  }
-
-  val handler = Handler()
-  // cancel 대응을 위한 코드 ③ : coroutine 취소가 일어 났을 때 Handler 측도 취소한다.
-  c.invokeOnCancellation{handler.removeCallbacks(callback)}
-
-  // 2 초후 처리를 호출하도록 타이머를 설정한다.
-  // callback 처리는 메인 스레드에서 행해지고, 그 동안 스레드가 해제된다.
-  handler.postDelayed(callback, 2000)
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;참고 : &lt;a href=&quot;https://qiita.com/wm3/items/48b5b5c878561ff4761a&quot;&gt;https://qiita.com/wm3/items/48b5b5c878561ff4761a&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;1.&lt;/p&gt;
-</description>
-        <pubDate>Tue, 14 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/14/Android-Kotlin-Coroutine/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/14/Android-Kotlin-Coroutine/</guid>
-        
-        
-        <category>Android-Kotlin</category>
         
       </item>
     
