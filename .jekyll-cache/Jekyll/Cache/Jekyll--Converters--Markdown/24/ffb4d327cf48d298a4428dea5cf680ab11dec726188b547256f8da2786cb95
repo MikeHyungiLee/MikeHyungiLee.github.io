@@ -1,0 +1,13 @@
+I"�<h3 id="flutter의-hot-reload-기능">Flutter의 Hot reload 기능<br /></h3>
+
+<p><strong><font color="Blue">Flutter의 Hot reload기능을 사용하기 위해서는 Stateless Stateful Widgets에 대한 이해가 필요하다.</font></strong></p>
+
+<p><img src="/images/flutter/2020-04-21/2020-04-21 flutter stateless widget.png" alt="blog capture" title="capture img" /><br /></p>
+
+<p><strong>① 이미지 리소스를 무료로 받아서 사용할 수 있는 사이트</strong><br />
+<a href="icon8.com/ouch">icon8.com/ouch</a><br />
+<a href="vecteezy.com">vecteezy.com</a><br /></p>
+
+<p><strong>② Customize the background or icon image</strong><br />
+<a href="www.canva.com">www.canva.com</a><br /></p>
+:ET

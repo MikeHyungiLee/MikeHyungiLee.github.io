@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Java MVVM Part7 ~ 9</title>
+	<meta name="description" content="#7 Android MVVM Architecture Tutorial - Handling API Exceptions">
+	
+	<link rel="canonical" href="http://localhost:4000/2020/04/20/Android-Kotlin-MVVM-Part7-9/">
+	<link rel="alternate" type="application/rss+xml" title="Lee Hyungi's Tech Blog" href="http://localhost:4000/feed.xml" />
+	
+	<!-- <link rel="stylesheet" href="/css/main.css"> -->
+    
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+	<script type="text/javascript" src="/static/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/monokai_sublime.min.css">
+	<script type="text/javascript" src="/static/js/highlight.min.js"></script>
+
+    <!--
+    <link rel="stylesheet" type="text/css" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://apps.bdimg.com/libs/highlight.js/8.4/styles/monokai_sublime.min.css">
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/highlight.js/8.4/highlight.min.js"></script>
+    -->
+    
+	<script type="text/javascript" src="/static/js/index.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+ <!--  <body data-spy="scroll" data-target="#myAffix"> -->
+  <body>
+
+    <header>
+
+<!-- navbar -->
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">LeeHyungi's Tech Blog</a>
+      <p class="navbar-text"></p>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+
+        
+          <li>
+        
+        <a href="/">Home</a></li>
+        
+          
+            
+              <li>
+            
+              <a href="/projects/"><span class="glyphicon "></span> Projects</a></li>
+          
+        
+          
+            
+              <li>
+            
+              <a href="/about/"><span class="glyphicon "></span> About</a></li>
+          
+        
+          
+        
+          
+        
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+</header>
+
+
+    <div id="main" class="container main">
+      <div class="row">
+  <div id="myArticle" class="col-sm-9">
+    <div class="post-area post">
+      <header>
+        <h1>Java MVVM Part7 ~ 9</h1>
+        <p>Apr 20, 2020</p>
+      </header>
+      <hr>
+      <article>
+        <p><strong>#7 Android MVVM Architecture Tutorial - Handling API Exceptions<br /></strong></p>
+
+<p><strong>참고</strong>:<a href="https://www.youtube.com/watch?v=67bdklHmXA8&amp;list=PLk7v1Z2rk4hjVaZ8DZKe8iT9RIM9OUrwp&amp;index=1">https://www.youtube.com/watch?v=67bdklHmXA8&amp;list=PLk7v1Z2rk4hjVaZ8DZKe8iT9RIM9OUrwp&amp;index=1</a><br /></p>
+
+<p>API 송수신 에러를 처리를 구현해 볼 것이다. <br /></p>
+
+<p>※ 노트정리 (Part7)<br />
+<img src="/images/android/2020-04-20/2020-04-20 Handling API Exceptions.png" alt="blog capture" width="500" title="capture img" /><br /></p>
+
+<p>ViewModel클래스에서 호출해서 사용할 UserRepository의 메소드를 살펴보자. 이 메소드는 기존에 Response 객체를 반환하고, 이 반환된 객체를 ViewModel에서 일일이 송수신 성공여부(로그인 성공/실패)에 따라서 이벤트 처리를 해주었다. <br />
+<strong><font color="Red">하지만 이런식으로 반복해서 ViewModel 클래스에서 매번 조건처리해서 적어주면 코드의 가독성이 떨어지기 때문에, 이러한 처리를 공통화 처리해주기로 한다.</font></strong><br /></p>
+
+<p>위의 공통화 처리해서 작성해줄 부분이 network 패키지 아래에 작성한 SafeApiRequest 추상클래스이고, 여기에서 작성한 메소드는 송수신 성공시에는 ResponseBody를 반환해주고, 실패하면, 에러 메시지를 덫붙여서 ApiException 클래스에 던져준다. <br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class ApiException(message: String) : IOException(message) {
+
+}
+</code></pre></div></div>
+
+<p>위와 같이 IOException클래스를 상속하고, String타입의 message 변수를 인자로 갖는 ApiException클래스를 작성해서 활용한다. 이 ApiException 클래스는 IOException의 기능을 계승한다.<br /></p>
+
+<p><strong>이렇게 작성을 하게 되면, 최종적으로 AuthViewModel 클래스에서 Repository클래스 내부에서 작성한 메소드로 값을 반환할때, <font color="Red">try{}catch{}내에서 커스터마이징한 ApiException클래스로 송수신 성공/실패를 에러로써 Catch해서 처리할 수 있게 된다.</font></strong><br /></p>
+
+<p>이 부분은 연습이 필요할 것 같다.<br /></p>
+
+
+      </article>
+      <hr>
+        <div class="bdsharebuttonbox">
+            <a href="#" class="bds_more" data-cmd="more"></a>
+            <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+            <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+            <a href="#" class="bds_fbook" data-cmd="fbook" title="Share to Facebook"></a>
+            <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+        </div>
+        <script>
+            window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    </div>
+	
+    <!-- duoshuo.com javascript include code. -->    
+    
+    <!-- disqus.com javascript include code. -->
+	
+    <div class="post-area post comment">
+        <div id="disqus_thread"></div>
+    </div>
+	<script>
+		var disqus_config = function () {
+			this.page.url = "http://mikehyungilee.github.io/2020/04/20/Android-Kotlin-MVVM-Part7-9/"; 
+			this.page.identifier = "/2020/04/20/Android Kotlin MVVM Part7-9"; 
+		};
+		(function() {
+			var d = document, s = d.createElement('script');
+			s.src = '//Hyungi Lee.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+	</script>
+	
+    
+  </div>
+  
+  <div id="content" class="col-sm-3">
+    <!-- <div id="myAffix" class="shadow-bottom-center hidden-xs" data-spy="affix" data-offset-top="0" data-offset-bottom="-20"> -->
+    <div id="myAffix" class="shadow-bottom-center hidden-xs" >
+      <div class="categories-list-header">
+        Content
+      </div>
+      <div class="content-text"></div>
+    </div>
+  </div>
+  
+</div>
+    </div>
+
+    
+    <div id="top" data-toggle="tooltip" data-placement="left" title="back to top">
+      <a href="javascript:;">
+        <div class="arrow"></div>
+        <div class="stick"></div>
+      </a>
+    </div>
+
+    <footer class="">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <a href="mailto:mike.hyungi.lee@google.com"><span class="glyphicon glyphicon-envelope"></span> mike.hyungi.lee@gmail.com </a>
+        <span class="point"> · </span>
+        
+          <a href="https://github.com/MikeHyungiLee">
+            <span class="icon">
+              <svg viewBox="0 0 16 16">
+                <path fill="#aaa" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+              </svg>
+            </span>
+            Github
+            <span>(MikeHyungiLee)</span>
+          </a>
+          
+          <span class="point"> · </span>
+          <span><a class="newpost" href="javascript:;">New post</a></span>
+		  <span class="point"> · </span>
+          <span><a href="/feed.xml">RSS</a></span>
+          <span class="point"> · </span>
+          <span>&copy; 2020 Lee Hyungi</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <script type="text/javascript">
+    function OnClickNewPost()
+    {
+        var title = prompt("Please enter title of your post");
+        if (title!=null){
+            title = title.replace(" ", "-");
+            var currentdate = new Date();
+            var urlNewPage = "https://github.com/LiXizhi/LiXizhi.github.io/new/master?filename=_posts/" 
+                + currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate() + "-" + title + ".md";
+                
+            var defaultText =  [
+                '---',
+                'layout: post',
+                'comments: true',
+                'categories: diary',
+                '---',
+                '## Title',
+                'text'
+                ].join('\n');
+            urlNewPage += "&value=" + encodeURIComponent(defaultText);
+            window.open(urlNewPage);
+        }
+    }
+    
+    $(function() {
+      // CreateNewPostLinks
+      $('.newpost').each(function(){
+          $(this).click(OnClickNewPost);
+      });
+    });
+</script>
+  
+  </body>
+</html>

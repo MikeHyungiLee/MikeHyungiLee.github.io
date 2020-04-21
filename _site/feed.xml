@@ -5,15 +5,487 @@
     <description>Hyungi's Ideas &amp; Blogs</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 19 Apr 2020 20:54:17 +0900</pubDate>
-    <lastBuildDate>Sun, 19 Apr 2020 20:54:17 +0900</lastBuildDate>
+    <pubDate>Tue, 21 Apr 2020 17:23:14 +0900</pubDate>
+    <lastBuildDate>Tue, 21 Apr 2020 17:23:14 +0900</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>(8) Hot reload! Stateless Stateful Widgets</title>
+        <description>&lt;h3 id=&quot;flutter의-hot-reload-기능&quot;&gt;Flutter의 Hot reload 기능&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Flutter의 Hot reload기능을 사용하기 위해서는 Stateless Stateful Widgets에 대한 이해가 필요하다.&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;아래는 StatelessWidget의 사용의 예이다. &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;stless를 작성하면 Stateless class가 자동완성된다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter stateless widget.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/21/(8)Hot-reload-Stateless-Stateful-widgets/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/21/(8)Hot-reload-Stateless-Stateful-widgets/</guid>
+        
+        
+        <category>Flutter</category>
+        
+      </item>
+    
+      <item>
+        <title>(7) Image resources download tip</title>
+        <description>&lt;h3 id=&quot;이미지-리소스를-무료로-다운받아서-사용할-수-있는-사이트&quot;&gt;이미지 리소스를 무료로 다운받아서 사용할 수 있는 사이트&lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;개인적으로 앱을 만들면서 느낀 것이 앱에 알맞는 이미지 리소스를 넣는 것은 실제 앱의 사용자로 하여금 좀 더 편리하고 효율적으로 앱을 사용하게 해준다고 느꼈다.따라서 아래의 이미지 리소스를 무료로 받아서 사용할 수 있는 사이트를 적극 활용하자.&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;① 이미지 리소스를 무료로 받아서 사용할 수 있는 사이트&lt;/strong&gt;&lt;br /&gt;
+&lt;a href=&quot;icon8.com/ouch&quot;&gt;icon8.com/ouch&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;vecteezy.com&quot;&gt;vecteezy.com&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;② Customize the background or icon image&lt;/strong&gt;&lt;br /&gt;
+&lt;a href=&quot;www.canva.com&quot;&gt;www.canva.com&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/21/(7)Image-resource-download/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/21/(7)Image-resource-download/</guid>
+        
+        
+        <category>Flutter</category>
+        
+      </item>
+    
+      <item>
+        <title>(6) Running your app on a physical device</title>
+        <description>&lt;h3 id=&quot;deploying-your-flutter-apps-to-a-physical-device-&quot;&gt;Deploying Your Flutter Apps to a Physical Device &lt;br /&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;실제 안드로이드 단말기에서 Flutter App을 deploy하는 방법을 살펴보자.&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;우선 아래의 순서대로 실제 안드로이드 단말기에서 설정해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;(1) [About] - Software Information - Build number (need to tap the menu until being developer mode.)&lt;br /&gt;
+(2) Enable USB Debugging&lt;br /&gt;
+(3) Connect Your Phone with USB&lt;br /&gt;
+(4) Set “Trust Connected PC”&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;※ TroubleShooting Reference&lt;br /&gt;
+&lt;a href=&quot;https://blog.londonappbrewery.com/troubleshooting-android-device-testing-on-windows-a2b5d779df08&quot;&gt;https://blog.londonappbrewery.com/troubleshooting-android-device-testing-on-windows-a2b5d779df08&lt;/a&gt; &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;실제 iOS 단말기에서 Flutter App을 deploy하는 방법을 살펴보자.&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;아래의 Requirements를 우선준비한다.&lt;br /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Requirements&lt;/p&gt;
+  &lt;blockquote&gt;
+    &lt;p&gt;① An Apple ID 준비하기&lt;br /&gt;
+② An iPhone/iPad Device &lt;br /&gt;
+③ Xcode 설치 &lt;br /&gt;
+④ USB Cable &lt;br /&gt;&lt;/p&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;blockquote&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Green&quot;&gt;iOS 실 단말기에 Flutter app을 deploy하기 위한 5 Steps&lt;/font&gt;&lt;/strong&gt; &lt;br /&gt;&lt;/p&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;① &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;iOS버전이 Xcode 버전과 호환이 되는지 확인하기&lt;/font&gt;&lt;br /&gt;
+iOS의 소프트웨어 버전 = 12.3이라고 가정하면, 우선 소수점 앞자리 12에서 2를 빼서(12-2) 10이라는 숫자가 된다.&lt;br /&gt;
+실제 내 단말기를 확인하면, 13.3.1 버전이고 소수점 맨 앞자리 13에서 2를 빼면(13-2) 11이라는 숫자가 된다. &lt;br /&gt;
+위에서 계산된 숫자는 Xcode의 최소로 요구되는 버전가 된다.&lt;strong&gt;Xcode는 최소 버전 11이어야 하고, 동시에 두번째 숫자는 Xcode버전의 두번째 숫자보다 작거나 같아야 한다.&lt;/strong&gt;&lt;br /&gt;&lt;font color=&quot;Red&quot;&gt;내가 설치한 Xcode버전은 11.3.1 / iOS버전은 13.3.1이므로 위의 두 조건을 모두 만족한다.&lt;/font&gt;&lt;br /&gt;만약에 버전이 일치하지 않는다면, Xcode의 버전을 업그레이드 하는 것이 최선이다. &lt;br /&gt;
+MacOS 버전이 업데이트 되었다면, Xcode 버전도 함께 업데이트하자.&lt;br /&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;② homebrew를 설치한다. &lt;br /&gt;
+&lt;a href=&quot;https://brew.sh/index_ja&quot;&gt;https://brew.sh/index_ja&lt;/a&gt;&lt;br /&gt;
+&lt;strong&gt;/usr/bin/ruby -e “$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)”&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;Use home-brew to install ideviceInstaller, iOS-deploy &amp;amp; cocoa pods&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+아래 링크의 “Deploy to iOS devices”를 참조해서 설치하기&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;③ Xcode에서 “Apple ID”를 등록하기&lt;br /&gt;
+&lt;strong&gt;(1) 프로젝트에서 iOS module in Xcode를 이용해서 Xcode열기&lt;/strong&gt;
+&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter xcode open.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;
+&lt;strong&gt;(2) Xcode에서 [Runner] - [Targets App을 선택] - [Signing &amp;amp; Capabilities 탭을 선택] - All - [Add Account]
+내 Apple ID로 로그인한 뒤에 Develop Team 선택하기.&lt;/strong&gt;
+&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter apple id register.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter regeister apple id.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;④ 실제 iOS단말기를 USB로 연결하고, “Trust connected Computer” 선택하기&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;만약에 앱이 단말기에 기동되지 않는다면, 신뢰된 App으로 인식이 안되서 앱이 기동이 되지 않는 것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+[General] - Device Management - Click the App  - check - Trust Profile and device management - developer app 아래에 어플 설정 들어가서 Trust클릭! - Create Unique bundle ID&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;⑤ 최종적으로 Android studio에서 Flutter를 진단해본다.&lt;br /&gt;
+Android studio - [final check] - Flutter doctor&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt; (Check the setup process)&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+※ iOS에 앱을 기동시켰을때 에러가 나는 경우, 아래 troubleshooting페이지를 확인하자.&lt;br /&gt;
+&lt;a href=&quot;https://blog.londonappbrewery.com/troubleshooting-ios-device-testing-for-flutter-38c5da239e62&quot;&gt;https://blog.londonappbrewery.com/troubleshooting-ios-device-testing-for-flutter-38c5da239e62&lt;/a&gt; &lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/21/(6)Running-your-app-on-a-physical-device/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/21/(6)Running-your-app-on-a-physical-device/</guid>
+        
+        
+        <category>Flutter</category>
+        
+      </item>
+    
+      <item>
+        <title>(5)Working with Assets in Flutter &amp; the PubSpec file</title>
+        <description>&lt;h2 id=&quot;flutter-app에-이미지-넣어주기-&quot;&gt;Flutter app에 이미지 넣어주기 &lt;br /&gt;&lt;/h2&gt;
+
+&lt;p&gt;Project에 Images 폴더를 만들어서 이미지 파일을 넣어줄 것이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;① 프로젝트 폴더의 바로 아래에 &lt;font color=&quot;Red&quot;&gt;&quot;images&quot;&lt;/font&gt;폴더를 만들어준다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;② pubspec.yaml 파일에 새로 만든 &lt;font color=&quot;Red&quot;&gt;assets폴더의 경로를 지정&lt;/font&gt;해준다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;특정 파일만 지정을 안해주고 - image/ 디렉토리 경로만 설정해줘도 폴더 안에 모든 파일을 읽는데 문제가 되지 않는다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 pubspec yamal file.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;assets의 요소를 보면 flutter: (Parents)의 자식으로 구성되어있는 것을 확인할 수 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 yaml language.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;yaml 언어는 들여쓰기에 주의해서 작성을 해주어야 한다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;③ 모든 설정이 끝난다음에는 &lt;strong&gt;“Packages get”을 눌러서 프로젝트에 적용&lt;/strong&gt;시켜준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter configuration change.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter app.png&quot; width=&quot;300&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 화면에 보여지는 이미지는 해상도별로 나눠서 단말기에 넣어주지 않으면 안된다. &lt;br /&gt;
+각 단말기별로 해상도가 다르므로, 화면에 이미지가 출력이 될때 해상도를 고려해서 화면에 출력을 해주어야 한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※ Icon 이미지를 해상도별로 나눠주는 웹 Generator : &lt;/font&gt;&lt;/strong&gt;&lt;a href=&quot;https://appicon.co&quot;&gt;https://appicon.co&lt;/a&gt; &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 image generator.png&quot; width=&quot;300&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;iPhone과 Android앱에 맞추어 App의 아이콘을 추출할 수도 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 asset folder location.png&quot; width=&quot;300&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Android / iOS는 각각 Asset folder의 위치가 다르므로 위의 위치를 고려해서 이미지를 넣어주어야 한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;아이콘 이미지를 import시켜주었다면 실 단말기 화면에 보여질 App의 Icon이미지를 만들어주어야 한다.&lt;br /&gt;
+이전에 안드로이드 작업을 하면서 알게 된 것인데, 단말기의 기종마다 어떤 기종은 아이콘 이미지를 원으로 만들어서 출력하는 기종도 있고, 어떤 기종은 네모난 모양으로 만들어서 아이콘 이미지에 보여주는 것도 있었다. 이러한 점을 개선하기 위해서 아래의 작업을 해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;[res] - &quot;Right click&quot; - [new] - &quot;Image Assets&quot;&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 android image asset.png&quot; width=&quot;600&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter app img.png&quot; width=&quot;300&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/21/(5)Working-with-Assets-in-Flutter-&-the-PubSpec-file/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/21/(5)Working-with-Assets-in-Flutter-&-the-PubSpec-file/</guid>
+        
+        
+        <category>Flutter</category>
+        
+      </item>
+    
+      <item>
+        <title>(4) Create first Flutter App</title>
+        <description>&lt;h2 id=&quot;create-flutter-app&quot;&gt;Create Flutter App&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;이제 Flutter의 개발환경 구축이 완료되었으므로, 새로 프로젝트를 생성해서 내부 구조를 살펴볼 것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이번 Posting에서는 첫 Flutter App을 만들어 볼 것이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;우선 모든 프로그래밍 공부의 기본이 되는 “Hello world!”를 어플에 띄어볼 것이다.&lt;br /&gt;
+기존에 자동생성된 class를 삭제하고, 최 상단에 있는 void main() 메소드를 수정해보자.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter first app capture.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void main() =&amp;gt; runApp(MaterialApp(home: Center(child: Text('Hello World'))));
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;), 를 붙여주는 이유는 Formatting해서 정렬을 해주기 위해서이다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;To automatically format the code in the current source code window, &lt;font color=&quot;Red&quot;&gt;right-click in the code window and select Reformat Code with dartfmt.&lt;/font&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void main() =&amp;gt; runApp(
+    MaterialApp(
+      home: Center(
+        child: Text('Hello World'),
+      ),
+    ),
+);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;아래와 같이 =&amp;gt; 를 {}로 묶어서 코드를 작성할 수도 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void main(){
+  runApp(
+    MaterialApp(
+      home: Center(
+        child: Text('Hello World'),
+      ),
+    ),
+  );
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;우선 첫번째로 살펴볼 Widget은 &quot;Scaffold()&quot; Widget이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter scaffold.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※Flutter를 개발할때 사용될 Widget의 내용을 api문서에서 확인하며 개발하는 습관을 들여야 한다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+&lt;a href=&quot;https://api.flutter.dev/flutter/material/Scaffold-class.html&quot;&gt;Scaffold class API - official web site &lt;/a&gt; &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;두번째로 살펴볼 Widget은 &quot;AppBar()&quot; Widget이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter appbar widget.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이제 기존의 Center Widget을 삭제하고, 새롭게 배운 Scaffold()Widget을 넣어준다. &lt;br /&gt;
+그 다음에 Scaffold()widget의 Background속성에 색을 넣어주고, 그 안에 appBar와 body Widget을 넣어준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;결과 코드는 아래와 같다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void main() {
+  runApp(
+    MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.blueGrey,
+          appBar: AppBar(
+            title: Center(
+              child: Text(&quot;Hello World App&quot;),
+            ),
+          ),
+          body: Center(
+            child: Image(image: NetworkImage(&quot;https://stickershop.line-scdn.net/stickershop/v1/product/8729/LINEStorePC/main.png;compress=true&quot;)),
+          ),
+      ),
+    ),
+  );
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위와같이 body 위젯에 이미지를 가운데 정렬하는데 사용되는 위젯은 Center Widget이다. Widget안에 또 다른 Widget을 넣을땐, child: 속성을 넣어주고, 그 안에 새로운 위젯을 넣어주면 된다.&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;여기서의 핵심은 Widget안에 또 다른 Widget을 넣어줄때는 child: 속성을 이용해서 넣어준다는 것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Widgets을 선택한 상태에서 Alt+Enter를 클릭하면, Widget에 적용할 수 있는 다양한 옵션들을 확인할 수 있다.&lt;br /&gt;
+“Wrap with center”를 이용해서 이미지를 가운데 정렬할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter alt enter capture.png&quot; alt=&quot;blog capture&quot; width=&quot;300&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;결과화면은 아래와 같다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 result screen capture(1).png&quot; alt=&quot;blog capture&quot; width=&quot;300&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;각 widget 클래스의 요소를 참조해가면서 코딩해야하므로, API문서에서 해당 클래스를 검색해서 확인할 수 있어야 한다.&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;예를들어, 화면에 Image를 보여줘야하는 경우,&lt;/font&gt;Image class를 검색해서 참조해야한다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;blockquote&gt;
+    &lt;p&gt;Widgets tree 그리기
+아래의 주소를 통해서 Widgets tree를 그릴 수 있다.
+&lt;a href=&quot;https://api.flutter.dev/flutter/widgets/Image-class.html&quot;&gt;https://api.flutter.dev/flutter/widgets/Image-class.html&lt;/a&gt;&lt;/p&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 widgets tree .png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※ Flutter의 developer mode&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+Chrome의 developer mode와 비슷하게 원반모양의 아이콘을 클릭한 후 궁금한 부분을 클릭하면 해당 부분의 요소를 트리형태로 보여준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter iOS developer mode.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter developer mode.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※ Debug mark 없애기.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter remove debug mode.png&quot; alt=&quot;blog capture&quot; width=&quot;300&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/21/(4)Create-first-Flutter-app/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/21/(4)Create-first-Flutter-app/</guid>
+        
+        
+        <category>Flutter</category>
+        
+      </item>
+    
+      <item>
+        <title>(3)Widgets in Flutter !</title>
+        <description>&lt;h2 id=&quot;anatomy-of-a-flutter-app&quot;&gt;Anatomy of a Flutter App&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;※ Flutter의 Resources 참조 GitHub&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/londonappbrewery/Flutter-Course-Resources&quot;&gt;https://github.com/londonappbrewery/Flutter-Course-Resources&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;이번 Posting에서는 Flutter App구성을 해부해볼 것이다.&lt;br /&gt;
+앞서 업데이트한 포스팅에서 알 수 있듯 Flutter는 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;레고 블럭처럼 위젯을 가져다가 화면에 올려주면 된다.&quot;&lt;/font&gt;&lt;/strong&gt;컨셉으로 매우 간편하게 앱을 작성할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter widgets anatomy.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 이메지와 같은 Tree구조의 Widget들을 사용해서 앱을 만들 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter basic code structure.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;이 Posting은 Udemy에서 강의를 수강하면서 정리한 내용인데, 강의를 수강하면서 공부하는 Tip에 대해서 정리해본다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;Top Tips for the Course&quot;&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+각 Lesson은 10분정도의 길이로, 강의를 수강하면서 따라서 코드를 작성하지 말고, 왜 이 코드가 이렇게 작성되고 있는지 이해하면서 듣도록 한다. &lt;br /&gt;
+그 후에 강의가 끝난 다음에 혼자서 배웠던 소스코드를 쳐보도록 한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;강의를 듣고 나서 나중에 참조를 위해 노트정리를 해두도록 한다. &lt;br /&gt;
+(Cornell Note Taking System &amp;amp; Summarize bullet points)&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;만약에 강의 수강도중에 막히는 부분이 있다면, bookmark를 해두고 나중에 다시 보고 이해하도록 한다.&lt;br /&gt;
+강의의 내용은 모두 중요하므로, 중간중간 빼먹는 부분이 없도록한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;새로운 Skill을 배운다는 것은, 단순 강의를 보는 것에 그치지 않고, 끊임없이 시간을 갖고 코딩을 해나가야 한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;Struggle is good to improve my own skill.&quot;&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/21/(3)Widget-in-flutter/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/21/(3)Widget-in-flutter/</guid>
+        
+        
+        <category>Flutter</category>
+        
+      </item>
+    
+      <item>
+        <title>(2) Setup for Flutter Development</title>
+        <description>&lt;h2 id=&quot;setup-for-flutter-development&quot;&gt;Setup for Flutter Development&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;※ Flutter의 Resources 참조 GitHub&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/londonappbrewery/Flutter-Course-Resources&quot;&gt;https://github.com/londonappbrewery/Flutter-Course-Resources&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;이번 Posting에서는 Flutter 개발을 위한 환경설정을 하는 방법에 대해서 정리할 것이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Android Studio vs Visual Studio&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;나는 나에게 익숙한 “Android Studio”를 이용해서 개발을 할 것이다.&lt;br /&gt;
+Android studio에서는 Android와 iOS의 Emulator view를 toggle할 수 있기 때문에 이러한 장점으로 본 IDE를 사용하는 것이 좋다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter setting sequence.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;
+&lt;strong&gt;※ 참고링크&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.udemy.com/course/flutter-bootcamp-with-dart/learn/lecture/17130752#content&quot;&gt;Check here for troubleshooting&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://www.udemy.com/course/flutter-bootcamp-with-dart/learn/lecture/17119664/#content&quot;&gt;Start Here For Step-by-Step Installation Videos&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://flutter.dev/docs/get-started/install/macos&quot;&gt;Flutter Installation Manual&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://thenextweb.com/dd/2019/06/04/why-does-macos-catalina-use-zsh-instead-of-bash-licensing/&quot;&gt;Why does macOS Catalina use Zsh instead of Bash? Licensing&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;현재 나는 Mac을 사용하고 있으므로, Mac을 기준으로 Flutter 개발환경을 구축해볼 것이다.&lt;br /&gt;
+자세한 설치내용은 상단의 &lt;strong&gt;“Flutter Installation Manual”&lt;/strong&gt;의 내용을 참조한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;① 우선 flutter 환경설정을 하기전에 shell을 zsh로 바꿔줘야한다. &lt;/strong&gt;&lt;br /&gt;
+  그러기 위해서는 아래와 같이 .zshrc　파일을 작성하고 그 내부에 flutter의 환경설정파일(bin)폴더의 경로를 작성해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter zshrc file.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;
+&lt;strong&gt;※ flutter 환경설정이 잘되었는지 진단할때 유용한 &lt;font color=&quot;Red&quot;&gt;&quot;flutter doctor&quot;&lt;/font&gt;명령어가 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter doctor.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;최종적으로 Flutter의 개발환경 구축이 완료된 후에 &lt;strong&gt;flutter –version&lt;/strong&gt;으로 terminal상에서 확인을 해보면, 아래와 같이 설치 버전을 확인할 수 있는데, 이렇게 나온다면 환경구축이 성공한 것이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter version check.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;
+&lt;strong&gt;※ 참고링크&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;② 그 다음으로 사용하게 될 Android Studio에 &lt;strong&gt;Flutter plugin을 설치&lt;/strong&gt;해준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;[Android studio] - [Preferences] - [Plugin] - &quot;Flutter&quot;검색하고 설치 &lt;br /&gt;&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter plugin.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;이제 Flutter의 개발환경 구축이 완료되었으므로, 새로 프로젝트를 생성해서 내부 구조를 살펴볼 것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/21/(2)Setup-for-Flutter-Development/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/21/(2)Setup-for-Flutter-Development/</guid>
+        
+        
+        <category>Flutter</category>
+        
+      </item>
+    
+      <item>
+        <title>(1) What is Flutter ?</title>
+        <description>&lt;h2 id=&quot;flutter&quot;&gt;Flutter&lt;/h2&gt;
+
+&lt;p&gt;이번 Posting에서는 여지까지 공부했던 “Flutter”에 대해서 내용정리를 하면서 복습해 볼 것이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;우선 Flutter의 특징에 대해서 알아보자.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;① Flutter는 다양한 비율과 해상도에 맞게 레이아웃을 만들 수 있다. &lt;/strong&gt;&lt;br /&gt;
+   개발자가 레이아웃을 만들때, screen과 device의 제약을 두지 않고 만들 수 있다는 의미이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;→ 이것이 가능한 이유는 Flutter는&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;Based on simple blank window&quot;&lt;/font&gt;&lt;/strong&gt;로 모든 단말기에 단순 빈 윈도우 화면을 요청하고 그 위에 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;그림을 그리듯 위젯을 그린다.&lt;/font&gt;&lt;/strong&gt; &lt;br /&gt;
+   이처럼 Flutter는 빈 화면위에 간단하게 모든 widget을 그리기때문에 Layout을 작성함에 있어 매우 강력하다.(Paint function)&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter screen image.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;② 두번째 Flutter의 강력한 기능은 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;레고처럼 Piece by piece&quot;로 위젯들을 연결시켜 어플을 만들 수 있다는 것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter widget capture.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;③ 세번째로 왜 Flutter여야 하는가? 인데 이것은 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;One codebase to rule them all&quot;&lt;/font&gt;&lt;/strong&gt;에 그 의미가 있다. 하나의 코드 작성으로 &lt;font color=&quot;Red&quot;&gt;모바일(Android, iOS), Web 어플리케이션, Desktop 어플리케이션&lt;/font&gt;을 모두 작성할 수 있기 때문이다.&lt;br /&gt;
+이러한 Web design concept이 flutter에 도입이 되었다.&lt;br /&gt;
+&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter huge advantage.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;④ &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;Flutter는 &quot;Hot Reload&quot; 기능을 지원한다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+  기존의 App개발에서는 Running and Compiling을 해야지만 app의 레이아웃의 변경사항을 확인할 수 있었지만, Flutter는 레이아웃의 변경사항이 레이아웃상에 바로 보여진다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;⑤ iOS에서는 세부 클래스의 정보들이 숨겨져있지만, &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;안드로이드처럼 Flutter는 상속되어있는 클래스와 메소드의 관계를 모두 공개하고 있다.&lt;br /&gt;&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/21/(1)flutter/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/21/(1)flutter/</guid>
+        
+        
+        <category>Flutter</category>
+        
+      </item>
+    
+      <item>
+        <title>Java MVVM Part7 ~ 9</title>
+        <description>&lt;p&gt;&lt;strong&gt;#7 Android MVVM Architecture Tutorial - Handling API Exceptions&lt;br /&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;참고&lt;/strong&gt;:&lt;a href=&quot;https://www.youtube.com/watch?v=67bdklHmXA8&amp;amp;list=PLk7v1Z2rk4hjVaZ8DZKe8iT9RIM9OUrwp&amp;amp;index=1&quot;&gt;https://www.youtube.com/watch?v=67bdklHmXA8&amp;amp;list=PLk7v1Z2rk4hjVaZ8DZKe8iT9RIM9OUrwp&amp;amp;index=1&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;API 송수신 에러를 처리를 구현해 볼 것이다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;※ 노트정리 (Part7)&lt;br /&gt;
+&lt;img src=&quot;/images/android/2020-04-20/2020-04-20 Handling API Exceptions.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;ViewModel클래스에서 호출해서 사용할 UserRepository의 메소드를 살펴보자. 이 메소드는 기존에 Response 객체를 반환하고, 이 반환된 객체를 ViewModel에서 일일이 송수신 성공여부(로그인 성공/실패)에 따라서 이벤트 처리를 해주었다. &lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;하지만 이런식으로 반복해서 ViewModel 클래스에서 매번 조건처리해서 적어주면 코드의 가독성이 떨어지기 때문에, 이러한 처리를 공통화 처리해주기로 한다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 공통화 처리해서 작성해줄 부분이 network 패키지 아래에 작성한 SafeApiRequest 추상클래스이고, 여기에서 작성한 메소드는 송수신 성공시에는 ResponseBody를 반환해주고, 실패하면, 에러 메시지를 덫붙여서 ApiException 클래스에 던져준다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class ApiException(message: String) : IOException(message) {
+
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위와 같이 IOException클래스를 상속하고, String타입의 message 변수를 인자로 갖는 ApiException클래스를 작성해서 활용한다. 이 ApiException 클래스는 IOException의 기능을 계승한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;이렇게 작성을 하게 되면, 최종적으로 AuthViewModel 클래스에서 Repository클래스 내부에서 작성한 메소드로 값을 반환할때, &lt;font color=&quot;Red&quot;&gt;try{}catch{}내에서 커스터마이징한 ApiException클래스로 송수신 성공/실패를 에러로써 Catch해서 처리할 수 있게 된다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 부분은 연습이 필요할 것 같다.&lt;br /&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 20 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/20/Android-Kotlin-MVVM-Part7-9/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/20/Android-Kotlin-MVVM-Part7-9/</guid>
+        
+        
+        <category>Android-Architecture</category>
+        
+      </item>
     
       <item>
         <title>Java MVVM Part4 ~ 6</title>
         <description>&lt;p&gt;&lt;strong&gt;#4 Android MVVM Architecture Tutorial - User Login using Retrofit&lt;br /&gt;&lt;/strong&gt;
-&lt;strong&gt;#5 Android MVVM Architecture Tutorial - Room Database Setup&lt;br /&gt;&lt;/strong&gt;
-&lt;strong&gt;#6 Android MVVM Architecture Tutorial - Using Coroutines&lt;br /&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;strong&gt;#5 Android MVVM Architecture Tutorial - Room Database Setup&lt;br /&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;참고&lt;/strong&gt;:&lt;a href=&quot;https://www.youtube.com/watch?v=67bdklHmXA8&amp;amp;list=PLk7v1Z2rk4hjVaZ8DZKe8iT9RIM9OUrwp&amp;amp;index=1&quot;&gt;https://www.youtube.com/watch?v=67bdklHmXA8&amp;amp;list=PLk7v1Z2rk4hjVaZ8DZKe8iT9RIM9OUrwp&amp;amp;index=1&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -63,879 +535,89 @@
 ② Room database로부터 데이터를 insert, select하는 @Dao interface를 작성한다. - (I)UserDao&lt;br /&gt;
 ③ db 클래스 내부에 entities 패키지를 작성해주고, 보내줄 데이터의 entity클래스를 작성한다. - (data C)User&lt;br /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;1.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;#6 Android MVVM Architecture Tutorial - Using Coroutines&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+이번에는 위에서 구성한 Room database setting을 통해서 내부 DB에 로그인한 User의 token정보를 저장해볼 것이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;User의 token정보를 저장하기에 앞서, 우선 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;Simplify Retrofit calls using coroutine&quot; Retrofit의 callback function의 작성을 Kotlin의 Coroutine을 활용해서 간단하게 작성해볼것이다..&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;【code refactoring (UserRepository.kt)】&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;기존 코드(Retrofit callback function)&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  // 아래와 같이 해주기 보다는 Repository 에서 Api instance 를 초기화 시켜주고 사용하는 것이 좋다.
+  // 이 부분은 차후에 수정해보기
+  MyApi().userLogin(email, password)
+      .enqueue(object: Callback&amp;lt;ResponseBody&amp;gt;{
+          override fun onFailure(call: Call&amp;lt;ResponseBody&amp;gt;, t: Throwable) {
+              loginResponse.value = t.message
+          }
+
+          override fun onResponse(
+              call: Call&amp;lt;ResponseBody&amp;gt;,
+              response: Response&amp;lt;ResponseBody&amp;gt;
+          ) {
+              if(response.isSuccessful){
+                  loginResponse.value = response.body()?.string()
+              }else{
+                  loginResponse.value = response.errorBody()?.string()
+              }
+          }
+      })
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;수정된 코드(Kotlin coroutine)&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// Api 메소드를 suspend fun 메소드로 수정한 뒤에 Repository method
+suspend fun userLogin(email: String, password: String) : Response&amp;lt;AuthResponse&amp;gt;{
+    return MyApi().userLogin(email, password)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;【code refactoring (AuthViewModel.kt)】&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;기존 코드(AuthViewModel.kt)&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+기존에 Retrofit call함수로 코드를 작성했을때는 아래와 같이 작성해주었다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val loginResponse = UserRepository().userLogin(email!!, password!!)
+authListener?.onSuccess(loginResponse)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;하지만, suspend fun로 메소드를 작성해주면 호출해서 사용하는 곳이 suspend 메소드이거나 Coroutine scope 내부에서 호출해주어야 한다. 따라서 아래와 같이 코드를 작성해주었다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;수정된 코드(AuthViewModel.kt)&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// util &amp;gt; Coroutines 에 작성해 준 main() 메소드를 사용해서 실행해준다.
+Coroutines.main {
+   val response = UserRepository().userLogin(email!!, password!!)
+   if(response.isSuccessful){
+       authListener?.onSuccess(response.body()?.user!!)
+   }else{
+       authListener?.onFailure(&quot;Error code: ${response.code()}&quot;)
+   }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;기존에 LoginActivity에서 loginResponse의 변화를 observe하는 처리를 해주었는데, ViewModel 클래스에서 CoroutineScope의 main thread에서 처리를 해주었기 때문에, 별도로 Activity에는 Observe처리를 해주지 않아도 된다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;코드를 작성해줄때, 공통적으로 사용되는 메소드는 잘 정리해서 공통화처리해주어야 한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//util/Coroutines.kt (Object class)
+
+object Coroutines{
+  //parameter : coroutine function (suspend function)
+  fun main(work: suspend (()-&amp;gt;Unit)) =
+      CoroutineScope(Dispatchers.Main).launch{
+          work()
+      }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Sun, 19 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/19/Android-Kotlin-MVVM-Part4/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/19/Android-Kotlin-MVVM-Part4/</guid>
+        <link>http://localhost:4000/2020/04/19/Android-Kotlin-MVVM-Part4-6/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/19/Android-Kotlin-MVVM-Part4-6/</guid>
         
         
         <category>Android-Architecture</category>
-        
-      </item>
-    
-      <item>
-        <title>Kotlin Coroutine Jobs(Beginner)</title>
-        <description>&lt;h3 id=&quot;coroutine-jobs-in-kotlin-&quot;&gt;&lt;strong&gt;Coroutine Jobs in Kotlin ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;참고&lt;/strong&gt;:&lt;a href=&quot;https://www.youtube.com/watch?v=UsHTxOILP5g&quot;&gt;https://www.youtube.com/watch?v=UsHTxOILP5g&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;이번 포스팅에서는 Coroutine Job에 대해서 샘플 어플을 만들어가면서 알아볼 것이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;인터넷을 통해서 데이터를 취득하는 도중에 속도가 느리거나 timeout, 작업(Job)을 취소해야되는 경우, 과거에는 AsyncTask를 통해서 작업을 조작하는 것은 매우 어렵고 번거로웠다.(현재 deprecated되었다) &lt;br /&gt;
-이후에 개선되서 나온 것이 “RxJava”이다. 이 RxJava로 기존의 복잡했던 작업들이 좀 더 간단하게 처리할 수 있게 되었다. 각각의 option들이 잘 되어있어서 편리하게 처리할 수 있다는 장점이 있다.(에러가 발생하였을때, 등등..)&lt;br /&gt;
-그 다음은 “Coroutine”이다. Coroutine은 RxJava보다 더 편리하게 각각의 작업들은 간단하게 컨트롤할 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-18 coroutine job(1).png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;300&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;우선 샘플 어플의 처리과정을 정리해보자. &lt;br /&gt;
-이 어플은 화면에 ProgressBar가 있고, 버튼과 TextView가 있다.&lt;br /&gt;
-버튼을 눌렀을때 background thread에 해당 task가 실행이 되고, 그 task의 진행상태가 progress bar에 반영이 된다.&lt;br /&gt;
-(1) task실행이 완료되었을때, TextView에 “Job is complete”표시가 된다.&lt;br /&gt;
-(2) 실행되는 도중에 “CANCEL JOB #1”을 누르면 “resetting job” Toast 메시지가 표시가 된다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※ 내부 처리 작성하기&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;① Field 변수로 Progress bar 관련 변수 &lt;strong&gt;“PROGRESS_MAX=100, PROGRESS_START, JOB_TIME=400(ms)”&lt;/strong&gt;와 CompletableJob변수 &lt;strong&gt;“job”&lt;/strong&gt;변수를 선언해준다. &lt;br /&gt;
-② “START JOB #1” 버튼을 클릭했을때, job 변수가 초기화되어 있지 않은 경우 job을 초기화시켜주고, Task 작업을 실행해준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Coroutine Job의 초기화 메소드&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fun initJob(){
-    // button의 text를 setting
-    job_button.text = &quot;start Job #1&quot;
-    // 초기 TextView의 text를 &quot;&quot;로 초기화
-    updateJobCompleteTextView(&quot;&quot;)
-    // job변수의 초기화
-    job = Job()
-    // job이 취소되거나 완성되었을때 실행되는 invokeOnCompletion 처리하기
-    job.invokeOnCompletion{
-      it?.message.let{
-        var msg = it
-        if(msg.isNullOrBlank()){
-          msg = &quot;Unknown cancellation error&quot;
-        }
-        println(&quot;${job}was cancelled. Reason: $msg&quot;)
-        showToast(msg)
-      }
-    }
-    job_progress_bar.max = PROGRESS_MAX
-    job_progress_bar.progress = PROGRESS_START
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;③ job을 초기화할때 사용한 updateJobCompleteTextView(), showToast() 메소드 작성하기&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private fun updateJobCompleteTextView(text: String){
-  // GlobalScope를 사용해서 UI요소인 TextView를 업데이트  
-  GlobalScope.launch(Main){
-    job_complete_text.text = text
-  }
-}
-
-private fun showToast(text: String){
-  // GlobalScope를 사용해서 어디서든 Toast 메세지를 보여줄 수 있도록 처리
-  GlobalScope.launch(Main){
-    Toast.makeText(this@MainActivity, text, Toast.LENGTH_SHORT).show()
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;④ Job을 reset하는 메소드를 작성하기&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private fun resetJob(){
-  if(job.isActive || job.isCompleted){
-    job.cancel(CancellationException(&quot;Resetting job&quot;))
-  }
-  // job이 취소된 후에 job이 다시 사용될 수 있도록 job을 초기화시켜준다.
-  initJob()
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;⑤ 확장함수를 사용해서 startJobOrCancel() 메소드를 작성하기&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private fun ProgressBar.startJobOrCancel(job: Job){
-  // ProgressBar를 this로 접근할 수 있다.
-  if(this.progress &amp;gt; 0){
-    // ProgressBar의 값이 0보다 크다면, job을 reset한다.
-    resetJob()
-  }else{
-    job_button.text = &quot;Cancel job #1&quot;
-    CoroutineScope(IO+job).launch{
-      // job을 background thread(IO+job)에서 실행하기
-      // 동시에 progress bar의 상태를 업데이트 해준다.
-      for(i in PROGRESS_START .. PROGRESS_MAX){
-        delay((JOB_TIME/PROGRESS_MAX).toLong())
-        this@startJobOrCancel.progress = i
-      }
-      // Main thread를 통해 TextView에 &quot;Job is complete&quot;를 업데이트해주기
-      updateJobCompleteTextView(&quot;Job is complete&quot;)
-    }
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;⑥ onCreate() 메소드에 job_button의 setOnClickListener() 이벤트 처리해주기&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;job_button.setOnClickListener {
-    if(!::job.isInitialized){
-        initJob()
-    }
-    job_progress_bar.startJobOrCancel(job)
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;1.&lt;/p&gt;
-</description>
-        <pubDate>Sat, 18 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/18/Android-Kotlin-Coroutine-Jobs(Beginner)/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/18/Android-Kotlin-Coroutine-Jobs(Beginner)/</guid>
-        
-        
-        <category>Android-Kotlin</category>
-        
-      </item>
-    
-      <item>
-        <title>Java MVVM Part1 ~ 3</title>
-        <description>&lt;h3 id=&quot;1-android-mvvm-architecture-tutorial---introduction&quot;&gt;#1 Android MVVM Architecture Tutorial - Introduction&lt;br /&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;2-android-mvvm-architecture-tutorial---project-setup&quot;&gt;#2 Android MVVM Architecture Tutorial - Project Setup&lt;br /&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;3-android-mvvm-architecture-tutorial---using-data-binding&quot;&gt;#3 Android MVVM Architecture Tutorial - Using Data Binding&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;참고&lt;/strong&gt;:&lt;a href=&quot;https://www.youtube.com/watch?v=67bdklHmXA8&amp;amp;list=PLk7v1Z2rk4hjVaZ8DZKe8iT9RIM9OUrwp&amp;amp;index=1&quot;&gt;https://www.youtube.com/watch?v=67bdklHmXA8&amp;amp;list=PLk7v1Z2rk4hjVaZ8DZKe8iT9RIM9OUrwp&amp;amp;index=1&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;MVVM(Model View View Model)&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;Why Design Pattern?&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;(1) Makes the code more understandable.&lt;br /&gt;
-(2) Makes the code maintainable for long run.&lt;br /&gt;
-(3) Makes the project loosely coupled.&lt;br /&gt;
-(4) Makes the code testable.&lt;br /&gt;
-(5) Making changes, adding new features are easy.&lt;br /&gt;
-&lt;strong&gt;Design Patter에 따라서 앱을 만들면, 나중에 다른 개발자들이 앱을 파악하는데 매우 도움이 되고, 더 나아가 코드를 운용보수하는데도 도움이 된다. &lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;또한 코드를 테스트하고, 새로운 기능을 추가를 쉽게 할 수 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;Architectural Principles&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;(1) Separation of Concerns&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;(2) Drive UI from Model &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;Why MVVM?&lt;br /&gt;
-(1) MVC &lt;br /&gt;
-(2) MVP &lt;br /&gt;
-(3) MVVM (Google recommend) &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;기존에 살펴보았던 MVVM Design Pattern의 구조를 다시 되짚어보면,&lt;br /&gt;
-(1) UI를 담당하는 Activity/Fragment&lt;br /&gt;
-(2) Life cycle을 담당하는 ViewModel [LiveData] &lt;br /&gt;
-(3) ViewModel에서 데이터를 취득하는 경로 “Repository”&lt;br /&gt;
-(4) “Repository”에 데이터를 제공하는 &lt;strong&gt;“Room - SQLite” Local database(=Model)&lt;/strong&gt;, 원격 서버에서 데이터를 제공하는 &lt;strong&gt;“Remote Data Source” - “Retrofit - WebService”&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;위의 구조로 구성되어있는 것을 배웠다. 앱은 기본적으로 &lt;strong&gt;Model(Local storage)&lt;/strong&gt;를 통해 우선적으로 데이터를 취득한다.&lt;br /&gt;
-따라서, 인터넷 연결에 문제가 생겨도 앱의 사용에 있어서는 문제가 없게 된다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;이제 Kotlin으로 Room Database를 포함한 프로젝트를 생성해보자.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;App level의 gradle에 아래의 dependencies를 추가해준다.&lt;/strong&gt;&lt;br /&gt;
-상단에는 아래의 apply plugin: 을 선언해주고,&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//kotlin kapt and navigation safeargs plugin
-apply plugin: 'kotlin-kapt'
-apply plugin: &quot;androidx.navigation.safeargs&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;android{} 안에 buildTypes의 아래에 추가해준다. (dataBinding compiler 추가)&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dataBinding{
-    enabled = true
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;(1) Retrofit and GSON&lt;br /&gt;
-(2) Kotlin Coroutines&lt;br /&gt;
-(3) ViewModel and LiveData&lt;br /&gt;
-(4) New Material design&lt;br /&gt;
-(5) Kodein Dependency Injection&lt;br /&gt;
-(6) Android Room&lt;br /&gt;
-(7) Android Navigation Architecture&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Project level의 gradle에 아래의 class Path를 추가해준다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//Android Navigation Safe Args Classpath
-classpath &quot;androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0-alpha02&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;“gradle.properties”에 아래의 내용을 추가해준다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;android.databinding.enableV2=true
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※ Project package 구성&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Package(level-1)&lt;/font&gt;&lt;/strong&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Package(level-2)&lt;/font&gt;&lt;/strong&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Package(level-3)&lt;/font&gt;&lt;/strong&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;① data&lt;br /&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;② ui &lt;br /&gt;&lt;/td&gt;
-    &lt;td&gt;auth&lt;/td&gt;
-    &lt;td&gt;(I) AuthListener.kt &lt;br /&gt;
-        (C) AuthViewModel.kt&lt;br /&gt;
-        (C) LoginActivity.kt&lt;br /&gt;
-        (C) SignupActivity.kt&lt;br /&gt;
-    &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;/td&gt;
-    &lt;td&gt;home&lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;③ util &lt;br /&gt;&lt;/td&gt;
-    &lt;td&gt;
-       → ViewUtils.kt &lt;br /&gt;
-      (1) Context. 확장함수 형태로 toast 메시지를 띄우는 메소드를 작성&lt;br /&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-
-&lt;p&gt;위의 도표와 같은 구조로 패키지를 구성하였다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-19/2020-04-19 data binding note(1).png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음으로 할 작업은 로그인 페이지 처리부분을 구현할 것이다.&lt;br /&gt;
-Login할때 UI(Activity/Fragment)상에서 ID와 Password를 입력하고, 입력한 데이터가 ViewModel, Repository, Remote Data Source 순으로 이동해가면서 Validation 체크를 하게 된다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;이때 Login할때 입력했던 데이터(ID, Password)는 editText에 입력한 값을 getter 메소드로 취득해서 처리하지 않고, &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;Data binding처리&quot;&lt;/font&gt;&lt;/strong&gt;를 해서 처리를 해줄 것이다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;노트필기 캡쳐의 하단부에 작성한 Data binding하는 방법에 대한 내용을 다시 한 번 정리해본다.&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;※ Data binding하는 방법&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-(1) 기존의 layout 파일에서 Top-level tag를 감싸는 &lt;layout&gt;&lt;/layout&gt; 태그를 만들어준다.&lt;br /&gt;
-    (만들어준 layout태그에 &lt;strong&gt;xmlns:~&lt;/strong&gt;로 시작하는 tag를 &lt;layout&gt; 안에 붙여넣는다)&lt;br /&gt;
-(2) 이제 실제 binding해줄 &lt;data&gt; 태그를 &lt;layout&gt;과 &amp;lt;androidx.~&amp;gt;(실제 UI 구성 코드) 사이에 작성해준다. data tag는 아래와 같은 형태로 작성해준다. &lt;br /&gt;&lt;/layout&gt;&lt;/data&gt;&lt;/layout&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;data&amp;gt;
-    &amp;lt;variable name=&quot;viewmodel&quot;
-              type=&quot;(viewModel class의 full경로)&quot;/&amp;gt;
-&amp;lt;/data&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;(3) UI 구성코드에 있는 editText(email, Password)의 text 속성에 &lt;strong&gt;”@={viewmodel.email}”&lt;/strong&gt; 와 같은 형태로 작성해준다. &lt;strong&gt;onclick 속성의 경우에는 “@{viewmodel:onLoginButtonClick}”과 같은 형태로 작성해준다.&lt;/strong&gt; &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-19/2020-04-19 data binding note(2).png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;이제는 AuthViewModel 클래스와 LoginActivity의 관계 성립을 위해 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;AuthListener 인터페이스&lt;/font&gt;를 작성한다.&lt;/strong&gt;&lt;br /&gt;
-AuthListener 인터페이스에는 “성공, 실패, 시작”했을때 Toast 메시지를 처리할 메소드를 작성해준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;LoginActivity에는 AuthListener를 구현해서 override 메소드를 구현한다.&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;이제 Activity 클래스와 AuthViewModel 클래스를 binding해줄 것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-onCreate()메소드에서 &lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// binding의 타입은 레이아웃의 이름을 기준으로 layout name conversion이 일어난다.
-val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_Login)
-
-val viewModel = ViewModelProviders.of(this).get(AuthViewModel::class.java)
-// layout파일에서 사용할 viewmodel 에 실제 viewmodel 클래스 객체를 주입시켜준다.
-binding.viewmodel = viewModel
-// LoginActivity에서 구현을 해줬기 때문에 &quot;this&quot; 해주면 된다.
-viewModel.authListener = this
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;strong&gt;이제 실제 remote server로 입력한 email과 password를 비교하여 로그인 처리를 할 수 있도록 AuthViewModel과 Repository의 상호작용 처리하는 부분을 배워 볼 것이다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;1.&lt;/p&gt;
-</description>
-        <pubDate>Sat, 18 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/18/Android-Kotlin-MVVM-Part1-3/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/18/Android-Kotlin-MVVM-Part1-3/</guid>
-        
-        
-        <category>Android-Architecture</category>
-        
-      </item>
-    
-      <item>
-        <title>Android-To Do App for AAD Exam.</title>
-        <description>&lt;h3 id=&quot;to-do-app-for-aad-exam&quot;&gt;To Do App for AAD Exam&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;① MVVM Architecture &lt;br /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Sat, 18 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/18/To_Do_App_for_AAD_exam/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/18/To_Do_App_for_AAD_exam/</guid>
-        
-        
-        <category>Android-AAD</category>
-        
-      </item>
-    
-      <item>
-        <title>Android Core</title>
-        <description>&lt;h3 id=&quot;android-core&quot;&gt;Android Core&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;① Android Core &lt;br /&gt;&lt;br /&gt;
-첫번째 항목으로 &lt;strong&gt;안드로이드 코어&lt;/strong&gt;에 대해서 알아보자. &lt;br /&gt;&lt;br /&gt;
-안드로이드는 Linux 기반 운영 체제로 주로 모바일 장치용으로 설계되어있다. Android 어플리케이션은 멀티 태스킹이 가능하며 Java, Kotlin 또는 C++로 작성이 되어 있다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;AAD 인증 시험을 위해서 Android 개발자는 아래의 체크리스트 내용을 수행해야 한다. &lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;(1) Android 시스템의 아키텍처에 대한 이해할 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;(2) Android 앱의 기본 빌딩 블록을 설명할 수 있다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;(3) Android 앱을 빌드하고 실행하는 방법을 알 수 있다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;(4) &lt;code class=&quot;highlighter-rouge&quot;&gt;Toast&lt;/code&gt; 또는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Snackbar&lt;/code&gt;를 사용하여 간단한 메시지를 팝업으로 표시할 수 있다.&lt;br /&gt;
-안드로이드 developer : &lt;a href=&quot;https://developer.android.com/guide/topics/ui/notifiers/toasts&quot;&gt;https://developer.android.com/guide/topics/ui/notifiers/toasts&lt;/a&gt; &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;(5) 앱 UI 외부에서 메시지를 표시할 수 있다. &lt;code class=&quot;highlighter-rouge&quot;&gt;Notifications&lt;/code&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;(6) 앱을 로컬화하는 방법에 대해 이해할 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;(7) &lt;code class=&quot;highlighter-rouge&quot;&gt;JobScheduler&lt;/code&gt;를 사용하여 백그라운드 작업을 예약할 수 있다.&lt;br /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Sat, 18 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/18/Android-Core/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/18/Android-Core/</guid>
-        
-        
-        <category>Android-AAD</category>
-        
-      </item>
-    
-      <item>
-        <title>Android AAD 시험 체크리스트</title>
-        <description>&lt;h3 id=&quot;aad-시험-학습가이드-google-associate-android-developer-certification-exam&quot;&gt;AAD 시험 학습가이드 (Google Associate Android Developer Certification exam)&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;참고 : &lt;a href=&quot;https://developers.google.com/certification/associate-android-developer/study-guide&quot;&gt;https://developers.google.com/certification/associate-android-developer/study-guide&lt;/a&gt; &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;참고(Github/associate-android-developer-exam) : &lt;a href=&quot;https://github.com/topics/associate-android-developer-exam&quot;&gt;https://github.com/topics/associate-android-developer-exam&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;이번 포스팅에서는 안드로이드 공부를 위한 가이드라인의 일환으로 AAD 시험을 위한 체크리스트를 작성해본다.&lt;/font&gt;&lt;/strong&gt; &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;시험 할 역량 영역과 개별 역량리스트를 기준으로 작성한다. &lt;br /&gt;&lt;br /&gt;
-시험의 테스트 항목은 아래와 같이 총 5개의 항목으로 구성된다. &lt;br /&gt;&lt;br /&gt;
-① Android Core &lt;br /&gt;&lt;br /&gt;
-② User Interface &lt;br /&gt;&lt;br /&gt;
-③ Database Management &lt;br /&gt;&lt;br /&gt;
-④ Debugging &lt;br /&gt;&lt;br /&gt;
-⑤ Testing &lt;br /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Sat, 18 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/18/Android-AAD-exam-checklist/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/18/Android-AAD-exam-checklist/</guid>
-        
-        
-        <category>Android-AAD</category>
-        
-      </item>
-    
-      <item>
-        <title>Android Jetpack Navigation Component</title>
-        <description>&lt;h3 id=&quot;android-jetpack-navigation-component&quot;&gt;Android Jetpack Navigation Component&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;이번 포스팅에서는 Jetpack Navigation Component를 활용하여 Fragment간의 전이 처리하는 것에 대해서 배워 볼 것이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;① app gradle에 dependencies 추가하기&lt;/font&gt;&lt;/strong&gt; &lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def nav_version = &quot;2.3.0-alpha05&quot;
-// Kotlin
-implementation &quot;androidx.navigation:navigation-fragment-ktx:$nav_version&quot;
-implementation &quot;androidx.navigation:navigation-ui-ktx:$nav_version&quot;
-
-def material_version = &quot;1.2.0-alpha05&quot;
-implementation &quot;com.google.android.material:material:$material_version&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;※ navigation graph 기능&lt;/p&gt;
-
-&lt;p&gt;(1) resouce - [New Resource File] - (File name : nav_graph / Resource type : Navigation)&lt;br /&gt;
-(2) 위의 nav_graph 파일에 화면에 보여질 UI의 화면 설계구조를 구조화시킬 수 있다.&lt;br /&gt;
-(3) activity_main.xml 에서 &lt;fragment&gt; tag로 화면을 채우는데 &lt;strong&gt;이 부분이 각각 생성한 Fragment layout을 inflate하는 부분&lt;/strong&gt;이 될 것이다.&lt;br /&gt;
-이 fragment tag안에 속성에서 살펴볼 것은, &lt;strong&gt;defaultNavHost = &quot;true&quot;와 app:navGraph = &quot;@navigation/nav_graph&quot; 인데 두번째 navGraph 속성은 navigation type의 layout에 생성할 layout의 구조를 setting하겠다는 의미, 마지막으로 android:name=&quot;androidx.navigation.fragment.NavHostFragment&quot;속성도 필수적으로 설정해주어야 한다.&lt;/strong&gt;&lt;br /&gt;&lt;/fragment&gt;&lt;/p&gt;
-
-&lt;p&gt;(4) 작성한 Fragment layout파일(*.xml)에서 가장 상단 tag의 속성에 &lt;strong&gt;tools:context = “xxxxxFragment” &lt;/strong&gt;라고 지정해주어야 한다.&lt;br /&gt;
-이 layout 파일이 어느 fragment 클래스 파일과 관련이 있는지 표시하기 위해서이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;② MainActivity에서는 화면의 fragment 태그에서 fragment 레이아웃을 보여주는 기능만 하므로, 실질적인 Navigation 객체를 만들어서 처리해주는 것은 Fragment class에서 해줄 것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;(1) onViewCreated() 메소드에서 property로 선언한 NavController 타입의 변수를 초기화시켜준다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-    // reference of the view
-    navController = Navigation.findNavController(view)
-    view_transactions_btn.setOnClickListener(this)
-    send_money_btn.setOnClickListener(this)
-    view_balance_btn.setOnClickListener(this)
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;이 MainFragment도 nav_graph에 등록된 Fragment이기 때문에 navController객체의 생성이 가능하다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;(2) 이제 이 navController를 이용해서 각 버튼의 onClickListener의 이벤트를 구현할 것이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;override fun onClick(v: View?) {
-  // backStack관리가 자동으로 이루어지기 때문에 편리하다.
-  when(v!!.id){
-      R.id.view_transactions_btn -&amp;gt; navController.navigate(R.id.action_mainFragment_to_viewTransactionFragment)
-      R.id.send_money_btn -&amp;gt; navController.navigate(R.id.action_mainFragment_to_chooseRecipientFragment)
-      R.id.view_balance_btn -&amp;gt; navController.navigate(R.id.action_mainFragment_to_viewBalanceFragment)
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;위의 ②-(1)과 (2)의 과정을 다른 Fragment에서도 작성을 작성해준다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;③ 다음 과정에서는 animation, bundle을 추가하는 과정이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;ex)&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;....
-&amp;lt;fragment
-    android:id=&quot;@+id/mainFragment&quot;
-    android:name=&quot;com.hyungilee.androidjetpacknavigationsample.MainFragment&quot;
-    android:label=&quot;fragment_main&quot;
-    tools:layout=&quot;@layout/fragment_main&quot; &amp;gt;
-      &amp;lt;action
-        android:id=&quot;@+id/action_mainFragment_to_chooseRecipientFragment&quot;
-        app:destination=&quot;@id/chooseRecipientFragment&quot;
-        app:popEnterAnim=&quot;@anim/slide_in_left&quot;
-        app:popExitAnim=&quot;@anim/slide_out_right&quot;
-        app:enterAnim=&quot;@anim/slide_in_right&quot;
-        app:exitAnim=&quot;@anim/slide_out_left&quot;
-        app:popUpTo=&quot;@id/mainFragment&quot;
-        app:popUpToInclusive=&quot;true&quot;/&amp;gt;
- ....
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;backStack이나 Back버튼을 눌렀을때 적용되는 animation효과는 popExitAnim 속성이다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음 어플을 제작할때 생각해봐야 하는 부분은 대부분의 어플에 있는 Login 기능이다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;로그인이 성공한 뒤에 Back 버튼을 누르게 되면, 이전의 로그인 화면으로 돌아가는 것이 아닌 어플자체가 화면에서 사라지고 단말기의 Background가 표시됨을 알 수 있다. (로그인 완료된 후에 Back버튼을 누른다고 다시 로그인 화면으로 돌아가는 것은 non sense상황)&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 이벤트 처리 동작에 대해서 생각해보자.&lt;br /&gt;
-Back버튼을 누른다고 이전화면으로 돌아가지 않고, BackStack에서 실행되는 Task들을 모두 종료시키는 것을 해보자.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;popUpTo and popUpToInclusive&lt;/strong&gt;&lt;br /&gt;
-① popUpTo : Back 버튼을 눌렀을때 이벤트　&lt;br /&gt;
-② popUpToInclusive : true(clear everything to navigate) or false(leave it) &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;※ Android 공식 : &lt;/strong&gt;&lt;a href=&quot;https://developer.android.com/guide/navigation/navigation-getting-started&quot;&gt;Get started with the Navigation component&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Fragment 간에 값을 보내기&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;(1) 먼저 아래 sample 코드를 보고 nav_graph.xml에서의 설정에 대해서 이해해보도록 하자. &lt;br /&gt;
-우선 화면은 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;specifyAmountFragment.xml -&amp;gt; confirmationFragment.xml&lt;/font&gt;&lt;/strong&gt;전이를 하게 되는데, 화면전이가 일어날때 값을 bundle의 형태로 넘겨준다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;보내고자하는 데이터를 입력하는 Fragment 태그에서 name이 recipient, defaultValue가 None으로 된 태그를 추가해주고, &lt;br /&gt;
-받는 Fragment 태그에서도 똑같이 argument태그를 추가해주고, 추가적으로 name이 “amount”, argument 타입이 보내고자하는 데이터의 data class의 경로를 지정해준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;....
-&amp;lt;fragment
-    android:id=&quot;@+id/confirmationFragment&quot;
-    android:name=&quot;com.hyungilee.androidjetpacknavigationsample.ConfirmationFragment&quot;
-    android:label=&quot;fragment_confirmation&quot;
-    tools:layout=&quot;@layout/fragment_confirmation&quot;&amp;gt;
-
-    &amp;lt;argument android:name=&quot;recipient&quot;
-              android:defaultValue=&quot;None&quot;/&amp;gt;
-
-    &amp;lt;argument android:name=&quot;amount&quot;
-              app:argType=&quot;com.hyungilee.androidjetpacknavigationsample.Money&quot;/&amp;gt;
-
-&amp;lt;/fragment&amp;gt;
-
-&amp;lt;fragment
-    android:id=&quot;@+id/specifyAmountFragment&quot;
-    android:name=&quot;com.hyungilee.androidjetpacknavigationsample.SpecifyAmountFragment&quot;
-    android:label=&quot;fragment_specify_amount&quot;
-    tools:layout=&quot;@layout/fragment_specify_amount&quot; &amp;gt;
-
-    &amp;lt;argument android:name=&quot;recipient&quot;
-              android:defaultValue=&quot;None&quot;/&amp;gt;
-....              
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;(2) 다음으로 수취인 이름을 등록하는 Fragment(chooseRecipientFragment.kt)파일에서 아래와 같이 bundle의 형태로 수취인 데이터를 넘겨준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;R.id.next_btn -&amp;gt; {
-      if(!TextUtils.isEmpty(input_recipient.text.toString())){
-          val bundle = bundleOf(&quot;recipient&quot; to input_recipient.text.toString())
-
-          navController.navigate(
-              R.id.action_chooseRecipientFragment_to_specifyAmountFragment,
-              bundle
-          )
-      }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;(3) 데이터를 받는 Fragment(SpecifyAmountFragment.kt)파일에서는 아래와 같이 bundle 형태로 데이터를 취득하는 부분을 작성한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;lateinit var recipient: String
-
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    recipient = arguments?.getString(&quot;recipient&quot;)!!
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Parcelable 데이터를 받는 경우에는 getParcelable(“[키값]”) 로 해서 취득하며, Parcelable로 취득할 객체의 class는 아래와 같이 작성해준다. 여기서 값의 초기화는 “onCreater()”메소드에서 처리하며, 화면에 보여질 view의 초기화는 메소드명대로 “onViewCreated()”메소드에서 처리해준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;@Parcelize
-data class Money(val amount: BigDecimal): Parcelable
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-&lt;ol&gt;
-  &lt;li&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        <pubDate>Thu, 16 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/16/Android-Jetpack-Navigation-Component/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/16/Android-Jetpack-Navigation-Component/</guid>
-        
-        
-        <category>Android</category>
-        
-      </item>
-    
-      <item>
-        <title>Android Kotlin 범위 함수 사용정리</title>
-        <description>&lt;p&gt;이번 포스팅에서는 Kotlin 범위 함수 사용에 대해서 정리한다.&lt;br /&gt;
-&lt;strong&gt;Kotlin의 표준 라이브러리에는 “범위함수”라는 4가지 기능&lt;/strong&gt;이 있다.&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;let, with, run, apply&lt;/font&gt;&lt;/strong&gt;이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;let-&quot;&gt;&lt;strong&gt;.let ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val s = &quot;hoge&quot;.let{it.toUpperCase()}
-println(s) // HOGE
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;위의 코드에서 알 수 있듯이 &lt;strong&gt;let은 어떤 형태의 확장 기능&lt;/strong&gt;이다.&lt;br /&gt;
-위의 예에서는 String 인스턴스를 “hoge”를 it으로 받아 처리하고 있다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;다른 예시로, &lt;strong&gt;예를 들어 String? 변수 foo의 대소 표현을 얻고 싶은 경우에는 아래와 같이 작성할 수 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val upperCase : String? = foo?.let{it.toUpperCase()}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;foo가 null인 경우에는 ?. 호출에 의해 let이 실행되지 않고 null을 반환한다.&lt;br /&gt;
-foo가 null이 아닌경우, let이 실행 it.toUpperCase()에 의해 foo 대문자 표현을 반환한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;with-&quot;&gt;&lt;strong&gt;with ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val s = with(&quot;hoge&quot;){this.toUpperCase()}
-println(s) // HOGE
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;위의 코드에서 알 수 있듯이 &lt;strong&gt;let과 달리 확장함수&lt;/strong&gt;가 없다.&lt;br /&gt;
-첫 번째 인수에 &lt;strong&gt;임의의 형태 T&lt;/strong&gt;를 취한다. &lt;br /&gt;
-this는 “hoge”를 의미하며, 선택적이므로 {toUpperCase()}로 기술해도 된다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;다른 예시로, &lt;strong&gt;예를 들어 String? 변수 foo의 대소 표현을 얻고 싶은 경우에는 아래와 같이 작성할 수 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val upperCase : String? = foo?.let{it.toUpperCase()}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;foo가 null인 경우에는 ?. 호출에 의해 let이 실행되지 않고 null을 반환한다.&lt;br /&gt;
-foo가 null이 아닌경우, let이 실행 it.toUpperCase()에 의해 foo 대문자 표현을 반환한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;run-&quot;&gt;&lt;strong&gt;run ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val s = &quot;hoge&quot;.run{toUpperCase()}
-println(s) // HOGE
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;let 그리고 with이 합쳐진 버전이다.&lt;/strong&gt;&lt;br /&gt;
-첫 번째 인수에 &lt;strong&gt;임의의 형태 T&lt;/strong&gt;를 취한다. &lt;br /&gt;
-this는 “hoge”를 의미하며, 선택적이므로 {toUpperCase()}로 기술해도 된다.&lt;br /&gt;
-인스턴스를 생성하고 각종 설정을 한 후 실제로 바로 사용하기 위해서 사용된다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;apply-&quot;&gt;&lt;strong&gt;.apply ?&lt;/strong&gt;&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;우선 .apply를 사용해서 recyclerView의 LayoutManager와 adapter를 초기해준 아래 예를 같이 살펴보자. &lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;private fun initRecyclerView(){
-    // apply 를 사용해서 layoutManager 와 adapter 를 지정해주었을때,
-    recycler_view.apply {
-        layoutManager = LinearLayoutManager(this@MainActivity)
-        blogAdapter = BlogRecyclerAdapter(context,[dataSet])
-        adapter = blogAdapter
-    }
-
-    // recycler_view를 지정해주면서 layoutManager 와 adapter 를 지정해주었을때
-    recycler_view.layoutManager = LinearLayoutManager(this@MainActivity)
-    blogAdapter = BlogRecyclerAdapter(this,[dataSet])
-    recycler_view.adapter = blogAdapter
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;확실히 apply annotation을 사용해서 recycler_view를 초기화 시켜주면, 매번 recycler_view를 호출해서 사용하지 않아도 가볍게 layoutManager와 adapter 키워드만으로도 초기화 시켜줄 수 있다.&lt;/p&gt;
-
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-&lt;p&gt;1.&lt;/p&gt;
-</description>
-        <pubDate>Thu, 16 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/16/Android-Kotlin-%EB%B2%94%EC%9C%84-%ED%95%A8%EC%88%98-%EC%82%AC%EC%9A%A9%EC%A0%95%EB%A6%AC/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/16/Android-Kotlin-%EB%B2%94%EC%9C%84-%ED%95%A8%EC%88%98-%EC%82%AC%EC%9A%A9%EC%A0%95%EB%A6%AC/</guid>
-        
-        
-        <category>Android-Kotlin</category>
-        
-      </item>
-    
-      <item>
-        <title>Kotlin Singleton Example with MVVM and coroutines</title>
-        <description>&lt;h3 id=&quot;kotlin-singleton-example-with-mvvm-and-coroutines&quot;&gt;Kotlin Singleton Example with MVVM and coroutines&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;이번 Post에 정리할 내용은 아래와 같다.&lt;br /&gt;
-2 examples :&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;1) Quick “how to”&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;2)Practical example&lt;br /&gt;
--Retrofit&lt;br /&gt;
--Coroutines&lt;br /&gt;
--MVVM&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;Singletons&lt;/p&gt;
-
-&lt;p&gt;Instance of an object &lt;br /&gt;
-reuse the instance &lt;br /&gt;
-Retrofit instance &lt;br /&gt;
-Repository instance &lt;br /&gt;
-User sessions &lt;br /&gt;
-Dagger(Dependency Injection/Provide Singleton)
-Dagger라이브러리는 좀 어렵다. 나중에 별도의 강의로 이해하도록 하자.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;자 이제 실제로 Singleton 패턴의 클래스를 Kotlin으로 작성해보자.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;① 우선 models패키지를 작성을 하고, 그 안에 User라는 data class를 작성해준다. &lt;br /&gt;
-② 다음으로 ExampleSingleton을 이름으로 하는 Object클래스를 작성한다. 이 클래스 안에는 앞서 작성한 User클래스를 아래와 같이 객체를 만들어준다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;val singletonUser: User by lazy {
-  User(&quot;email@gmail.com&quot;, &quot;username&quot;, &quot;image.png&quot;)
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;lazy키워드를 사용해서 변수를 위임하면 실제로 해당 속성이 호출되서 사용될때, 초기화가 된다.&lt;br /&gt;
-(클래스가 인스턴스화되는 타이밍에는 해당 속성은 메모리상에 초기화되지 않는다) &lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;③ MainActivity의 onCreate 메소드 내에서 Singleton클래스 내부에서 작성한 singletonUser 변수의 hashCode를 확인해서 실제 화면의 configuration(portrait/landscape)가 변경이 되었을때, 같은 메모리 주소를 반환하고 있는지 확인해본다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;println(&quot;DEBUG: ${ExampleSingleton.singletonUser.hashCode()}&quot;)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;아래와 같이 화면의 configuration을 바꿨을때, 매번 같은 hashCode를 반환함을 알 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;D/EGL_emulation: eglMakeCurrent: 0xdb71a480: ver 3 0 (tinfo 0xdb70f7a0)
-I/System.out: DEBUG: -1198862957
-D/EGL_emulation: eglMakeCurrent: 0xdb71a480: ver 3 0 (tinfo 0xdb70f7a0)
-D/EGL_emulation: eglMakeCurrent: 0xdb71a480: ver 3 0 (tinfo 0xdb70f7a0)
-I/System.out: DEBUG: -1198862957
-D/EGL_emulation: eglMakeCurrent: 0xdb71a480: ver 3 0 (tinfo 0xdb70f7a0)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;④ 다음으로, api 패키지를 작성하고, MyRetrofitBuilder(Object클래스)와 ApiService 인터페이스를 작성해볼 것이다. &lt;br /&gt;
-MyRetrofitBuilder클래스를 Object클래스 타입으로 작성하는 이유는 Kotlin에서는 Object클래스로 작성한다는 의미가 바로 ‘Singleton’으로 작성하겠다는 의미이기 때문이다. ApiService인터페이스에서는 Retrofit을 사용해 통신상으로터 데이터를 취득하는 메소드를 작성할 것이다.&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;MyRetrofitBuilder.kt&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;object MyRetrofitBuilder {
-
-    const val BASE_URL = &quot;https://open-api.xyz/&quot;
-
-    // Singleton Retrofit builder
-    val retrofitBuilder: Retrofit.Builder by lazy {
-      Retrofit.Builder()
-      .baseUrl(BASE_URL)
-      .addConverterFactory(GsonConverterFactory.create())
-      // 서버로부터 호출되는 데이터의 형식은 JSON형태이므로, 이를 Convert할 Converter가 필요하다.
-      // Gson Converter = JSON objcet -&amp;gt; Java object
-    }
-
-    // Singleton apiService (Network request)
-    val apiService: ApiService by lazy {
-      retrofitBuilder
-      .build()
-      .create(ApiService::class.java)
-    }
-
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;ApiService.kt&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;interface ApiService {
-
-    @GET(&quot;placeholder/user/{userId}&quot;)
-    // 여기서 사용되는 suspend fun은 'coroutine'을 사용하기 위한 fun이다.
-    // use 'coroutine' fun return the date from network.
-    suspend fun getUser(
-        @Path(&quot;userId&quot;) userId: String
-    ): User
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;‘suspend fun’을 사용하면 ‘coroutine’을 사용한다는 의미이다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;⑤ &lt;strong&gt;Repository&lt;/strong&gt;패키지 추가하고, Repository Object클래스 작성하기.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;object Repository{
-
-    var job: CompletableJob? = null
-
-    fun getUser(userId: String): LiveData&amp;lt;User&amp;gt; {
-      // job을 초기화시켜준다.
-      job = Job()
-      return object: LiveData&amp;lt;User&amp;gt;(){
-          override fun onActive(){
-            super.onActive()
-            // 우선 job이 null인지 아닌지 검사를 한다.
-            job?.let{ theJob-&amp;gt;
-              // job이 null이 아닌경우, 실행을 한다.
-              // IO(Dispatchers)+theJob으로 유니크한 CoroutineScope를 background thread에 생성을 한다.
-              CoroutineScope(IO+theJob).launch{
-                val user = MyRetrofitBuilder.apiService.getUser(userId)
-                // live data를 background thread에 해줄 수 없으므로,
-                // 우선 MAIN 스레드로 전환을 하고, live data를 setting해주어야 한다.
-                withContext(Main){
-                  value = user
-                  theJob.complete()
-                }
-              }
-            }
-          }
-      }  
-    }
-    // job을 calcel하는 method이다.
-    fun cancelJob(){
-        job?.cancel()
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;⑥ MainViewModel 클래스를 작성한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class MainViewModel : ViewModel() {
-    private val _userId: MutableLiveData&amp;lt;String&amp;gt; = MutableLiveData()
-
-    // Transformations _userId에 변화가 생기면 .switchMap 이 trigger 되고 {}안에 코드가 실행된다.
-    val user: LiveData&amp;lt;User&amp;gt; = Transformations
-          .switchMap(_userId){
-              // 기존 _userId에 변화가 생겼으니, 업데이트를 해주어야 한다.
-              // 따라서, Repository.getUser를 통해서 새로운 uerId를 취득해서 위에 String변수를 초기화 시켜준다.
-              Repository.getUser(it)
-          }
-
-    fun setUserId(userId: String){
-         val update = userId
-
-         // 현재의 userId가 이미 setting 되었다면 종료한다.
-         if(_userId.value == update){
-              return
-          }
-         // 기존의 userId를 update된 새로운 userId로 초기화시킨다.
-          _userId.value = update
-    }  
-
-    // Repository에서 작성한 cancelJobs() 메소드를 viewModel클래스의 cancelJobs()메소드 안에 작성해준다.
-    fun cancelJobs(){
-        Repository.cancelJobs()
-    }    
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;⑦ MainActivity에서 작성한 MainViewModel클래스의 instance를 작성해서, Observe(변수의 변화가 감지되었을때)를 작성한다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class MainActivity : AppCompatActivity() {
-
-    lateinit var viewModel: MainViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
-        viewModel.user.observe(this, Observer {user -&amp;gt;
-            println(&quot;DBUG: $user&quot;)
-        })
-        viewModel.setUserId(&quot;1&quot;)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.cancelJobs()
-    }
-} &amp;lt;br&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;※ 노트필기 캡쳐 &lt;br /&gt;
-&lt;img src=&quot;/images/android/MVVM Kotlin note.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;600&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;※ 실습했던 Repository : &lt;a href=&quot;https://github.com/MikeHyungiLee/MVVMArchitectureKotlin&quot;&gt;https://github.com/MikeHyungiLee/MVVMArchitectureKotlin&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-&lt;ol&gt;
-  &lt;li&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        <pubDate>Wed, 15 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/15/Kotlin-Singleton-Example-with-MVVM-and-Coroutines/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/15/Kotlin-Singleton-Example-with-MVVM-and-Coroutines/</guid>
-        
-        
-        <category>Android-Architecture</category>
-        
-      </item>
-    
-      <item>
-        <title>Transfer data between Activities and Fragments</title>
-        <description>&lt;h3 id=&quot;activities와-fragments-사이에서-값-전달하기&quot;&gt;Activities와 Fragments 사이에서 값 전달하기&lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;① Intent putExtra/getExtra &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;② Bundle bundle.putString/bundle.getString &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;③ Parcelable &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;④ SharedPreference &lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;전체적인-학습내용을-복습한다&quot;&gt;전체적인 학습내용을 복습한다.&lt;br /&gt;&lt;/h3&gt;
-&lt;ol&gt;
-  &lt;li&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        <pubDate>Tue, 14 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/14/Transfer-data-between-Activities-and-Fragments/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/14/Transfer-data-between-Activities-and-Fragments/</guid>
-        
-        
-        <category>Android</category>
         
       </item>
     

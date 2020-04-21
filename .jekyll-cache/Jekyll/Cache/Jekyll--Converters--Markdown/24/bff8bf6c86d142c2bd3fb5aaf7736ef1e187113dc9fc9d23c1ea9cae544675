@@ -1,0 +1,51 @@
+I"[<h2 id="create-flutter-app">Create Flutter App</h2>
+
+<p><strong><font color="Blue">이제 Flutter의 개발환경 구축이 완료되었으므로, 새로 프로젝트를 생성해서 내부 구조를 살펴볼 것이다.</font></strong><br /></p>
+
+<p>이번 Posting에서는 첫 Flutter App을 만들어 볼 것이다.<br /></p>
+
+<p>우선 모든 프로그래밍 공부의 기본이 되는 “Hello world!”를 어플에 띄어볼 것이다.<br />
+기존에 자동생성된 class를 삭제하고, 최 상단에 있는 void main() 메소드를 수정해보자.<br /></p>
+
+<p><img src="/images/flutter/2020-04-21/2020-04-21 flutter first app capture.png" alt="blog capture" title="capture img" /><br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void main() =&gt; runApp(MaterialApp(home: Center(child: Text('Hello World'))));
+</code></pre></div></div>
+
+<p><strong>Android Studio vs Visual Studio</strong><br /></p>
+
+<p>나는 나에게 익숙한 “Android Studio”를 이용해서 개발을 할 것이다.<br />
+Android studio에서는 Android와 iOS의 Emulator view를 toggle할 수 있기 때문에 이러한 장점으로 본 IDE를 사용하는 것이 좋다.<br /></p>
+
+<p><img src="/images/flutter/2020-04-21/2020-04-21 flutter setting sequence.png" alt="blog capture" title="capture img" /><br />
+<strong>※ 참고링크</strong><br /></p>
+
+<p><a href="https://www.udemy.com/course/flutter-bootcamp-with-dart/learn/lecture/17130752#content">Check here for troubleshooting</a><br />
+<a href="https://www.udemy.com/course/flutter-bootcamp-with-dart/learn/lecture/17119664/#content">Start Here For Step-by-Step Installation Videos</a><br />
+<a href="https://flutter.dev/docs/get-started/install/macos">Flutter Installation Manual</a><br />
+<a href="https://thenextweb.com/dd/2019/06/04/why-does-macos-catalina-use-zsh-instead-of-bash-licensing/">Why does macOS Catalina use Zsh instead of Bash? Licensing</a><br /></p>
+
+<p>현재 나는 Mac을 사용하고 있으므로, Mac을 기준으로 Flutter 개발환경을 구축해볼 것이다.<br />
+자세한 설치내용은 상단의 <strong>“Flutter Installation Manual”</strong>의 내용을 참조한다.<br /></p>
+
+<p><strong>① 우선 flutter 환경설정을 하기전에 shell을 zsh로 바꿔줘야한다. </strong><br />
+  그러기 위해서는 아래와 같이 .zshrc　파일을 작성하고 그 내부에 flutter의 환경설정파일(bin)폴더의 경로를 작성해준다.<br /></p>
+
+<p><img src="/images/flutter/2020-04-21/2020-04-21 flutter zshrc file.png" alt="blog capture" title="capture img" /><br />
+<strong>※ flutter 환경설정이 잘되었는지 진단할때 유용한 <font color="Red">"flutter doctor"</font>명령어가 있다.</strong><br /></p>
+
+<p><img src="/images/flutter/2020-04-21/2020-04-21 flutter doctor.png" alt="blog capture" title="capture img" /><br /></p>
+
+<p>최종적으로 Flutter의 개발환경 구축이 완료된 후에 <strong>flutter –version</strong>으로 terminal상에서 확인을 해보면, 아래와 같이 설치 버전을 확인할 수 있는데, 이렇게 나온다면 환경구축이 성공한 것이다.<br /></p>
+
+<p><img src="/images/flutter/2020-04-21/2020-04-21 flutter version check.png" alt="blog capture" title="capture img" /><br />
+<strong>※ 참고링크</strong><br /></p>
+
+<p>② 그 다음으로 사용하게 될 Android Studio에 <strong>Flutter plugin을 설치</strong>해준다.<br /></p>
+
+<p><strong><font color="Red">[Android studio] - [Preferences] - [Plugin] - "Flutter"검색하고 설치 <br /></font></strong></p>
+
+<p><img src="/images/flutter/2020-04-21/2020-04-21 flutter plugin.png" alt="blog capture" title="capture img" /><br /></p>
+
+<p><strong><font color="Blue">이제 Flutter의 개발환경 구축이 완료되었으므로, 새로 프로젝트를 생성해서 내부 구조를 살펴볼 것이다.</font></strong><br /></p>
+:ET

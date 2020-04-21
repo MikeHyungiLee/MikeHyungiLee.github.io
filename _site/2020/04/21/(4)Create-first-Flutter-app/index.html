@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>(4) Create first Flutter App</title>
+	<meta name="description" content="Create Flutter App">
+	
+	<link rel="canonical" href="http://localhost:4000/2020/04/21/(4)Create-first-Flutter-app/">
+	<link rel="alternate" type="application/rss+xml" title="Lee Hyungi's Tech Blog" href="http://localhost:4000/feed.xml" />
+	
+	<!-- <link rel="stylesheet" href="/css/main.css"> -->
+    
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+	<script type="text/javascript" src="/static/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/monokai_sublime.min.css">
+	<script type="text/javascript" src="/static/js/highlight.min.js"></script>
+
+    <!--
+    <link rel="stylesheet" type="text/css" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://apps.bdimg.com/libs/highlight.js/8.4/styles/monokai_sublime.min.css">
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/highlight.js/8.4/highlight.min.js"></script>
+    -->
+    
+	<script type="text/javascript" src="/static/js/index.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+ <!--  <body data-spy="scroll" data-target="#myAffix"> -->
+  <body>
+
+    <header>
+
+<!-- navbar -->
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">LeeHyungi's Tech Blog</a>
+      <p class="navbar-text"></p>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+
+        
+          <li>
+        
+        <a href="/">Home</a></li>
+        
+          
+            
+              <li>
+            
+              <a href="/projects/"><span class="glyphicon "></span> Projects</a></li>
+          
+        
+          
+            
+              <li>
+            
+              <a href="/about/"><span class="glyphicon "></span> About</a></li>
+          
+        
+          
+        
+          
+        
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+</header>
+
+
+    <div id="main" class="container main">
+      <div class="row">
+  <div id="myArticle" class="col-sm-9">
+    <div class="post-area post">
+      <header>
+        <h1>(4) Create first Flutter App</h1>
+        <p>Apr 21, 2020</p>
+      </header>
+      <hr>
+      <article>
+        <h2 id="create-flutter-app">Create Flutter App</h2>
+
+<p><strong><font color="Blue">이제 Flutter의 개발환경 구축이 완료되었으므로, 새로 프로젝트를 생성해서 내부 구조를 살펴볼 것이다.</font></strong><br /></p>
+
+<p>이번 Posting에서는 첫 Flutter App을 만들어 볼 것이다.<br /></p>
+
+<p>우선 모든 프로그래밍 공부의 기본이 되는 “Hello world!”를 어플에 띄어볼 것이다.<br />
+기존에 자동생성된 class를 삭제하고, 최 상단에 있는 void main() 메소드를 수정해보자.<br /></p>
+
+<p><img src="/images/flutter/2020-04-21/2020-04-21 flutter first app capture.png" alt="blog capture" title="capture img" /><br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void main() =&gt; runApp(MaterialApp(home: Center(child: Text('Hello World'))));
+</code></pre></div></div>
+
+<p><strong>), 를 붙여주는 이유는 Formatting해서 정렬을 해주기 위해서이다.</strong><br /></p>
+
+<p>To automatically format the code in the current source code window, <font color="Red">right-click in the code window and select Reformat Code with dartfmt.</font><br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void main() =&gt; runApp(
+    MaterialApp(
+      home: Center(
+        child: Text('Hello World'),
+      ),
+    ),
+);
+</code></pre></div></div>
+
+<p>아래와 같이 =&gt; 를 {}로 묶어서 코드를 작성할 수도 있다.<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void main(){
+  runApp(
+    MaterialApp(
+      home: Center(
+        child: Text('Hello World'),
+      ),
+    ),
+  );
+}
+</code></pre></div></div>
+
+<p><strong><font color="Blue">우선 첫번째로 살펴볼 Widget은 "Scaffold()" Widget이다.</font></strong><br /></p>
+
+<p><img src="/images/flutter/2020-04-21/2020-04-21 flutter scaffold.png" alt="blog capture" title="capture img" /><br /></p>
+
+<p><strong><font color="Red">※Flutter를 개발할때 사용될 Widget의 내용을 api문서에서 확인하며 개발하는 습관을 들여야 한다.</font></strong><br />
+<a href="https://api.flutter.dev/flutter/material/Scaffold-class.html">Scaffold class API - official web site </a> <br /></p>
+
+<p><strong><font color="Blue">두번째로 살펴볼 Widget은 "AppBar()" Widget이다.</font></strong><br /></p>
+
+<p><img src="/images/flutter/2020-04-21/2020-04-21 flutter appbar widget.png" alt="blog capture" title="capture img" /><br /></p>
+
+<p>이제 기존의 Center Widget을 삭제하고, 새롭게 배운 Scaffold()Widget을 넣어준다. <br />
+그 다음에 Scaffold()widget의 Background속성에 색을 넣어주고, 그 안에 appBar와 body Widget을 넣어준다.<br /></p>
+
+<p>결과 코드는 아래와 같다.<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void main() {
+  runApp(
+    MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.blueGrey,
+          appBar: AppBar(
+            title: Center(
+              child: Text("Hello World App"),
+            ),
+          ),
+          body: Center(
+            child: Image(image: NetworkImage("https://stickershop.line-scdn.net/stickershop/v1/product/8729/LINEStorePC/main.png;compress=true")),
+          ),
+      ),
+    ),
+  );
+}
+</code></pre></div></div>
+
+<p>위와같이 body 위젯에 이미지를 가운데 정렬하는데 사용되는 위젯은 Center Widget이다. Widget안에 또 다른 Widget을 넣을땐, child: 속성을 넣어주고, 그 안에 새로운 위젯을 넣어주면 된다.<br />
+<strong><font color="Red">여기서의 핵심은 Widget안에 또 다른 Widget을 넣어줄때는 child: 속성을 이용해서 넣어준다는 것이다.</font></strong><br /></p>
+
+<p>Widgets을 선택한 상태에서 Alt+Enter를 클릭하면, Widget에 적용할 수 있는 다양한 옵션들을 확인할 수 있다.<br />
+“Wrap with center”를 이용해서 이미지를 가운데 정렬할 수 있다.<br /></p>
+
+<p><img src="/images/flutter/2020-04-21/2020-04-21 flutter alt enter capture.png" alt="blog capture" width="300" title="capture img" /><br /></p>
+
+<p>결과화면은 아래와 같다. <br /></p>
+
+<p><img src="/images/flutter/2020-04-21/2020-04-21 result screen capture(1).png" alt="blog capture" width="300" title="capture img" /><br /></p>
+
+<p>각 widget 클래스의 요소를 참조해가면서 코딩해야하므로, API문서에서 해당 클래스를 검색해서 확인할 수 있어야 한다.<br />
+<strong><font color="Red">예를들어, 화면에 Image를 보여줘야하는 경우,</font>Image class를 검색해서 참조해야한다.</strong><br /></p>
+
+<blockquote>
+  <blockquote>
+    <p>Widgets tree 그리기
+아래의 주소를 통해서 Widgets tree를 그릴 수 있다.
+<a href="https://api.flutter.dev/flutter/widgets/Image-class.html">https://api.flutter.dev/flutter/widgets/Image-class.html</a></p>
+  </blockquote>
+</blockquote>
+
+<p><img src="/images/flutter/2020-04-21/2020-04-21 widgets tree .png" alt="blog capture" width="500" title="capture img" /><br /></p>
+
+<p><strong><font color="Red">※ Flutter의 developer mode</font></strong><br />
+Chrome의 developer mode와 비슷하게 원반모양의 아이콘을 클릭한 후 궁금한 부분을 클릭하면 해당 부분의 요소를 트리형태로 보여준다.<br /></p>
+
+<p><img src="/images/flutter/2020-04-21/2020-04-21 flutter iOS developer mode.png" alt="blog capture" width="500" title="capture img" /><br /></p>
+
+<p><img src="/images/flutter/2020-04-21/2020-04-21 flutter developer mode.png" alt="blog capture" width="500" title="capture img" /><br /></p>
+
+<p><strong><font color="Red">※ Debug mark 없애기.</font></strong><br />
+<img src="/images/flutter/2020-04-21/2020-04-21 flutter remove debug mode.png" alt="blog capture" width="300" title="capture img" /><br /></p>
+
+      </article>
+      <hr>
+        <div class="bdsharebuttonbox">
+            <a href="#" class="bds_more" data-cmd="more"></a>
+            <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+            <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+            <a href="#" class="bds_fbook" data-cmd="fbook" title="Share to Facebook"></a>
+            <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+        </div>
+        <script>
+            window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    </div>
+	
+    <!-- duoshuo.com javascript include code. -->    
+    
+    <!-- disqus.com javascript include code. -->
+	
+    <div class="post-area post comment">
+        <div id="disqus_thread"></div>
+    </div>
+	<script>
+		var disqus_config = function () {
+			this.page.url = "http://mikehyungilee.github.io/2020/04/21/(4)Create-first-Flutter-app/"; 
+			this.page.identifier = "/2020/04/21/(4)Create first Flutter app"; 
+		};
+		(function() {
+			var d = document, s = d.createElement('script');
+			s.src = '//Hyungi Lee.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+	</script>
+	
+    
+  </div>
+  
+  <div id="content" class="col-sm-3">
+    <!-- <div id="myAffix" class="shadow-bottom-center hidden-xs" data-spy="affix" data-offset-top="0" data-offset-bottom="-20"> -->
+    <div id="myAffix" class="shadow-bottom-center hidden-xs" >
+      <div class="categories-list-header">
+        Content
+      </div>
+      <div class="content-text"></div>
+    </div>
+  </div>
+  
+</div>
+    </div>
+
+    
+    <div id="top" data-toggle="tooltip" data-placement="left" title="back to top">
+      <a href="javascript:;">
+        <div class="arrow"></div>
+        <div class="stick"></div>
+      </a>
+    </div>
+
+    <footer class="">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <a href="mailto:mike.hyungi.lee@google.com"><span class="glyphicon glyphicon-envelope"></span> mike.hyungi.lee@gmail.com </a>
+        <span class="point"> · </span>
+        
+          <a href="https://github.com/MikeHyungiLee">
+            <span class="icon">
+              <svg viewBox="0 0 16 16">
+                <path fill="#aaa" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+              </svg>
+            </span>
+            Github
+            <span>(MikeHyungiLee)</span>
+          </a>
+          
+          <span class="point"> · </span>
+          <span><a class="newpost" href="javascript:;">New post</a></span>
+		  <span class="point"> · </span>
+          <span><a href="/feed.xml">RSS</a></span>
+          <span class="point"> · </span>
+          <span>&copy; 2020 Lee Hyungi</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <script type="text/javascript">
+    function OnClickNewPost()
+    {
+        var title = prompt("Please enter title of your post");
+        if (title!=null){
+            title = title.replace(" ", "-");
+            var currentdate = new Date();
+            var urlNewPage = "https://github.com/LiXizhi/LiXizhi.github.io/new/master?filename=_posts/" 
+                + currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate() + "-" + title + ".md";
+                
+            var defaultText =  [
+                '---',
+                'layout: post',
+                'comments: true',
+                'categories: diary',
+                '---',
+                '## Title',
+                'text'
+                ].join('\n');
+            urlNewPage += "&value=" + encodeURIComponent(defaultText);
+            window.open(urlNewPage);
+        }
+    }
+    
+    $(function() {
+      // CreateNewPostLinks
+      $('.newpost').each(function(){
+          $(this).click(OnClickNewPost);
+      });
+    });
+</script>
+  
+  </body>
+</html>
