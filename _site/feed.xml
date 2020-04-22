@@ -5,9 +5,314 @@
     <description>Hyungi's Ideas &amp; Blogs</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 23 Apr 2020 04:35:55 +0900</pubDate>
-    <lastBuildDate>Thu, 23 Apr 2020 04:35:55 +0900</lastBuildDate>
+    <pubDate>Thu, 23 Apr 2020 06:11:20 +0900</pubDate>
+    <lastBuildDate>Thu, 23 Apr 2020 06:11:20 +0900</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>(15)Building Apps with State.</title>
+        <description>&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;※ 이번 포스팅에서는 기존에 작성했던 코드를 Customized Widgets을 활용하여 간단하게 refactoring해볼것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;사용할 Customized widget은 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;Card widget&quot;과 &quot;ListTile&quot; Widget&lt;/font&gt;&lt;/strong&gt;이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;일전에 MiCard App을 만들었을때, 전화와 이메일 정보를 담는 네모난 카드형태의 모양을 Container 위젯을 사용해서 구현해보았다. 하지만 앞에 아이콘이 위치하고 뒤에 그 아이콘의 타이틀이 위치하는 형태는 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;이미 Card 위젯으로 Customize되어있다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+자 그럼 두 가지 소스코드를 비교해보자.&lt;/p&gt;
+
+&lt;p&gt;다음 코드에서 볼 수 있듯이 Customize된 Widget을 활용하면 더욱 간단하게 소스코드를 작성할 수 있다. &lt;br /&gt;
+이전에 사용했던 &lt;strong&gt;CircleAvatar 위젯&lt;/strong&gt;도 Customize Widget 중에 하나이다. 다음 소스 코드에서 Container 위젯을 Card위젯으로 바꾸었을때 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;가장 큰 변화는 padding 속성을 주는 부분&lt;/font&gt;&lt;/strong&gt;이다.&lt;br /&gt;
+기존의 Container에서 padding을 주었을때에는 간단히 padding속성에 EdgeInsets.all(10.0) 속성을 주어 padding을 주었지만, Card 위젯을 주었을 때는 별도의 padding속성이 아닌 &lt;strong&gt;Padding 클래스&lt;/strong&gt;를 사용해서 내부 위젯을 Padding위젯으로 감싸주고, 그 안에 padding 속성을 주었다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Flutter에서는 각 위젯의 구성과 전체적인 구성도에 익숙해져야 하므로, widget tree를 작성해보았다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-23/2020-04-23 flutter widget tree.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;700&quot; /&gt; &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 위젯 이외에 요소간에 경계선을 주기 위해 SizedBox 위젯 안에 Divider 위젯을 넣어 경계선을 표현해주었다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;Row Widget&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Container(
+  padding: EdgeInsets.all(10.0),
+  color: Colors.white,
+  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+  child: Row(
+    children: &amp;lt;Widget&amp;gt;[
+      Icon(
+          Icons.phone,
+          color: Colors.teal,
+      ),
+      SizedBox(
+        width: 10.0,
+      ),
+      Text(
+        '+81 80 4443 5931',
+        style: TextStyle(
+          color:Colors.teal.shade900,
+          fontFamily: 'Source Sans Pro',
+          fontSize: 20.0,
+        ),
+      ),
+    ],
+  )
+),   }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;ListTile Widget&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Card(
+  color: Colors.white,
+  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+  child: Padding(
+    padding: EdgeInsets.all(1.0),
+    child: ListTile(
+        leading: Icon(
+          Icons.phone,
+          color: Colors.teal,
+        ),
+        title: Text(
+        '+81 80 4443 5931',
+        style: TextStyle(
+          color:Colors.teal.shade900,
+          fontFamily: 'Source Sans Pro',
+          fontSize: 17.0,
+        ),
+       ),
+     ),
+   ),
+ ),                
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Wed, 22 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/22/(15)Building-Apps-with-State/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/22/(15)Building-Apps-with-State/</guid>
+        
+        
+        <category>Flutter</category>
+        
+      </item>
+    
+      <item>
+        <title>(14)Card and ListTile Widget</title>
+        <description>&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;※ 이번 포스팅에서는 기존에 작성했던 코드를 Customized Widgets을 활용하여 간단하게 refactoring해볼것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;사용할 Customized widget은 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;Card widget&quot;과 &quot;ListTile&quot; Widget&lt;/font&gt;&lt;/strong&gt;이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;일전에 MiCard App을 만들었을때, 전화와 이메일 정보를 담는 네모난 카드형태의 모양을 Container 위젯을 사용해서 구현해보았다. 하지만 앞에 아이콘이 위치하고 뒤에 그 아이콘의 타이틀이 위치하는 형태는 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;이미 Card 위젯으로 Customize되어있다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+자 그럼 두 가지 소스코드를 비교해보자.&lt;/p&gt;
+
+&lt;p&gt;다음 코드에서 볼 수 있듯이 Customize된 Widget을 활용하면 더욱 간단하게 소스코드를 작성할 수 있다. &lt;br /&gt;
+이전에 사용했던 &lt;strong&gt;CircleAvatar 위젯&lt;/strong&gt;도 Customize Widget 중에 하나이다. 다음 소스 코드에서 Container 위젯을 Card위젯으로 바꾸었을때 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;가장 큰 변화는 padding 속성을 주는 부분&lt;/font&gt;&lt;/strong&gt;이다.&lt;br /&gt;
+기존의 Container에서 padding을 주었을때에는 간단히 padding속성에 EdgeInsets.all(10.0) 속성을 주어 padding을 주었지만, Card 위젯을 주었을 때는 별도의 padding속성이 아닌 &lt;strong&gt;Padding 클래스&lt;/strong&gt;를 사용해서 내부 위젯을 Padding위젯으로 감싸주고, 그 안에 padding 속성을 주었다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Flutter에서는 각 위젯의 구성과 전체적인 구성도에 익숙해져야 하므로, widget tree를 작성해보았다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-23/2020-04-23 flutter widget tree.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;700&quot; /&gt; &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 위젯 이외에 요소간에 경계선을 주기 위해 SizedBox 위젯 안에 Divider 위젯을 넣어 경계선을 표현해주었다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;
+      Row Widget
+    &lt;/th&gt;
+    &lt;th&gt;
+      ListTile Widget
+    &lt;/th&gt;
+  &lt;/tr&gt;
+
+  &lt;tr&gt;
+
+    &lt;td&gt;
+    &lt;pre&gt;
+    Container(
+      padding: EdgeInsets.all(10.0),
+      color: Colors.white,
+      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+      child: &lt;b&gt;Row&lt;/b&gt;(
+        children: &lt;Widget&gt;[
+          Icon(
+              Icons.phone,
+              color: Colors.teal,
+          ),
+          SizedBox(
+            width: 10.0,
+          ),
+          Text(
+            '+81 80 4443 5931',
+            style: TextStyle(
+              color:Colors.teal.shade900,
+              fontFamily: 'Source Sans Pro',
+              fontSize: 20.0,
+            ),
+          ),
+        ],
+      )
+    ),
+  }
+
+    &lt;td&gt;
+      &lt;pre&gt;
+  &lt;b&gt;Card&lt;/b&gt;(
+    color: Colors.white,
+    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+    child: Padding(
+      padding: EdgeInsets.all(1.0),
+      child: &lt;b&gt;ListTile&lt;/b&gt;(
+          leading: Icon(
+            Icons.phone,
+            color: Colors.teal,
+           ),
+           title: Text(
+            '+81 80 4443 5931',
+            style: TextStyle(
+              color:Colors.teal.shade900,
+              fontFamily: 'Source Sans Pro',
+              fontSize: 17.0,
+            ),
+           ),
+         ),
+       ),
+     ),                
+      &lt;/pre&gt;
+    &lt;/td&gt;
+&lt;/Widget&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+</description>
+        <pubDate>Wed, 22 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/22/(14)Card-and-ListTile-Widget/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/22/(14)Card-and-ListTile-Widget/</guid>
+        
+        
+        <category>Flutter</category>
+        
+      </item>
+    
+      <item>
+        <title>(13) Flutter MiCard App</title>
+        <description>&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;※ 이번 포스팅에서는 간단한 Flutter 앱을 만들어가면서 개발시에 필요한 각종 팁에 대해서 배우고, 중요한 내용들을 정리해 볼 것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;우선 이번에 만든 최종 앱의 모습은 다음과 같다.&lt;br /&gt;
+간단하게 Flutter로 레이아웃을 만들어 보았다. 단순한 앱이지만 레이아웃을 작성해나가면서 각 Widget을 어떻게 구성해야되는지, 여러 개념에 대해서 배울 수 있었다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;빨간색으로 작성한 속성은 나중에 유용하게 사용될 수 있다고 생각이 되서, Syntax에 익숙해지기 위해서 적어두었다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;※ Quick dogs의 사용 : &lt;font color=&quot;Red&quot;&gt;Mac에서는 Ctrl + j 단축키를&lt;/font&gt;누르면 각 위젯에서 설정할 수 있는 속성리스트를 확인할 수 있다.&lt;/strong&gt; &lt;br /&gt;
+&lt;strong&gt;Material Design에서의 Pallet와 Icons의 사용에 대해서 익숙해지자. Google에서 제공되는 유용한 디자인 도구이므로, 잘 활용할 수 있도록 연습을 하자.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://material.io/&quot;&gt;https://material.io/&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;이번 Flutter 앱을 만들어보면서 Container에 padding과 margin속성을 주는 작업을 하였는데, &lt;font color=&quot;Red&quot;&gt;EdgeInsets.all, EdgeInsets.symmetric 등 EdgeInsets를 이용해서 padding과  margin값을 지정할 수 있다는 것을 배웠다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;
+      &lt;img src=&quot;/images/flutter/2020-04-23/2020-04-23 flutter micard app capture.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;300&quot; /&gt; &lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+      &lt;img src=&quot;/images/flutter/2020-04-23/2020-04-23 micard widget tree diagram.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;1000&quot; /&gt; &lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.teal,
+        body: SafeArea(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: &amp;lt;Widget&amp;gt;[
+                CircleAvatar(
+                  radius: 50.0,
+                  backgroundColor: Colors.red,
+                  backgroundImage: AssetImage('images/profile picture.jpg'),
+                ),
+                Text(
+                  'Lee Hyungi',
+                  style: TextStyle(
+                    fontFamily: 'Pacifico',
+                    fontSize: 40.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'Flutter Developer',
+                  style: TextStyle(
+                    fontFamily: 'Source Sans Pro',
+                    color: Colors.teal.shade100,
+                    fontSize: 20.0,
+                    letterSpacing: 2.5,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(10.0),
+                  color: Colors.white,
+                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+                  child: Row(
+                    children: &amp;lt;Widget&amp;gt;[
+                      Icon(
+                          Icons.phone,
+                          color: Colors.teal,
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      Text(
+                        '+81 80 4443 5931',
+                        style: TextStyle(
+                          color:Colors.teal.shade900,
+                          fontFamily: 'Source Sans Pro',
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ],
+                  )
+                ),
+                Container(
+                  padding: EdgeInsets.all(10.0),
+                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+                  color: Colors.white,
+                  child: Row(
+                    children: &amp;lt;Widget&amp;gt;[
+                      Icon(
+                        Icons.email,
+                        color: Colors.teal,
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      Text(
+                        'mike.hyungi.lee@gmail.com',
+                        style: TextStyle(
+                          color: Colors.teal.shade900,
+                          fontSize: 20.0,
+                          fontFamily: 'Source Sans Pro',
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Wed, 22 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/22/(13)Flutter-Simple-App/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/22/(13)Flutter-Simple-App/</guid>
+        
+        
+        <category>Flutter</category>
+        
+      </item>
     
       <item>
         <title>(9) How to build beautiful UIs with Flutter Widgets</title>
@@ -499,223 +804,6 @@ Chrome의 developer mode와 비슷하게 원반모양의 아이콘을 클릭한 
         <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
         <link>http://localhost:4000/2020/04/21/(3)Widget-in-flutter/</link>
         <guid isPermaLink="true">http://localhost:4000/2020/04/21/(3)Widget-in-flutter/</guid>
-        
-        
-        <category>Flutter</category>
-        
-      </item>
-    
-      <item>
-        <title>(2) Setup for Flutter Development</title>
-        <description>&lt;h2 id=&quot;setup-for-flutter-development&quot;&gt;Setup for Flutter Development&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;※ Flutter의 Resources 참조 GitHub&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/londonappbrewery/Flutter-Course-Resources&quot;&gt;https://github.com/londonappbrewery/Flutter-Course-Resources&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;이번 Posting에서는 Flutter 개발을 위한 환경설정을 하는 방법에 대해서 정리할 것이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Android Studio vs Visual Studio&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;나는 나에게 익숙한 “Android Studio”를 이용해서 개발을 할 것이다.&lt;br /&gt;
-Android studio에서는 Android와 iOS의 Emulator view를 toggle할 수 있기 때문에 이러한 장점으로 본 IDE를 사용하는 것이 좋다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter setting sequence.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;
-&lt;strong&gt;※ 참고링크&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.udemy.com/course/flutter-bootcamp-with-dart/learn/lecture/17130752#content&quot;&gt;Check here for troubleshooting&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://www.udemy.com/course/flutter-bootcamp-with-dart/learn/lecture/17119664/#content&quot;&gt;Start Here For Step-by-Step Installation Videos&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://flutter.dev/docs/get-started/install/macos&quot;&gt;Flutter Installation Manual&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://thenextweb.com/dd/2019/06/04/why-does-macos-catalina-use-zsh-instead-of-bash-licensing/&quot;&gt;Why does macOS Catalina use Zsh instead of Bash? Licensing&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;현재 나는 Mac을 사용하고 있으므로, Mac을 기준으로 Flutter 개발환경을 구축해볼 것이다.&lt;br /&gt;
-자세한 설치내용은 상단의 &lt;strong&gt;“Flutter Installation Manual”&lt;/strong&gt;의 내용을 참조한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;① 우선 flutter 환경설정을 하기전에 shell을 zsh로 바꿔줘야한다. &lt;/strong&gt;&lt;br /&gt;
-  그러기 위해서는 아래와 같이 .zshrc　파일을 작성하고 그 내부에 flutter의 환경설정파일(bin)폴더의 경로를 작성해준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter zshrc file.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;
-&lt;strong&gt;※ flutter 환경설정이 잘되었는지 진단할때 유용한 &lt;font color=&quot;Red&quot;&gt;&quot;flutter doctor&quot;&lt;/font&gt;명령어가 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter doctor.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;최종적으로 Flutter의 개발환경 구축이 완료된 후에 &lt;strong&gt;flutter –version&lt;/strong&gt;으로 terminal상에서 확인을 해보면, 아래와 같이 설치 버전을 확인할 수 있는데, 이렇게 나온다면 환경구축이 성공한 것이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter version check.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;
-&lt;strong&gt;※ 참고링크&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;② 그 다음으로 사용하게 될 Android Studio에 &lt;strong&gt;Flutter plugin을 설치&lt;/strong&gt;해준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;[Android studio] - [Preferences] - [Plugin] - &quot;Flutter&quot;검색하고 설치 &lt;br /&gt;&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter plugin.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;이제 Flutter의 개발환경 구축이 완료되었으므로, 새로 프로젝트를 생성해서 내부 구조를 살펴볼 것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/21/(2)Setup-for-Flutter-Development/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/21/(2)Setup-for-Flutter-Development/</guid>
-        
-        
-        <category>Flutter</category>
-        
-      </item>
-    
-      <item>
-        <title>(13) Flutter MiCard App</title>
-        <description>&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;※ 이번 포스팅에서는 간단한 Flutter 앱을 만들어가면서 개발시에 필요한 각종 팁에 대해서 배우고, 중요한 내용들을 정리해 볼 것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;우선 이번에 만든 최종 앱의 모습은 다음과 같다.&lt;br /&gt;
-간단하게 Flutter로 레이아웃을 만들어 보았다. 단순한 앱이지만 레이아웃을 작성해나가면서 각 Widget을 어떻게 구성해야되는지, 여러 개념에 대해서 배울 수 있었다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;빨간색으로 작성한 속성은 나중에 유용하게 사용될 수 있다고 생각이 되서, Syntax에 익숙해지기 위해서 적어두었다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;※ Quick dogs의 사용 : &lt;font color=&quot;Red&quot;&gt;Mac에서는 Ctrl + j 단축키를&lt;/font&gt;누르면 각 위젯에서 설정할 수 있는 속성리스트를 확인할 수 있다.&lt;/strong&gt; &lt;br /&gt;
-&lt;strong&gt;Material Design에서의 Pallet와 Icons의 사용에 대해서 익숙해지자. Google에서 제공되는 유용한 디자인 도구이므로, 잘 활용할 수 있도록 연습을 하자.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://material.io/&quot;&gt;https://material.io/&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;이번 Flutter 앱을 만들어보면서 Container에 padding과 margin속성을 주는 작업을 하였는데, &lt;font color=&quot;Red&quot;&gt;EdgeInsets.all, EdgeInsets.symmetric 등 EdgeInsets를 이용해서 padding과  margin값을 지정할 수 있다는 것을 배웠다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td&gt;
-      &lt;img src=&quot;/images/flutter/2020-04-23/2020-04-23 flutter micard app capture.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;300&quot; /&gt; &lt;br /&gt;
-    &lt;/td&gt;
-    &lt;td&gt;
-      &lt;img src=&quot;/images/flutter/2020-04-23/2020-04-23 micard widget tree diagram.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;1000&quot; /&gt; &lt;br /&gt;
-    &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.teal,
-        body: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: &amp;lt;Widget&amp;gt;[
-                CircleAvatar(
-                  radius: 50.0,
-                  backgroundColor: Colors.red,
-                  backgroundImage: AssetImage('images/profile picture.jpg'),
-                ),
-                Text(
-                  'Lee Hyungi',
-                  style: TextStyle(
-                    fontFamily: 'Pacifico',
-                    fontSize: 40.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  'Flutter Developer',
-                  style: TextStyle(
-                    fontFamily: 'Source Sans Pro',
-                    color: Colors.teal.shade100,
-                    fontSize: 20.0,
-                    letterSpacing: 2.5,
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(10.0),
-                  color: Colors.white,
-                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                  child: Row(
-                    children: &amp;lt;Widget&amp;gt;[
-                      Icon(
-                          Icons.phone,
-                          color: Colors.teal,
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Text(
-                        '+81 80 4443 5931',
-                        style: TextStyle(
-                          color:Colors.teal.shade900,
-                          fontFamily: 'Source Sans Pro',
-                          fontSize: 20.0,
-                        ),
-                      ),
-                    ],
-                  )
-                ),
-                Container(
-                  padding: EdgeInsets.all(10.0),
-                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                  color: Colors.white,
-                  child: Row(
-                    children: &amp;lt;Widget&amp;gt;[
-                      Icon(
-                        Icons.email,
-                        color: Colors.teal,
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Text(
-                        'mike.hyungi.lee@gmail.com',
-                        style: TextStyle(
-                          color: Colors.teal.shade900,
-                          fontSize: 20.0,
-                          fontFamily: 'Source Sans Pro',
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/21/(13)Flutter-Simple-App/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/21/(13)Flutter-Simple-App/</guid>
-        
-        
-        <category>Flutter</category>
-        
-      </item>
-    
-      <item>
-        <title>(12) Flutter Custom Fonts</title>
-        <description>&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;※ 이번 포스팅에서는 Flutter 앱에 Custom Fonts를 import하는 방법에 대해서 알아 볼 것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;우선 Google에서 제공하는 Custom fonts 다운로드 사이트는 아래와 같다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;fonts.google.com&quot;&gt;fonts.google.com&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;위에 사이트에서 *.ttf 확장자의 파일을 다운받는다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;다운받은 font들은 프로젝트 최상위 위치에 ‘fonts’폴더를 만들어서 복사붙여넣기 해준다.&lt;br /&gt;
-그 후에는 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;pubspec.yaml&quot;&lt;/font&gt;&lt;/strong&gt; 안에 아래의 fonts폴더의 위치를 잡아준다.(이 과정은 이전에 배웠던 images 폴더를 추가하고 프로젝트에 적용시켰던 작업과 동일하다)&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fonts:
-   - family: Pacifico
-     fonts:
-       - asset: fonts/Pacifico-Regular.ttf
-
-   - family: Source Sans Pro
-     fonts:
-       - asset: fonts/SourceSansPro-Regular.ttf
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/21/(12)Flutter-Custom-Fonts/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/21/(12)Flutter-Custom-Fonts/</guid>
         
         
         <category>Flutter</category>
