@@ -1,0 +1,270 @@
+I"!0<p><strong>이번 포스팅에서는 multiple children에 대해서 배워 볼 것이다. <font color="Red">이 multiple children를 사용하기 위해서는 Columns과 Rows과 같은 위젯에 대한 이해</font>가 필요하다.</strong><br /></p>
+
+<p><img src="/images/flutter/2020-04-22/2020-04-22 multi-child layout widget.png" alt="blog capture" title="capture img" width="400" /><br /></p>
+
+<p><strong>※ Flutter Layout Cheat Sheet</strong><br /></p>
+
+<p><a href="https://medium.com/flutter-community/flutter-layout-cheat-sheet-5363348d037e">https://medium.com/flutter-community/flutter-layout-cheat-sheet-5363348d037e</a> <br /></p>
+
+<p>이번 수업에서 배운 내용에 해당하는 부분을 위의 페이지에서 찾아서 실습하며 중요한 키워드를 정리해 볼 것이다.<br /></p>
+
+<p><strong>첫번째 실습해 볼 내용은 “Row”와 “Column” Widget이다.</strong><br /></p>
+
+<p>기존의 Container Widget 안에 Column 또는  Row  Widget을 넣어서 작성한다.<br /></p>
+
+<p>Column 또는 Row 위젯의 내부에는 첫번째 요소로 <strong><font color="Red">mainAxisAlignment</font></strong>가 있다. MainAxisAlignment는 다양한 옵션이 있는데 이 부분을 실습해보자.<br /></p>
+
+<p><img src="/images/flutter/2020-04-22/2020-04-22 flutter mainAxisAlignment.png" alt="blog capture" title="capture img" width="300" /><br /></p>
+
+<p>위의 그림은 Column 위젯에 MainAxisAlignment.start 속성을 넣은 것으로, 내부 children 별 3개가 상단부터 아래로 출력되고 있음을 알 수 있다.<br /></p>
+
+<p><img src="/images/flutter/2020-04-22/2020-04-22 flutter row MainAxisAlignment.png" alt="blog capture" title="capture img" width="300" /><br /></p>
+
+<p>위의 그림은 Row 위젯으로 변경후 출력된 화면의 모습이다. <br />
+<strong>MainAxisAlignment의 속성은 start외에도 center, end, spaceBetween(양끝 가운데 정렬), spaceEvenly(양끝 공백 각 요소 사이의 간격 일정), spaceAround(양끝 공백은 요소간의 간격보다 짧고, 요소간의 두 간격은 같다)등이 있다.</strong> <br /></p>
+
+<p><strong>CrossAxisAlignment는 start, end, center, baseline, stretch의 옵션이 있다.</strong><br /></p>
+
+<p><strong><font color="Blue">CrossAxisAlignment.baseline은 다른 텍스트의 기준선을 정렬해야하는 경우 사용한다.</font></strong><br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>child: Container(
+      color: Colors.yellow,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
+            children: &lt;Widget&gt;[
+              Text(
+                'Baseline',
+                style: Theme.of(context).textTheme.display3,
+              ),
+              Text(
+                'Baseline',
+                style: Theme.of(context).textTheme.body1,
+              ),
+         ],
+     ),
+),
+</code></pre></div></div>
+
+<p><img src="/images/flutter/2020-04-22/2020-04-22 flutter crossAxisAlignment.png" alt="blog capture" title="capture img" width="200" /><br /></p>
+
+<p><strong><font color="Blue">교차 축 정렬</font></strong><br /></p>
+
+<p><img src="/images/flutter/2020-04-22/2020-04-22 flutter CrossAxisAlignment start.png" alt="blog capture" title="capture img" width="200" /><br /></p>
+
+<p><img src="/images/flutter/2020-04-22/2020-04-22 flutter CrossAxisAlignment start column.png" alt="blog capture" title="capture img" width="200" /><br /></p>
+
+<p><strong>main축의 크기를 내부 컨텐스에 맞출것인지 Parent화면 크기에 맞춰서 표시할 것인지 판단하는 <font color="Red">"mainAxisSize"</font></strong><br /></p>
+
+<p>Row 또는 Column의 속성으로 mainAxisSize : MainAxisSize.[option]으로 넣어주면 된다. <br />
+option의 종류로는 <strong><font color="Red">"max(match_parent), min(wrap_contents)"</font></strong>이 있다.<br /></p>
+
+<p><strong><font color="Blue">각기 다른 너비의 버튼을 가장 너비가 넓은 버튼을 기준으로 너비 정렬을 하고 싶을때,</font></strong><br /></p>
+
+<p><strong>“IntrinsicWidth”속성을 사용한다. 이 속성은 Column 위젯을 감싸는 또다른 위젯으로써 정의해서 사용해야 한다.</strong><br />
+만약에 높이를 가장 높은 높이를 기준으로 맞추고 싶다면 IntrinsicHeight로 하고, Row위젯을 사용하면 된다.<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>return Scaffold (
+    appBar : AppBar (title : Text ( 'IntrinsicWidth')),
+    body : Center (
+      child : IntrinsicWidth (
+        child : Column (
+          crossAxisAlignment : CrossAxisAlignment.stretch,
+          children : &lt;Widget&gt; [
+            RaisedButton ()
+              onPressed : () {},
+              child : Text ( 'Short'),
+            ),
+            RaisedButton (
+              onPressed : () {},
+              child : Text ( 'A Long Long'),
+            ),
+            RaisedButton (
+              onPressed : () {},
+              child : 텍스트 ( '가장 긴 텍스트 버튼'),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+</code></pre></div></div>
+
+<p><img src="/images/flutter/2020-04-22/2020-04-22 flutter IntrinsicWidth.png" alt="blog capture" title="capture img" width="350" /><br /></p>
+
+<p><strong><font color="Blue">위젯을 서로 오버레이하는 방법에 대해서 알아보자.</font></strong><br />
+우선 build override 메소드 내부에 Widget 타입의 main변수를 만들어주고, 이 변수를 Scaffold로 감싸서 내부에 appBar만 정의해준다. <strong>이제 appBar만 나와있는 화면에 다른 레이아웃을 중첩해서 보여줄 것이다.</strong> 이번 실습에서는 각 모서리에 라벨을 붙여 그 레이아웃을 기존의 Scaffold 위젯 화면과 중첩해서 보여줄 것이다.<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Widget main = Scaffold(
+      appBar: AppBar(title: Text('Stack')),
+    );
+
+    return MaterialApp(
+      home: Stack(
+        fit: StackFit.expand,
+        children: &lt;Widget&gt;[
+          main,
+          Banner(
+            message: "Top Start",
+            location: BannerLocation.topStart,
+          ),
+          Banner(
+            message: "Top End",
+            location: BannerLocation.topEnd,
+          ),
+          Banner(
+            message: "Bottom Start",
+            location: BannerLocation.bottomStart,
+          ),
+          Banner(
+            message: "Bottom End",
+            location: BannerLocation.bottomEnd,
+          ),
+        ],
+      ),
+    );
+  }
+}
+</code></pre></div></div>
+
+<p><img src="/images/flutter/2020-04-22/2020-04-22 flutter stack.png" alt="blog capture" title="capture img" width="350" /><br /></p>
+
+<p><strong><font color="Red">Stack 위젯의 children 속성에는 Positioned 속성을 이용해서 top, left속성을 이용해서 Icon을 위치시킬 수 있다.</font></strong><br /></p>
+
+<p>만약 일일이 top, bottom 속성값을 예상해서 넣고 싶지 않다면, LayoutBuilder를 사용해서 정확한 값을 검색할 수 있다.<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    const iconSize = 50.0;
+    return MaterialApp(
+      home: Scaffold(
+          appBar: AppBar(title: Text('Stack')),
+          body: LayoutBuilder(
+            builder: (context, constraints) =&gt;
+            Stack(
+              fit: StackFit.expand,
+              children: &lt;Widget&gt;[
+                Material(color: Colors.yellowAccent),
+                Positioned(
+                  top: 0,
+                  child: Icon(Icons.star, size: 50),
+                ),
+                Positioned(
+                  top: constraints.maxHeight - iconSize,
+                  left: constraints.maxWidth - iconSize,
+                  child: Icon(Icons.call, size: iconSize),
+                )
+              ],
+            ),
+          ),
+        ),
+    );
+  }
+}
+</code></pre></div></div>
+
+<p><strong><font color="Red">※ Flutter의 색상 클래스</font></strong><br />
+Material design의 color palette를 나타내는 Color 클래스와 ColorSwatcher 상수에 대해서 살펴보자.<br /></p>
+
+<p>ColorSwatcher의 상수 속성값은 100에서 900까지의 색생에 50을 단위로 다르게 부여되며, 숫자가 작을수록 연한 색상이고 숫자가 클수록 색상이 어두워진다. 아래 색상의 예를 살펴보자.<br />
+<strong>Colors.blue[200]</strong><br /></p>
+
+<p><img src="/images/flutter/2020-04-22/2020-04-22 flutter pallet sample.png" alt="blog capture" title="capture img" width="350" /><br /></p>
+
+<p><strong><font color="Blue">SizedBox - 가장 단순하지만 가장 유용한 위젯</font></strong><br /></p>
+
+<p><strong>① ConstrainedBox로 SizedBox를 사용하기</strong><br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SizedBox.expand(
+    child : Card(
+      child : Text('Hello World'),
+      color : Colors.yellowAccent,
+    ),
+),
+</code></pre></div></div>
+
+<p>위처럼 작성하면 화면 전체에 노란배경의 SizedBox가 배치된다.<br /></p>
+
+<p><strong>① 패딩으로 SizedBox를 사용하기</strong><br /></p>
+
+<p>패딩이나 여백을 추가해야 할 때 padding 또는 Container 위젯을 선택할 수 있다. 하지만 SizedBox를 사용함으로써 좀 더 쉽게 Padding을 추가할 수 있다.<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Row(
+  children : &lt;Widget&gt; [
+    Icon(Icons.star, size:50),
+    const SizedBox(height:100),
+    Icon(Icons.star, size:50),
+    Icon(Icons.star, size:50),
+  ]
+)
+</code></pre></div></div>
+
+<p><strong>첫번째 Icon요소와 두번째 Icon요소 사이에 SizedBox constraint요소를 넣어서 Padding요소로 활용할 수 있다.</strong><br /></p>
+
+<p><strong><font color="Pink">Flutter Layouts Challenge</font></strong><br /></p>
+
+<p>이번 Challenge과제는 <strong>Expanded</strong> 위젯을 Flex\Flexbox 속성을 사용하여 children의 multiple 아이템들의 공간을 알맞게 분배할 수 있다.<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    const iconSize = 50.0;
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.teal,
+        body: Row(
+          children: &lt;Widget&gt;[
+            Expanded(
+              child: SafeArea(
+                child: Container(
+                  decoration: const BoxDecoration(color: Colors.red),
+                ),
+              ),
+              flex: 1,
+            ),
+            Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: &lt;Widget&gt;[
+                      Container(
+                        color: Colors.yellow,
+                        width: 100.0,
+                        height: 100.0,
+                      ),
+                      Container(
+                        color: Colors.green,
+                        width: 100.0,
+                        height: 100.0,
+                      )
+                    ],
+                  ),
+                ),
+                flex: 3
+            ),
+            Expanded(
+              child: SafeArea(
+                child: Container(
+                  decoration: const BoxDecoration(color: Colors.blue),
+                ),
+              ),
+              flex: 1,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+</code></pre></div></div>
+
+<p><strong><font color="Red">Flutter app layout diagram</font></strong><br />
+이번 Challenge로 만든 레이아웃의 구조를 Diagram 툴로 그려보았다.<br />
+<img src="/images/flutter/2020-04-22/2020-04-22 flutter layout diagram.png" alt="blog capture" title="capture img" width="350" /><br /></p>
+
+<p><strong>※ Flutter challenge layout diagram</strong><br /></p>
+:ET

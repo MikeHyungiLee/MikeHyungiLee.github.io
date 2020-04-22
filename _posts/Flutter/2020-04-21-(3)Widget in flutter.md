@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  (3)Widgets in Flutter !
+title:  (3) Widgets in Flutter !
 comments: true
 categories: Flutter
 ---

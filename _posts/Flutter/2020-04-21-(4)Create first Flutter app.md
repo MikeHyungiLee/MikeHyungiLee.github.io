@@ -94,7 +94,7 @@ Widgets을 선택한 상태에서 Alt+Enter를 클릭하면, Widget에 적용할
 
 >>Widgets tree 그리기
 > 아래의 주소를 통해서 Widgets tree를 그릴 수 있다.
-> [https://api.flutter.dev/flutter/widgets/Image-class.html](https://api.flutter.dev/flutter/widgets/Image-class.html)
+> [https://www.draw.io/](https://www.draw.io/)
 
 <img src="/images/flutter/2020-04-21/2020-04-21 widgets tree .png" alt="blog capture" width="500" title="capture img"><br>
 

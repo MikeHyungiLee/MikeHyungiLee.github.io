@@ -1,0 +1,23 @@
+I"�<p><strong><font color="Blue">※ 이번 포스팅에서는 간단한 Flutter 앱을 만들어가면서 개발시에 필요한 각종 팁에 대해서 배우고, 중요한 내용들을 정리해 볼 것이다.</font></strong><br /></p>
+
+<p>우선 이번에 만든 최종 앱의 모습은 다음과 같다.<br /></p>
+
+<p><strong>우선 Google에서 제공하는 Custom fonts 다운로드 사이트는 아래와 같다.</strong><br /></p>
+
+<p><a href="fonts.google.com">fonts.google.com</a></p>
+
+<p>위에 사이트에서 *.ttf 확장자의 파일을 다운받는다.<br /></p>
+
+<p>다운받은 font들은 프로젝트 최상위 위치에 ‘fonts’폴더를 만들어서 복사붙여넣기 해준다.<br />
+그 후에는 <strong><font color="Red">"pubspec.yaml"</font></strong> 안에 아래의 fonts폴더의 위치를 잡아준다.(이 과정은 이전에 배웠던 images 폴더를 추가하고 프로젝트에 적용시켰던 작업과 동일하다)<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fonts:
+   - family: Pacifico
+     fonts:
+       - asset: fonts/Pacifico-Regular.ttf
+
+   - family: Source Sans Pro
+     fonts:
+       - asset: fonts/SourceSansPro-Regular.ttf
+</code></pre></div></div>
+:ET
