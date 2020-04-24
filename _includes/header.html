@@ -29,9 +29,9 @@
         <button style="width:150px; height:50px; font-size:15px"><a href="{{ site.baseurl }}/about">About</a></button> -->
 
         <div class="row">
-          <button style="width:150px; height:50px; font-size:15px"><a href="{{ site.baseurl }}/">Home</a></button>
-          <button style="width:150px; height:50px; font-size:15px"><a href="{{ site.baseurl }}/projects">Projects</a></button>
-          <button style="width:150px; height:50px; font-size:15px"><a href="{{ site.baseurl }}/about">About</a></button>
+          <input type="button" onclick="location.href='{{ site.baseurl }}/'" style="width:150px; height:50px; font-size:15px" value="Home"/>
+          <input type="button" onclick="location.href='{{ site.baseurl }}/projects'" style="width:150px; height:50px; font-size:15px" value="Projects"/>
+          <input type="button" onclick="location.href='{{ site.baseurl }}/about'" style="width:150px; height:50px; font-size:15px" value="About"/>
         </div>
       <!-- {% for p in site.pages %}
           {% if p.title %}
