@@ -23,8 +23,17 @@
           {% else %}
           <li>
         {% endif %}
-        <a href="{{ site.baseurl }}/">Home</a></li>
-      {% for p in site.pages %}
+
+        <!-- <button style="width:150px; height:50px; font-size:15px"><a href="{{ site.baseurl }}/">Home</a></button>
+        <button style="width:150px; height:50px; font-size:15px"><a href="{{ site.baseurl }}/projects">Projects</a></button>
+        <button style="width:150px; height:50px; font-size:15px"><a href="{{ site.baseurl }}/about">About</a></button> -->
+
+        <div class="row">
+          <button style="width:150px; height:50px; font-size:15px"><a href="{{ site.baseurl }}/">Home</a></button>
+          <button style="width:150px; height:50px; font-size:15px"><a href="{{ site.baseurl }}/projects">Projects</a></button>
+          <button style="width:150px; height:50px; font-size:15px"><a href="{{ site.baseurl }}/about">About</a></button>
+        </div>
+      <!-- {% for p in site.pages %}
           {% if p.title %}
             {% if p.url == page.url %}
               <li class="active">
@@ -33,7 +42,7 @@
             {% endif %}
               <a href="{{ p.url | prepend: site.baseurl }}"><span class="glyphicon {{ p.icon }}"></span> {{ p.title }}</a></li>
           {% endif %}
-      {% endfor %}
+      {% endfor %} -->
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
