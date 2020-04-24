@@ -5,9 +5,79 @@
     <description>Hyungi's Ideas &amp; Blogs</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 24 Apr 2020 10:28:32 +0900</pubDate>
-    <lastBuildDate>Fri, 24 Apr 2020 10:28:32 +0900</lastBuildDate>
+    <pubDate>Fri, 24 Apr 2020 21:47:08 +0900</pubDate>
+    <lastBuildDate>Fri, 24 Apr 2020 21:47:08 +0900</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Java MVVM Part7 ~ 9</title>
+        <description>&lt;p&gt;&lt;strong&gt;#7 Android MVVM Architecture Tutorial - Handling API Exceptions&lt;br /&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;참고&lt;/strong&gt;:&lt;a href=&quot;https://www.youtube.com/watch?v=67bdklHmXA8&amp;amp;list=PLk7v1Z2rk4hjVaZ8DZKe8iT9RIM9OUrwp&amp;amp;index=1&quot;&gt;https://www.youtube.com/watch?v=67bdklHmXA8&amp;amp;list=PLk7v1Z2rk4hjVaZ8DZKe8iT9RIM9OUrwp&amp;amp;index=1&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;API 송수신 에러를 처리를 구현해 볼 것이다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;※ 노트정리 (Part7)&lt;/strong&gt;&lt;br /&gt;
+&lt;img src=&quot;/images/android/2020-04-20/2020-04-20 Handling API Exceptions.png&quot; alt=&quot;blog capture&quot; width=&quot;700&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;ViewModel클래스에서 호출해서 사용할 UserRepository의 메소드를 살펴보자. 이 메소드는 기존에 Response 객체를 반환하고, 이 반환된 객체를 ViewModel에서 일일이 송수신 성공여부(로그인 성공/실패)에 따라서 이벤트 처리를 해주었다. &lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;하지만 이런식으로 반복해서 ViewModel 클래스에서 매번 조건처리해서 적어주면 코드의 가독성이 떨어지기 때문에, 이러한 처리를 공통화 처리해주기로 한다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 공통화 처리해서 작성해줄 부분이 network 패키지 아래에 작성한 SafeApiRequest 추상클래스이고, 여기에서 작성한 메소드는 송수신 성공시에는 ResponseBody를 반환해주고, 실패하면, 에러 메시지를 덫붙여서 ApiException 클래스에 던져준다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class ApiException(message: String) : IOException(message) {
+
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위와 같이 IOException클래스를 상속하고, String타입의 message 변수를 인자로 갖는 ApiException클래스를 작성해서 활용한다. 이 ApiException 클래스는 IOException의 기능을 계승한다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;이렇게 작성을 하게 되면, 최종적으로 AuthViewModel 클래스에서 Repository클래스 내부에서 작성한 메소드로 값을 반환할때, &lt;font color=&quot;Red&quot;&gt;try{}catch{}내에서 커스터마이징한 ApiException클래스로 송수신 성공/실패를 에러로써 Catch해서 처리할 수 있게 된다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 부분은 연습이 필요할 것 같다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Green&quot;&gt;(2020/04/24 업데이트 내용)&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;#8 Android MVVM Architecture Tutorial - User Login&lt;br /&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이제 Login한 User정보를 내부 DB(SQLite)에 저장을 할 것이다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;LoginActivity &amp;lt;———-&amp;gt; DB(SQLite) &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 처리과정 사이에는 LoginActivity —&amp;gt; AuthViewModel —&amp;gt; UserRepository —&amp;gt; SQLite 순서로 값이 전달된다. 이런 형태로 데이터를 처리하면 나중에 Unit test를 할때 편할 것 같다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;구체적인 내용은 아래에 직접 노트필기한 부분을 캡쳐해서 사진으로 첨부했다. 이것을 참조하면서 이번시간에 공부한 내용을 정리하도록 하자.&lt;br /&gt;
+&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;집중해서 봐야할 내용은 Activity클래스에서 viewModel객체를 초기화 시킬때 Repository를 인수로 받아서 초기화 시켜주는 부분이다.&lt;/font&gt;&lt;br /&gt;
+ 이 부분이 중요한 이유는 Activity클래스에서 db에 접근하기 위해서는 Repository 클래스를 갖고 있는 ViewModel객체가 필요한데, 우리가 기존에 작성한 ViewModel 객체를 보면 초기화 시켜주었을 당시에 ViewModelProviders를 사용해서 초기화를 시켜주었는데, 여기서 인자값으로 Context만 넘겨주었다. 따라서 ViewModelProviders의 다른 생성자를 확인해보면 Context와 ViewModelFactory 두 개의 인자로 객체화를 시켜주는 생성자도 있는데, 이를 위해 AuthViewModelFactory 클래스를 작성해서 함께 초기화 시켜주면 Repository정보도 갖고 있는 ViewModel 객체를 만들어서 접근할 수 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;※ 노트정리 (Part8)&lt;/strong&gt;&lt;br /&gt;
+&lt;img src=&quot;/images/android/2020-04-24/2020-04-24 kotlin save user info into sqlite.png&quot; alt=&quot;blog capture&quot; width=&quot;700&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;#9 Android MVVM Architecture Tutorial - Dependency Injection&lt;br /&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이제 인터넷 연결을 검사해서 인터넷이 연결되어 있지 않은 경우, 에러를 처리하도록 할 것이다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;※ 노트정리 (Part9)&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;내용 설명 : 이제 에러처리하는 것은 모두 IOException 클래스를 상속받고 message를 인자로 받는 Customized 클래스를 사용해서 에러가 발생하는 경우에는 Customized된 클래스로 에러를 throw하는 처리를 할 것이다.&lt;br /&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;①우선 이번 시간에는 Network가 연결되었는지 아닌지를 검사를 하기 위해서 해당 처리부분을  NetworkConnectionInterceptor 클래스 내에 작성을 하였다. 이 클래스에는 인터넷이 연결되어있는지 체크하는 method와 그 method를 사용해서 에러처리한 뒤 에러가 발생하는 조건의 경우 앞서 IOException을 상속한 NoInternetException 클래스에 에러를 throw하도록 처리를 하였다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;②다음에는 작성한 NetworkConnectionInterceptor 요소를 OkHttpClient에 intercepter로써 추가해주는 작업을 하고 이 추가된 OkHttpClient 객체를 Retrofit.Builder의 client로써 추가시켜주었다.&lt;br /&gt;&lt;/p&gt;
+&lt;font color=&quot;Red&quot;&gt;(이 MyApi 인터페이스 내에는 context로 초기화를 시켜줄 수 없으므로, context를 생성자로 갖고 있는 NetworkConnectionInterceptor클래스 객체를 자체로 넘겨주어 처리한다./MyApi 인터페이스의 invoke operator fun의 인자로 NetworkConnectionInterceptor 타입의 인자를 넘겨준다)&lt;/font&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;③이제 ViewModel 클래스의  main 쓰레드 처리에서 예외처리를 받는 부분에 e:NoInternetException 처리를 추가해준다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/android/2020-04-24/2020-04-24 kotlin internet connection exception.png&quot; alt=&quot;blog capture&quot; width=&quot;700&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 24 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/24/Android-Kotlin-MVVM-Part10-12/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/24/Android-Kotlin-MVVM-Part10-12/</guid>
+        
+        
+        <category>Android-Architecture</category>
+        
+      </item>
     
       <item>
         <title>(17)Dart Language</title>
@@ -769,63 +839,6 @@ Android studio - [final check] - Flutter doctor&lt;strong&gt;&lt;font color=&quo
         <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
         <link>http://localhost:4000/2020/04/21/(6)Running-your-app-on-a-physical-device/</link>
         <guid isPermaLink="true">http://localhost:4000/2020/04/21/(6)Running-your-app-on-a-physical-device/</guid>
-        
-        
-        <category>Flutter</category>
-        
-      </item>
-    
-      <item>
-        <title>(5)Working with Assets in Flutter &amp; the PubSpec file</title>
-        <description>&lt;h2 id=&quot;flutter-app에-이미지-넣어주기-&quot;&gt;Flutter app에 이미지 넣어주기 &lt;br /&gt;&lt;/h2&gt;
-
-&lt;p&gt;Project에 Images 폴더를 만들어서 이미지 파일을 넣어줄 것이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;① 프로젝트 폴더의 바로 아래에 &lt;font color=&quot;Red&quot;&gt;&quot;images&quot;&lt;/font&gt;폴더를 만들어준다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;② pubspec.yaml 파일에 새로 만든 &lt;font color=&quot;Red&quot;&gt;assets폴더의 경로를 지정&lt;/font&gt;해준다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;특정 파일만 지정을 안해주고 - image/ 디렉토리 경로만 설정해줘도 폴더 안에 모든 파일을 읽는데 문제가 되지 않는다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 pubspec yamal file.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;assets의 요소를 보면 flutter: (Parents)의 자식으로 구성되어있는 것을 확인할 수 있다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 yaml language.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;yaml 언어는 들여쓰기에 주의해서 작성을 해주어야 한다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;③ 모든 설정이 끝난다음에는 &lt;strong&gt;“Packages get”을 눌러서 프로젝트에 적용&lt;/strong&gt;시켜준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter configuration change.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter app.png&quot; width=&quot;300&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 화면에 보여지는 이미지는 해상도별로 나눠서 단말기에 넣어주지 않으면 안된다. &lt;br /&gt;
-각 단말기별로 해상도가 다르므로, 화면에 이미지가 출력이 될때 해상도를 고려해서 화면에 출력을 해주어야 한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※ Icon 이미지를 해상도별로 나눠주는 웹 Generator : &lt;/font&gt;&lt;/strong&gt;&lt;a href=&quot;https://appicon.co&quot;&gt;https://appicon.co&lt;/a&gt; &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 image generator.png&quot; width=&quot;300&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;iPhone과 Android앱에 맞추어 App의 아이콘을 추출할 수도 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 asset folder location.png&quot; width=&quot;300&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;Android / iOS는 각각 Asset folder의 위치가 다르므로 위의 위치를 고려해서 이미지를 넣어주어야 한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;아이콘 이미지를 import시켜주었다면 실 단말기 화면에 보여질 App의 Icon이미지를 만들어주어야 한다.&lt;br /&gt;
-이전에 안드로이드 작업을 하면서 알게 된 것인데, 단말기의 기종마다 어떤 기종은 아이콘 이미지를 원으로 만들어서 출력하는 기종도 있고, 어떤 기종은 네모난 모양으로 만들어서 아이콘 이미지에 보여주는 것도 있었다. 이러한 점을 개선하기 위해서 아래의 작업을 해준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;[res] - &quot;Right click&quot; - [new] - &quot;Image Assets&quot;&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 android image asset.png&quot; width=&quot;600&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter app img.png&quot; width=&quot;300&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/21/(5)Working-with-Assets-in-Flutter-&-the-PubSpec-file/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/21/(5)Working-with-Assets-in-Flutter-&-the-PubSpec-file/</guid>
         
         
         <category>Flutter</category>
