@@ -1,0 +1,18 @@
+I"<p><strong><font color="Blue">※ 레이아웃을 작성하다보면 화면상의 widget이 화면 밖으로 위치하는 경우가 생긴다.(overflow) <br />
+이런 경우를 예방하기 위해 우리는 Expanded 위젯을 사용해서 레이아웃을 작성하는 것이 좋다. Expanded 위젯은 자동으로 Layout에 맞춰 화면상의 각 구성요소를 출력해주기 때문에 overflow가 발생하지 않는다.</font></strong><br /></p>
+
+<p>아래 Widget tree구조를 보면 알 수 있듯이 Row 위젯의 children 요소로써 Expanded 위젯을 두 개 배치하였고, 각각의 Expanded에 FlatButton 위젯을 넣어 버튼 처리를 해주었다. 이렇게 두 개 이상의 Expanded요소를 넣고 flex 속성을 넣어주면 각 요소를 비율에 맞추어 화면에 배치할 수 있다.<br /></p>
+
+<p><strong><font color="Red">Ref. "Dicd App Widget Tree"</font>&lt;/stron&gt;<br /></strong></p>
+
+<table>
+  <tr>
+    <td>
+      <img src="/images/flutter/2020-04-23/2020-04-23 flutter dice app.png" alt="blog capture" title="capture img" width="300" /> <br />
+    </td>  
+    <td>
+      <img src="/images/flutter/2020-04-23/2020-04-23 flutter dice app widget tree.png" alt="blog capture" title="capture img" width="600" /> <br />
+    </td>
+  </tr>
+</table>
+:ET

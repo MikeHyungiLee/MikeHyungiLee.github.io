@@ -1,0 +1,88 @@
+I"?<p><strong><font color="Blue">※ 레이아웃을 작성하다보면 화면상의 widget이 화면 밖으로 위치하는 경우가 생긴다.(overflow) <br />
+이런 경우를 예방하기 위해 우리는 Expanded 위젯을 사용해서 레이아웃을 작성하는 것이 좋다. Expanded 위젯은 자동으로 Layout에 맞춰 화면상의 각 구성요소를 출력해주기 때문에 overflow가 발생하지 않는다.</font></strong><br /></p>
+
+<p>아래 Widget tree구조를 보면 알 수 있듯이 Row 위젯의 children 요소로써 Expanded 위젯을 두 개 배치하였고, 각각의 Expanded에 FlatButton 위젯을 넣어 버튼 처리를 해주었다. 이렇게 두 개 이상의 Expanded요소를 넣고 flex 속성을 넣어주면 각 요소를 비율에 맞추어 화면에 배치할 수 있다.<br /></p>
+
+<p><strong><font color="Blue">※ 위젯을 다른 위젯의 하위에 위치시키거나 삭제 및 수정을 할때에는 <font color="Red">"Intention Action"</font>을 이용하면 widgets을 embeded하는 것이 편리하다.</font></strong><br /></p>
+
+<p><strong><font color="Red">방법1)</font></strong> 위젯을 선택하고, 안드로이드 IDE우측에 위치한 [Flutter outline] 탭을 선택, 소스코드에서 각 위젯요소를 선택시 outline의 navigator 리스트에서 해당 위젯이 선택됨을 확인할 수 있다. 이 navigator 리스트에서 우측 클릭을 해서 해당 위젯을 조작할 수 있다.<br /></p>
+
+<p><strong><font color="Red">방법2)</font></strong> 더 많은 Widget 조작을 하기 위해서는 소스코드상에서 위젯을 클릭하면 좌측에 light bulb(Intention Action) 마크가 나오는데,(Alt+Enter) 화살표를 클릭해서 다양한 Widget 조작 옵션을 활용할 수 있다. <br /></p>
+
+<p><strong><font color="Blue">※ Flutter 버튼을 활용하여 Gesture Detection을 추가해보자. </font></strong><br /></p>
+
+<p><strong><font color="Red">Ref. "Dicd App Widget Tree"</font></strong><br /></p>
+
+<table>
+  <tr>
+    <td>
+      <img src="/images/flutter/2020-04-23/2020-04-23 flutter dice app.png" alt="blog capture" title="capture img" width="300" /> <br />
+    </td>  
+    <td>
+      <img src="/images/flutter/2020-04-23/2020-04-23 flutter dice app widget tree.png" alt="blog capture" title="capture img" width="600" /> <br />
+    </td>
+  </tr>
+</table>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void main() {
+  return runApp(
+    MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.red,
+        appBar: AppBar(
+          title: Text('Dicee'),
+          backgroundColor: Colors.red,
+        ),
+        body: DicePage(),
+      ),
+    ),
+  );
+}
+
+class DicePage extends StatefulWidget {
+  @override
+  _DicePageState createState() =&gt; _DicePageState();
+}
+
+class _DicePageState extends State&lt;DicePage&gt; {
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 1;
+
+  void setupRandomDiceNumber(){
+    setState(() {
+      rightDiceNumber = Random().nextInt(6) + 1;
+      leftDiceNumber = Random().nextInt(6) + 1;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Center(
+        child: Row(
+          children: &lt;Widget&gt;[
+            Expanded(
+              child: FlatButton(
+                child: Image.asset('images/dice$leftDiceNumber.png'),
+                onPressed: () {
+                  // build again, re-build, re-draw
+                  setupRandomDiceNumber();
+                },
+              ),
+            ),
+            Expanded(
+              child: FlatButton(
+                child: Image.asset('images/dice$rightDiceNumber.png'),
+                onPressed: () {
+                  // build again, re-build, re-draw
+                  setupRandomDiceNumber();
+                },),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+</code></pre></div></div>
+:ET

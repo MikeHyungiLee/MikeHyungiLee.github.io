@@ -5,9 +5,194 @@
     <description>Hyungi's Ideas &amp; Blogs</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 23 Apr 2020 06:11:20 +0900</pubDate>
-    <lastBuildDate>Thu, 23 Apr 2020 06:11:20 +0900</lastBuildDate>
+    <pubDate>Fri, 24 Apr 2020 09:17:39 +0900</pubDate>
+    <lastBuildDate>Fri, 24 Apr 2020 09:17:39 +0900</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>(17)Dart Language</title>
+        <description>&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;※ 이번 포스팅에서는 Dart언어의 특징에 대해서 알아본다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Dart언어는 &lt;strong&gt;Statically Typed Language&lt;/strong&gt;이다. 물론 dynamic 키워드를 이용해서 다이나믹하게 변수를 사용할 수 있지만, “avoid using dynamic data type이 dart 언어 사용에 있어 권고되는 사항이다. 예기치 못한 에러의 발생을 예방하기 위해서 변수를 사용할때에는 확실한 data type을 지정해서 사용하는 것이 좋다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;String변수의 값을 초기화 할때는 일반 다른 언어와 달리 Dart에서는 ‘‘(single quotation)로 이용해 String값을 assign해준다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-23/2020-04-23 flutter widget tree.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;700&quot; /&gt; &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 22 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/22/(17)Dart-Language/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/22/(17)Dart-Language/</guid>
+        
+        
+        <category>Flutter</category>
+        
+      </item>
+    
+      <item>
+        <title>(16)Flutter Dice App - Expanded widget &amp; Stateful / StatelessWidget</title>
+        <description>&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;※ 레이아웃을 작성하다보면 화면상의 widget이 화면 밖으로 위치하는 경우가 생긴다.(overflow) &lt;br /&gt;
+이런 경우를 예방하기 위해 우리는 Expanded 위젯을 사용해서 레이아웃을 작성하는 것이 좋다. Expanded 위젯은 자동으로 Layout에 맞춰 화면상의 각 구성요소를 출력해주기 때문에 overflow가 발생하지 않는다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;아래 Widget tree구조를 보면 알 수 있듯이 Row 위젯의 children 요소로써 Expanded 위젯을 두 개 배치하였고, 각각의 Expanded에 FlatButton 위젯을 넣어 버튼 처리를 해주었다. 이렇게 두 개 이상의 Expanded요소를 넣고 flex 속성을 넣어주면 각 요소를 비율에 맞추어 화면에 배치할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;※ 위젯을 다른 위젯의 하위에 위치시키거나 삭제 및 수정을 할때에는 &lt;font color=&quot;Red&quot;&gt;&quot;Intention Action&quot;&lt;/font&gt;을 이용하면 widgets을 embeded하는 것이 편리하다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;방법1)&lt;/font&gt;&lt;/strong&gt; 위젯을 선택하고, 안드로이드 IDE우측에 위치한 [Flutter outline] 탭을 선택, 소스코드에서 각 위젯요소를 선택시 outline의 navigator 리스트에서 해당 위젯이 선택됨을 확인할 수 있다. 이 navigator 리스트에서 우측 클릭을 해서 해당 위젯을 조작할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;방법2)&lt;/font&gt;&lt;/strong&gt; 더 많은 Widget 조작을 하기 위해서는 소스코드상에서 위젯을 클릭하면 좌측에 light bulb(Intention Action) 마크가 나오는데,(Alt+Enter) 화살표를 클릭해서 다양한 Widget 조작 옵션을 활용할 수 있다. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;※ Flutter 버튼을 활용하여 Gesture Detection을 추가해보자. &lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;자 새로운 위젯을 사용할때에는 Widget category에서 해당 카테고리를 확인해가며 사용하도록 하자. &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Button Widget - FlatButton Widget Api&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://api.flutter.dev/flutter/material/FlatButton-class.html&quot;&gt;https://api.flutter.dev/flutter/material/FlatButton-class.html&lt;/a&gt; &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음 Api문서를 확인해보면 알 수 있듯이 FlatButton 위젯에서는 onPressed 속성과 Text 속성을 지정할 수 있다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;FlatButton(
+  // Anonymous function
+  onPressed: () {
+    /*...*/
+  },
+  child: Text(
+    &quot;Flat Button&quot;,
+  ),
+)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;※ 다음으로 알아볼 것은 Stateless Widget과 Stateful Widget의 사용이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th width=&quot;500&quot;&gt;
+      &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;Stateless Widget&lt;/font&gt;&lt;/strong&gt;
+    &lt;/th&gt;
+    &lt;th width=&quot;500&quot;&gt;
+      &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;Stateful Widget&lt;/font&gt;&lt;/strong&gt;
+    &lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;
+      &lt;strong&gt;if you are creating a user interface where the state of the widget isn't going to be changed.&lt;/strong&gt;&lt;br /&gt;
+
+      다음 설명에서와 같이 User과의  interaction에 의해 변하지 않는 화면(레이아웃)의 경우에는 Stateless Widget을 사용한다.
+    &lt;/td&gt;
+    &lt;td&gt;
+      &lt;strong&gt;if you are creating something which is going to be changed especially when it's dependent on user interaction.&lt;/strong&gt;&lt;br /&gt;
+
+      다음 설명에서와 같이 User과의  interaction에 의해 상태가 변하는 화면(레이아웃)의 경우에는 Stateful Widget을 사용한다.
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;※ StatefulWidget을 상속하는 클래스 작성하기&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+“stful”을 입력하면 자동으로 StatefulWidget을 상속하는 클래스와 State&lt;T&gt;상속하는 클래스가 자동생성된다. State&lt;T&gt;를 상속하는 클래스는 mutable 클래스로, 기존에 StatelessWidget상속 클래스에 작성했던 내용을 여기에 적어주면 된다.&lt;br /&gt;&lt;/T&gt;&lt;/T&gt;&lt;/p&gt;
+
+&lt;p&gt;State&lt;T&gt; 상속 클래스에서 User의 행동으로 trigger되는 event처리하는 부분(ex. 버튼클릭)에서&lt;/T&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;setState((){
+
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;위의 setState를 작성해줘서 클릭이벤트가 발생했을때, build 메소드 내에 있는 코드가 다시 Re-build될 수 있도록 처리해준다. &lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;※ Dart에서 Math 라이브러리 사용하기&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
+이번 주사위 돌리는 앱에서는 클릭할때마다 난수가 발생하여, 주사위에 표시되는 숫자가 랜덤으로 표시된다.&lt;br /&gt;
+사용법은 &lt;strong&gt;import ‘dart:math’;&lt;/strong&gt; 라이브러리를 import하고, 코드상에서&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Random().nextInt(6)+1 // 1~6까지의 난수 발생
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://dartpad.dartlang.org&quot;&gt;https://dartpad.dartlang.org&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;Ref. &quot;Dicd App Widget Tree&quot;&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;
+      &lt;img src=&quot;/images/flutter/2020-04-23/2020-04-23 flutter dice app.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;300&quot; /&gt; &lt;br /&gt;
+    &lt;/td&gt;  
+    &lt;td&gt;
+      &lt;img src=&quot;/images/flutter/2020-04-23/2020-04-23 flutter dice app widget tree.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; width=&quot;600&quot; /&gt; &lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void main() {
+  return runApp(
+    MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.red,
+        appBar: AppBar(
+          title: Text('Dicee'),
+          backgroundColor: Colors.red,
+        ),
+        body: DicePage(),
+      ),
+    ),
+  );
+}
+
+class DicePage extends StatefulWidget {
+  @override
+  _DicePageState createState() =&amp;gt; _DicePageState();
+}
+
+class _DicePageState extends State&amp;lt;DicePage&amp;gt; {
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 1;
+
+  void setupRandomDiceNumber(){
+    setState(() {
+      rightDiceNumber = Random().nextInt(6) + 1;
+      leftDiceNumber = Random().nextInt(6) + 1;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Center(
+        child: Row(
+          children: &amp;lt;Widget&amp;gt;[
+            Expanded(
+              child: FlatButton(
+                child: Image.asset('images/dice$leftDiceNumber.png'),
+                onPressed: () {
+                  // build again, re-build, re-draw
+                  setupRandomDiceNumber();
+                },
+              ),
+            ),
+            Expanded(
+              child: FlatButton(
+                child: Image.asset('images/dice$rightDiceNumber.png'),
+                onPressed: () {
+                  // build again, re-build, re-draw
+                  setupRandomDiceNumber();
+                },),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Wed, 22 Apr 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/04/22/(16)-Flutter-Dice-App-Expanded-Widget/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/22/(16)-Flutter-Dice-App-Expanded-Widget/</guid>
+        
+        
+        <category>Flutter</category>
+        
+      </item>
     
       <item>
         <title>(15)Building Apps with State.</title>
@@ -641,169 +826,6 @@ Android studio - [final check] - Flutter doctor&lt;strong&gt;&lt;font color=&quo
         <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
         <link>http://localhost:4000/2020/04/21/(5)Working-with-Assets-in-Flutter-&-the-PubSpec-file/</link>
         <guid isPermaLink="true">http://localhost:4000/2020/04/21/(5)Working-with-Assets-in-Flutter-&-the-PubSpec-file/</guid>
-        
-        
-        <category>Flutter</category>
-        
-      </item>
-    
-      <item>
-        <title>(4) Create first Flutter App</title>
-        <description>&lt;h2 id=&quot;create-flutter-app&quot;&gt;Create Flutter App&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;이제 Flutter의 개발환경 구축이 완료되었으므로, 새로 프로젝트를 생성해서 내부 구조를 살펴볼 것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;이번 Posting에서는 첫 Flutter App을 만들어 볼 것이다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;우선 모든 프로그래밍 공부의 기본이 되는 “Hello world!”를 어플에 띄어볼 것이다.&lt;br /&gt;
-기존에 자동생성된 class를 삭제하고, 최 상단에 있는 void main() 메소드를 수정해보자.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter first app capture.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void main() =&amp;gt; runApp(MaterialApp(home: Center(child: Text('Hello World'))));
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;), 를 붙여주는 이유는 Formatting해서 정렬을 해주기 위해서이다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;To automatically format the code in the current source code window, &lt;font color=&quot;Red&quot;&gt;right-click in the code window and select Reformat Code with dartfmt.&lt;/font&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void main() =&amp;gt; runApp(
-    MaterialApp(
-      home: Center(
-        child: Text('Hello World'),
-      ),
-    ),
-);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;아래와 같이 =&amp;gt; 를 {}로 묶어서 코드를 작성할 수도 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void main(){
-  runApp(
-    MaterialApp(
-      home: Center(
-        child: Text('Hello World'),
-      ),
-    ),
-  );
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;우선 첫번째로 살펴볼 Widget은 &quot;Scaffold()&quot; Widget이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter scaffold.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※Flutter를 개발할때 사용될 Widget의 내용을 api문서에서 확인하며 개발하는 습관을 들여야 한다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-&lt;a href=&quot;https://api.flutter.dev/flutter/material/Scaffold-class.html&quot;&gt;Scaffold class API - official web site &lt;/a&gt; &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Blue&quot;&gt;두번째로 살펴볼 Widget은 &quot;AppBar()&quot; Widget이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter appbar widget.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;이제 기존의 Center Widget을 삭제하고, 새롭게 배운 Scaffold()Widget을 넣어준다. &lt;br /&gt;
-그 다음에 Scaffold()widget의 Background속성에 색을 넣어주고, 그 안에 appBar와 body Widget을 넣어준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;결과 코드는 아래와 같다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void main() {
-  runApp(
-    MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.blueGrey,
-          appBar: AppBar(
-            title: Center(
-              child: Text(&quot;Hello World App&quot;),
-            ),
-          ),
-          body: Center(
-            child: Image(image: NetworkImage(&quot;https://stickershop.line-scdn.net/stickershop/v1/product/8729/LINEStorePC/main.png;compress=true&quot;)),
-          ),
-      ),
-    ),
-  );
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;위와같이 body 위젯에 이미지를 가운데 정렬하는데 사용되는 위젯은 Center Widget이다. Widget안에 또 다른 Widget을 넣을땐, child: 속성을 넣어주고, 그 안에 새로운 위젯을 넣어주면 된다.&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;여기서의 핵심은 Widget안에 또 다른 Widget을 넣어줄때는 child: 속성을 이용해서 넣어준다는 것이다.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;Widgets을 선택한 상태에서 Alt+Enter를 클릭하면, Widget에 적용할 수 있는 다양한 옵션들을 확인할 수 있다.&lt;br /&gt;
-“Wrap with center”를 이용해서 이미지를 가운데 정렬할 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter alt enter capture.png&quot; alt=&quot;blog capture&quot; width=&quot;300&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;결과화면은 아래와 같다. &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 result screen capture(1).png&quot; alt=&quot;blog capture&quot; width=&quot;300&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;각 widget 클래스의 요소를 참조해가면서 코딩해야하므로, API문서에서 해당 클래스를 검색해서 확인할 수 있어야 한다.&lt;br /&gt;
-&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;예를들어, 화면에 Image를 보여줘야하는 경우,&lt;/font&gt;Image class를 검색해서 참조해야한다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;blockquote&gt;
-    &lt;p&gt;Widgets tree 그리기
-아래의 주소를 통해서 Widgets tree를 그릴 수 있다.
-&lt;a href=&quot;https://www.draw.io/&quot;&gt;https://www.draw.io/&lt;/a&gt;&lt;/p&gt;
-  &lt;/blockquote&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 widgets tree .png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※ Flutter의 developer mode&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-Chrome의 developer mode와 비슷하게 원반모양의 아이콘을 클릭한 후 궁금한 부분을 클릭하면 해당 부분의 요소를 트리형태로 보여준다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter iOS developer mode.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter developer mode.png&quot; alt=&quot;blog capture&quot; width=&quot;500&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;※ Debug mark 없애기.&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter remove debug mode.png&quot; alt=&quot;blog capture&quot; width=&quot;300&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/21/(4)Create-first-Flutter-app/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/21/(4)Create-first-Flutter-app/</guid>
-        
-        
-        <category>Flutter</category>
-        
-      </item>
-    
-      <item>
-        <title>(3) Widgets in Flutter !</title>
-        <description>&lt;h2 id=&quot;anatomy-of-a-flutter-app&quot;&gt;Anatomy of a Flutter App&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;※ Flutter의 Resources 참조 GitHub&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/londonappbrewery/Flutter-Course-Resources&quot;&gt;https://github.com/londonappbrewery/Flutter-Course-Resources&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;이번 Posting에서는 Flutter App구성을 해부해볼 것이다.&lt;br /&gt;
-앞서 업데이트한 포스팅에서 알 수 있듯 Flutter는 &lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;레고 블럭처럼 위젯을 가져다가 화면에 올려주면 된다.&quot;&lt;/font&gt;&lt;/strong&gt;컨셉으로 매우 간편하게 앱을 작성할 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter widgets anatomy.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;위의 이메지와 같은 Tree구조의 Widget들을 사용해서 앱을 만들 수 있다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/flutter/2020-04-21/2020-04-21 flutter basic code structure.png&quot; alt=&quot;blog capture&quot; title=&quot;capture img&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;이 Posting은 Udemy에서 강의를 수강하면서 정리한 내용인데, 강의를 수강하면서 공부하는 Tip에 대해서 정리해본다.&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;Top Tips for the Course&quot;&lt;/font&gt;&lt;/strong&gt;&lt;br /&gt;
-각 Lesson은 10분정도의 길이로, 강의를 수강하면서 따라서 코드를 작성하지 말고, 왜 이 코드가 이렇게 작성되고 있는지 이해하면서 듣도록 한다. &lt;br /&gt;
-그 후에 강의가 끝난 다음에 혼자서 배웠던 소스코드를 쳐보도록 한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;강의를 듣고 나서 나중에 참조를 위해 노트정리를 해두도록 한다. &lt;br /&gt;
-(Cornell Note Taking System &amp;amp; Summarize bullet points)&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;만약에 강의 수강도중에 막히는 부분이 있다면, bookmark를 해두고 나중에 다시 보고 이해하도록 한다.&lt;br /&gt;
-강의의 내용은 모두 중요하므로, 중간중간 빼먹는 부분이 없도록한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;새로운 Skill을 배운다는 것은, 단순 강의를 보는 것에 그치지 않고, 끊임없이 시간을 갖고 코딩을 해나가야 한다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;Red&quot;&gt;&quot;Struggle is good to improve my own skill.&quot;&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 21 Apr 2020 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/2020/04/21/(3)Widget-in-flutter/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/21/(3)Widget-in-flutter/</guid>
         
         
         <category>Flutter</category>
