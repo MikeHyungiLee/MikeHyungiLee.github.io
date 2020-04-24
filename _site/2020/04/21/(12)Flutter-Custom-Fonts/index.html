@@ -5,10 +5,10 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>useful links</title>
-	<meta name="description" content="">
+	<title>(12) Flutter Custom Fonts</title>
+	<meta name="description" content="※ 이번 포스팅에서는 Flutter 앱에 Custom Fonts를 import하는 방법에 대해서 알아 볼 것이다.">
 	
-	<link rel="canonical" href="http://localhost:4000/2015/12/27/useful-links/">
+	<link rel="canonical" href="http://localhost:4000/2020/04/21/(12)Flutter-Custom-Fonts/">
 	<link rel="alternate" type="application/rss+xml" title="Lee Hyungi's Tech Blog" href="http://localhost:4000/feed.xml" />
 	
 	<!-- <link rel="stylesheet" href="/css/main.css"> -->
@@ -98,21 +98,31 @@
   <div id="myArticle" class="col-sm-9">
     <div class="post-area post">
       <header>
-        <h1>useful links</h1>
-        <p>Dec 27, 2015</p>
+        <h1>(12) Flutter Custom Fonts</h1>
+        <p>Apr 21, 2020</p>
       </header>
       <hr>
       <article>
-        <ul id="markdown-toc">
-  <li><a href="#paracraft" id="markdown-toc-paracraft">ParaCraft</a></li>
-  <li><a href="#npl" id="markdown-toc-npl">NPL</a></li>
-</ul>
+        <p><strong><font color="Blue">※ 이번 포스팅에서는 Flutter 앱에 Custom Fonts를 import하는 방법에 대해서 알아 볼 것이다.</font></strong><br /></p>
 
-<h3 id="paracraft">ParaCraft</h3>
-<p>http://www.paracraft.cn</p>
+<p><strong>우선 Google에서 제공하는 Custom fonts 다운로드 사이트는 아래와 같다.</strong><br /></p>
 
-<h3 id="npl">NPL</h3>
-<p>http://www.nplproject.com</p>
+<p><a href="fonts.google.com">fonts.google.com</a></p>
+
+<p>위에 사이트에서 *.ttf 확장자의 파일을 다운받는다.<br /></p>
+
+<p>다운받은 font들은 프로젝트 최상위 위치에 ‘fonts’폴더를 만들어서 복사붙여넣기 해준다.<br />
+그 후에는 <strong><font color="Red">"pubspec.yaml"</font></strong> 안에 아래의 fonts폴더의 위치를 잡아준다.(이 과정은 이전에 배웠던 images 폴더를 추가하고 프로젝트에 적용시켰던 작업과 동일하다)<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fonts:
+   - family: Pacifico
+     fonts:
+       - asset: fonts/Pacifico-Regular.ttf
+
+   - family: Source Sans Pro
+     fonts:
+       - asset: fonts/SourceSansPro-Regular.ttf
+</code></pre></div></div>
 
       </article>
       <hr>
@@ -138,8 +148,8 @@
     </div>
 	<script>
 		var disqus_config = function () {
-			this.page.url = "http://mikehyungilee.github.io/2015/12/27/useful-links/"; 
-			this.page.identifier = "/2015/12/27/useful-links"; 
+			this.page.url = "http://mikehyungilee.github.io/2020/04/21/(12)Flutter-Custom-Fonts/"; 
+			this.page.identifier = "/2020/04/21/(12)Flutter Custom Fonts"; 
 		};
 		(function() {
 			var d = document, s = d.createElement('script');

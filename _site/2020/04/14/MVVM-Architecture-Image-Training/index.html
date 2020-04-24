@@ -5,10 +5,10 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>useful links</title>
-	<meta name="description" content="">
+	<title>MVVM Architecture Image Training</title>
+	<meta name="description" content="MVVM Architecture">
 	
-	<link rel="canonical" href="http://localhost:4000/2015/12/27/useful-links/">
+	<link rel="canonical" href="http://localhost:4000/2020/04/14/MVVM-Architecture-Image-Training/">
 	<link rel="alternate" type="application/rss+xml" title="Lee Hyungi's Tech Blog" href="http://localhost:4000/feed.xml" />
 	
 	<!-- <link rel="stylesheet" href="/css/main.css"> -->
@@ -98,21 +98,84 @@
   <div id="myArticle" class="col-sm-9">
     <div class="post-area post">
       <header>
-        <h1>useful links</h1>
-        <p>Dec 27, 2015</p>
+        <h1>MVVM Architecture Image Training</h1>
+        <p>Apr 14, 2020</p>
       </header>
       <hr>
       <article>
-        <ul id="markdown-toc">
-  <li><a href="#paracraft" id="markdown-toc-paracraft">ParaCraft</a></li>
-  <li><a href="#npl" id="markdown-toc-npl">NPL</a></li>
-</ul>
+        <h2 id="mvvm-architecture">MVVM Architecture<br /></h2>
 
-<h3 id="paracraft">ParaCraft</h3>
-<p>http://www.paracraft.cn</p>
+<h3 id="java-">Java <br /></h3>
 
-<h3 id="npl">NPL</h3>
-<p>http://www.nplproject.com</p>
+<p><strong><font color="Red">① ViewModel Class</font></strong> <br /></p>
+
+<p>(1) class 선언하기<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class MainActivityViewModel extends ViewModel {
+
+    private MutableLiveData&lt;List&lt;NicePlace&gt;&gt; mNicePlaces;
+
+    public LiveData&lt;List&lt;NicePlace&gt;&gt; getNicePlaces(){return mNicePlaces;}
+
+}
+</code></pre></div></div>
+
+<p>클래스를 선언할때에는 ViewModel 클래스를 상속하고, field변수로 MutableLiveData&lt;List<NicePlace>&gt;타입의 변수를 선언해준다. Field변수로 선언을 해줄때는 값이 변화하기 때문에 MutableLiveData 타입으로 선언하지만, 이 값을 읽어올때는 LiveData&lt;List<NicePlace>&gt; 타입으로 선언해준다. <br /></NicePlace></NicePlace></p>
+
+<p>(2) MainActivity에서 작성한 MainActivityViewModel 인스턴스를 만들어서 초기화시켜준다.<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+</code></pre></div></div>
+
+<p><strong><font color="Red">우선, dependencies에 Lifecycle components dependency를 넣어준다.</font></strong><br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Lifecycle components
+def archLifecycleVersion = '1.1.1'
+implementation "android.arch.lifecycle:extensions:$archLifecycleVersion"
+annotationProcessor "android.arch.lifecycle:compiler:$archLifecycleVersion"
+</code></pre></div></div>
+
+<p>다음으로 해줄 것은 <strong>데이터가 변화하는 것을 관찰하기 위한 설정</strong>을 할 것이다. <br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mMainActivityViewModel.getNicePlaces().observe(this, new Observer&lt;List&lt;NicePlace&gt;&gt;() {
+    @Override
+    public void onChanged(List&lt;NicePlace&gt; nicePlaces) {
+        mNicePlaceRecycleAdapter.notifyDataSetChanged();
+    }
+});
+</code></pre></div></div>
+
+<p>이젠 데이터가 변할때마다 변화된 데이터를 화면에 잘 출력할 수 있도록 adapter를 초기화시켜줄때 이 변화된 데이터로 초기화를 시켜준다.<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>private void initRecyclerView(){
+  mAdapter = new RecyclerAdapter(this, mMainActivityViewModel.getNicePlaces().getValue());
+  RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(this);
+  mRecyclerView.setLayoutManager(linearLayoutManager);
+  mRecyclerView.setAdapter(mAdapter);
+}    
+</code></pre></div></div>
+
+<p>(3) Repository 클래스를 작성해준다.<br />
+    이 Repository클래스에서는 실제 화면에 보여지는 Data의 setter와 getter메소드가 있는 클래스이다.<br />
+    Repository class는 Singleton으로 작성을 한다.<br /></p>
+
+<p>(4) 작성한 Repository 클래스를 활용하여, ViewModel 클래스에서 init() 메소드를 작성해준다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public void init(){
+  if(mNicePlaces != null){
+      return;
+  }
+  mRepo = NicePlaceRepository.getInstance();
+  mNicePlaces = mRepo.getNicePlaces();
+}
+</code></pre></div></div>
+
+<p>위에 작성한 init() 메소드는 MainActivity에서 ViewModel 클래스를 초기화시켜줄때, 기존의 dataSet변수가 ‘null’인 경우, ViewModel 클래스 객체를 초기화시켜준 다음에 Repository로부터 데이터를 가져와서 데이터를 초기화시켜주는 작업을 한다.<br /></p>
+
+<h3 id="kotlin-">Kotlin <br /></h3>
+
+<h3 id="전체적인-학습내용을-복습한다">전체적인 학습내용을 복습한다.<br /></h3>
+<p>1.</p>
 
       </article>
       <hr>
@@ -138,8 +201,8 @@
     </div>
 	<script>
 		var disqus_config = function () {
-			this.page.url = "http://mikehyungilee.github.io/2015/12/27/useful-links/"; 
-			this.page.identifier = "/2015/12/27/useful-links"; 
+			this.page.url = "http://mikehyungilee.github.io/2020/04/14/MVVM-Architecture-Image-Training/"; 
+			this.page.identifier = "/2020/04/14/MVVM Architecture Image Training"; 
 		};
 		(function() {
 			var d = document, s = d.createElement('script');

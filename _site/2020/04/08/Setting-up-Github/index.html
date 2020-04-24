@@ -5,10 +5,10 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>useful links</title>
-	<meta name="description" content="">
+	<title>Setting up Github</title>
+	<meta name="description" content="GitHub Initial SettingGitHub SSH key setting 참고 Link">
 	
-	<link rel="canonical" href="http://localhost:4000/2015/12/27/useful-links/">
+	<link rel="canonical" href="http://localhost:4000/2020/04/08/Setting-up-Github/">
 	<link rel="alternate" type="application/rss+xml" title="Lee Hyungi's Tech Blog" href="http://localhost:4000/feed.xml" />
 	
 	<!-- <link rel="stylesheet" href="/css/main.css"> -->
@@ -98,21 +98,61 @@
   <div id="myArticle" class="col-sm-9">
     <div class="post-area post">
       <header>
-        <h1>useful links</h1>
-        <p>Dec 27, 2015</p>
+        <h1>Setting up Github</h1>
+        <p>Apr 8, 2020</p>
       </header>
       <hr>
       <article>
-        <ul id="markdown-toc">
-  <li><a href="#paracraft" id="markdown-toc-paracraft">ParaCraft</a></li>
-  <li><a href="#npl" id="markdown-toc-npl">NPL</a></li>
-</ul>
+        <h2 id="github-initial-setting">GitHub Initial Setting<br /></h2>
+<p><a href="https://help.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh">GitHub SSH key setting 참고 Link</a></p>
 
-<h3 id="paracraft">ParaCraft</h3>
-<p>http://www.paracraft.cn</p>
+<h3 id="generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">[Generating a new SSH key and adding it to the ssh-agent]<br /></h3>
 
-<h3 id="npl">NPL</h3>
-<p>http://www.nplproject.com</p>
+<p>홈페이지의 Instruction을 따라서 SSH키를 generate한 뒤에, 개인 GitHub 계정에 setting해본다.<br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hyungilee@HYUNGIs-MacBook-Pro ~ % ssh-keygen -t rsa -b 4096 -C "mike.hyungi.lee@gmail.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/hyungilee/.ssh/id_rsa):
+Created directory '/Users/hyungilee/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /Users/hyungilee/.ssh/id_rsa.
+Your public key has been saved in /Users/hyungilee/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:mNbD+8ugZkiabHbAxHz80dw8I++O9O0gRDtjrGEMqEs mike.hyungi.lee@gmail.com
+The key's randomart image is:
++---[RSA 4096]----+
+|                 |
+|   .             |
+| o...  o.o       |
+| .+ oo.B+.=      |
+|.E . .B.So o     |
+|..o .o.= =.      |
+|.. = .. =..      |
+|  * o oo B.o     |
+| o . o. ..*oo    |
++----[SHA256]-----+
+hyungilee@HYUNGIs-MacBook-Pro ~ % eval "$(ssh-agent -s)"
+Agent pid 5969
+
+hyungilee@HYUNGIs-MacBook-Pro .ssh % cat ./config
+Host *
+AddKeysToAgent yes
+UseKeychain yes
+IdentityFile ~/.ssh/id_rsa
+hyungilee@HYUNGIs-MacBook-Pro .ssh % pwd
+/Users/hyungilee/.ssh
+hyungilee@HYUNGIs-MacBook-Pro .ssh % ssh-add -K ~/.ssh/id_rsa
+Identity added: /Users/hyungilee/.ssh/id_rsa (mike.hyungi.lee@gmail.com)
+</code></pre></div></div>
+
+<h3 id="adding-a-new-ssh-key-to-your-github-account">[Adding a new SSH key to your GitHub account]</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hyungilee@HYUNGIs-MacBook-Pro .ssh % pbcopy &lt; ~/.ssh/id_rsa.pub
+</code></pre></div></div>
+
+<p>생성된 SSH키를 클립보드에 복사한 후에, GitHub계정의 SSH keys Setting에 붙여넣고, 추가해준다.
+<img src="/images/android/2020-04-08 Add SSH Key into GitHub setting.png" alt="blog capture" width="500" title="capture img" /></p>
 
       </article>
       <hr>
@@ -138,8 +178,8 @@
     </div>
 	<script>
 		var disqus_config = function () {
-			this.page.url = "http://mikehyungilee.github.io/2015/12/27/useful-links/"; 
-			this.page.identifier = "/2015/12/27/useful-links"; 
+			this.page.url = "http://mikehyungilee.github.io/2020/04/08/Setting-up-Github/"; 
+			this.page.identifier = "/2020/04/08/Setting up Github"; 
 		};
 		(function() {
 			var d = document, s = d.createElement('script');

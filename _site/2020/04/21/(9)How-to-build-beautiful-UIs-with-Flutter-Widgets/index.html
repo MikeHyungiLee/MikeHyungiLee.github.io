@@ -6,9 +6,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>(9) How to build beautiful UIs with Flutter Widgets</title>
-	<meta name="description" content="Hyungi's Ideas & Blogs">
+	<meta name="description" content="Flutter의 Widgets을 활용해서 UI를 작성해보자.">
 	
-	<link rel="canonical" href="http://localhost:4000/images/flutter/2020-04-21/2020-04-21-(9)How%20to%20build%20beautiful%20UIs%20with%20Flutter%20Widgets/">
+	<link rel="canonical" href="http://localhost:4000/2020/04/21/(9)How-to-build-beautiful-UIs-with-Flutter-Widgets/">
 	<link rel="alternate" type="application/rss+xml" title="Lee Hyungi's Tech Blog" href="http://localhost:4000/feed.xml" />
 	
 	<!-- <link rel="stylesheet" href="/css/main.css"> -->
@@ -69,8 +69,8 @@
       
           
             
-              <li class="active">
-              
+              <li>
+            
               <a href="/images/flutter/2020-04-21/2020-04-21-(9)How%20to%20build%20beautiful%20UIs%20with%20Flutter%20Widgets/"><span class="glyphicon "></span> (9) How to build beautiful UIs with Flutter Widgets</a></li>
           
       
@@ -99,7 +99,7 @@
     <div class="post-area post">
       <header>
         <h1>(9) How to build beautiful UIs with Flutter Widgets</h1>
-        <p></p>
+        <p>Apr 21, 2020</p>
       </header>
       <hr>
       <article>
@@ -167,6 +167,48 @@ Stateless Widget 클래스를 상속하면 build method를 내부에 구현하�
 
 <p>만약에 Container 내부에 child:Text(‘chlie’)를 넣어주면 그 작은 텍스트만 감싸는 Container를 확인할 수 있다. <br /></p>
 
+<p><strong><font color="Red">만약에 Container를 Parent와 맞춰서 늘리고 싶다면, double.infinity 값을 height와 width의 속성에 넣어주면 된다.</font></strong><br />
+<strong><font color="Blue">Container의 배경색을 바꾸기 위해서는 <font color="Red">decoration</font>과 <font color="Red">foregroundDecoration</font>을 사용해서 바꿀 수 있다. </font></strong><br /></p>
+
+<p>위의 두 가지 속성을 바꿔서 Container의 모양을 완전히 바꿀 수 있다. 두 속성의 간단한 차이점을 말하자면, <strong><font color="Red">"Decoration"</font>속성은 항상 child의 뒤(Behind)에 위치한고 반면에 <font color="Red">foregroundDecoration</font>은 child의 위(Top)에 위치한다.</strong><br /></p>
+
+<p><strong><font color="Red">Container내의 배경색상 바꾸기</font></strong><br /></p>
+
+<p>Way1 : use color with Color class <br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>child: Container(
+  //Set background for container.
+  color: Colors.redAccent
+)
+</code></pre></div></div>
+
+<p>Way2 : use decoration with BoxDecoration</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>return new Container(
+  // This widget is the root of the application.
+  decoration: new BoxDecoration(color: Colors.red),
+  child: new Center(
+    child: new Text("Hello, World!"),
+  ),
+);
+</code></pre></div></div>
+
+<p>Way3 : use foregroundDecoration with BoxDecoration</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>return Scaffold(
+    appBar: AppBar(title: Text('Container.foregroundDecoration')),
+    body: Container(
+      height: double.infinity,
+      width: double.infinity,
+      decoration: BoxDecoration(color: Colors.yellowAccent),
+      foregroundDecoration: BoxDecoration(
+        color: Colors.red.withOpacity(0.5),
+      ),
+      child: Text("Hi"),
+   ),
+);
+</code></pre></div></div>
+
 <p>위의 Text child를 가지고 있는 container의 위치를 확인해보면 최상단에 글자가 잘린 상태로 출력됨을 알 수 있다. 이로 인해 <strong><font color="Red">"Safe Area"</font></strong>를 설정해주면 된다.</p>
 
 <p><strong>Container 위젯에서 Alt+Enter키를 누르고 “wrap with widget”을 선택하면 Container 위젯을 감싸는 widget을 지정할 수 있다.</strong><br /></p>
@@ -227,8 +269,8 @@ margin: EdgeInsets.only(left: 30.0),
     </div>
 	<script>
 		var disqus_config = function () {
-			this.page.url = "http://mikehyungilee.github.io/images/flutter/2020-04-21/2020-04-21-(9)How%20to%20build%20beautiful%20UIs%20with%20Flutter%20Widgets/"; 
-			this.page.identifier = ""; 
+			this.page.url = "http://mikehyungilee.github.io/2020/04/21/(9)How-to-build-beautiful-UIs-with-Flutter-Widgets/"; 
+			this.page.identifier = "/2020/04/21/(9)How to build beautiful UIs with Flutter Widgets"; 
 		};
 		(function() {
 			var d = document, s = d.createElement('script');

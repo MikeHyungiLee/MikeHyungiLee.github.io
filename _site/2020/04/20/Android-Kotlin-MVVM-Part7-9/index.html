@@ -5,10 +5,10 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>useful links</title>
-	<meta name="description" content="">
+	<title>Java MVVM Part7 ~ 9</title>
+	<meta name="description" content="#7 Android MVVM Architecture Tutorial - Handling API Exceptions">
 	
-	<link rel="canonical" href="http://localhost:4000/2015/12/27/useful-links/">
+	<link rel="canonical" href="http://localhost:4000/2020/04/20/Android-Kotlin-MVVM-Part7-9/">
 	<link rel="alternate" type="application/rss+xml" title="Lee Hyungi's Tech Blog" href="http://localhost:4000/feed.xml" />
 	
 	<!-- <link rel="stylesheet" href="/css/main.css"> -->
@@ -98,21 +98,36 @@
   <div id="myArticle" class="col-sm-9">
     <div class="post-area post">
       <header>
-        <h1>useful links</h1>
-        <p>Dec 27, 2015</p>
+        <h1>Java MVVM Part7 ~ 9</h1>
+        <p>Apr 20, 2020</p>
       </header>
       <hr>
       <article>
-        <ul id="markdown-toc">
-  <li><a href="#paracraft" id="markdown-toc-paracraft">ParaCraft</a></li>
-  <li><a href="#npl" id="markdown-toc-npl">NPL</a></li>
-</ul>
+        <p><strong>#7 Android MVVM Architecture Tutorial - Handling API Exceptions<br /></strong></p>
 
-<h3 id="paracraft">ParaCraft</h3>
-<p>http://www.paracraft.cn</p>
+<p><strong>참고</strong>:<a href="https://www.youtube.com/watch?v=67bdklHmXA8&amp;list=PLk7v1Z2rk4hjVaZ8DZKe8iT9RIM9OUrwp&amp;index=1">https://www.youtube.com/watch?v=67bdklHmXA8&amp;list=PLk7v1Z2rk4hjVaZ8DZKe8iT9RIM9OUrwp&amp;index=1</a><br /></p>
 
-<h3 id="npl">NPL</h3>
-<p>http://www.nplproject.com</p>
+<p>API 송수신 에러를 처리를 구현해 볼 것이다. <br /></p>
+
+<p>※ 노트정리 (Part7)<br />
+<img src="/images/android/2020-04-20/2020-04-20 Handling API Exceptions.png" alt="blog capture" width="500" title="capture img" /><br /></p>
+
+<p>ViewModel클래스에서 호출해서 사용할 UserRepository의 메소드를 살펴보자. 이 메소드는 기존에 Response 객체를 반환하고, 이 반환된 객체를 ViewModel에서 일일이 송수신 성공여부(로그인 성공/실패)에 따라서 이벤트 처리를 해주었다. <br />
+<strong><font color="Red">하지만 이런식으로 반복해서 ViewModel 클래스에서 매번 조건처리해서 적어주면 코드의 가독성이 떨어지기 때문에, 이러한 처리를 공통화 처리해주기로 한다.</font></strong><br /></p>
+
+<p>위의 공통화 처리해서 작성해줄 부분이 network 패키지 아래에 작성한 SafeApiRequest 추상클래스이고, 여기에서 작성한 메소드는 송수신 성공시에는 ResponseBody를 반환해주고, 실패하면, 에러 메시지를 덫붙여서 ApiException 클래스에 던져준다. <br /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class ApiException(message: String) : IOException(message) {
+
+}
+</code></pre></div></div>
+
+<p>위와 같이 IOException클래스를 상속하고, String타입의 message 변수를 인자로 갖는 ApiException클래스를 작성해서 활용한다. 이 ApiException 클래스는 IOException의 기능을 계승한다.<br /></p>
+
+<p><strong>이렇게 작성을 하게 되면, 최종적으로 AuthViewModel 클래스에서 Repository클래스 내부에서 작성한 메소드로 값을 반환할때, <font color="Red">try{}catch{}내에서 커스터마이징한 ApiException클래스로 송수신 성공/실패를 에러로써 Catch해서 처리할 수 있게 된다.</font></strong><br /></p>
+
+<p>이 부분은 연습이 필요할 것 같다.<br /></p>
+
 
       </article>
       <hr>
@@ -138,8 +153,8 @@
     </div>
 	<script>
 		var disqus_config = function () {
-			this.page.url = "http://mikehyungilee.github.io/2015/12/27/useful-links/"; 
-			this.page.identifier = "/2015/12/27/useful-links"; 
+			this.page.url = "http://mikehyungilee.github.io/2020/04/20/Android-Kotlin-MVVM-Part7-9/"; 
+			this.page.identifier = "/2020/04/20/Android Kotlin MVVM Part7-9"; 
 		};
 		(function() {
 			var d = document, s = d.createElement('script');
